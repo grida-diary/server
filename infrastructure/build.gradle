@@ -1,0 +1,24 @@
+plugins {
+    id 'java-library'
+}
+
+dependencies {
+    // 모듈 의존성 주입
+    implementation project(':likelion-common')
+}
+
+clean {
+    delete file('src/main/generated')
+}
+
+tasks.withType(Test) {
+    useJUnitPlatform()
+}
+
+bootJar {
+    enabled = false
+}
+
+jar {
+    enabled = true
+}
