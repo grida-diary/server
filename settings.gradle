@@ -1,8 +1,8 @@
-pluginManagement {
-	repositories {
-		maven { url 'https://repo.spring.io/milestone' }
-		maven { url 'https://repo.spring.io/snapshot' }
-		gradlePluginPortal()
-	}
-}
 rootProject.name = 'grida'
+
+include 'application-client'
+include 'web-client'
+include 'common'
+include 'core'
+include 'infrastructure'
+include 'security'
