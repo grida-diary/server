@@ -6,3 +6,6 @@ spring:
       - common
       - infrastructure
       - security
+
+server:
+  port: 8090
