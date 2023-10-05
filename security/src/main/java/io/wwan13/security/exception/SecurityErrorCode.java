@@ -1,7 +1,7 @@
 package io.wwan13.security.exception;
 
 import io.wwan13.common.constant.HttpStatusCode;
-import io.wwan13.common.exeption.ErrorCode;
+import io.wwan13.common.exeption.base.ErrorCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 

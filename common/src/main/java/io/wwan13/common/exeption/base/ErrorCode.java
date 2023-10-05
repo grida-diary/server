@@ -1,4 +1,4 @@
-package io.wwan13.common.exeption;
+package io.wwan13.common.exeption.base;
 
 public interface ErrorCode {
     int getHttpStatus();

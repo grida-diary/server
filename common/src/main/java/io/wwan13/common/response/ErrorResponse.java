@@ -1,6 +1,6 @@
 package io.wwan13.common.response;
 
-import io.wwan13.common.exeption.ErrorCode;
+import io.wwan13.common.exeption.base.ErrorCode;
 import lombok.Getter;
 import lombok.ToString;
 

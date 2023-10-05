@@ -1,6 +1,5 @@
 package io.wwan13.common.response;
 
-import io.wwan13.common.exeption.ErrorCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;

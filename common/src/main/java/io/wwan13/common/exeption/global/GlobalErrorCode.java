@@ -1,12 +1,13 @@
-package io.wwan13.common.exeption;
+package io.wwan13.common.exeption.global;
 
 import io.wwan13.common.constant.HttpStatusCode;
+import io.wwan13.common.exeption.base.ErrorCode;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public enum GlobalErrorCode implements ErrorCode{
+public enum GlobalErrorCode implements ErrorCode {
 
     BAD_REQUEST_ERROR(HttpStatusCode.BAD_REQUEST, "잘못된 요청입니다."),
     INVALID_HTTP_MESSAGE_BODY(HttpStatusCode.BAD_REQUEST,"HTTP 요청 바디의 형식이 잘못되었습니다."),

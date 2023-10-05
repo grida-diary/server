@@ -1,7 +1,6 @@
 package io.wwan13.security.exception;
 
-import io.wwan13.common.exeption.BaseException;
-import io.wwan13.common.exeption.ErrorCode;
+import io.wwan13.common.exeption.base.BaseException;
 
 public class NoValidJwtTokensException extends BaseException {
     public NoValidJwtTokensException() {
