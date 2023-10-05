@@ -12,7 +12,7 @@ public class ErrorResponse extends ApiResponse {
 
     private ErrorResponse(ErrorCode errorCode) {
         super(false, errorCode.getHttpStatus(), errorCode.getMessage());
-        this.code = errorCode.getCode();
+        this.code = errorCode.name();
     }
 
     public static ErrorResponse of(ErrorCode errorCode) {
