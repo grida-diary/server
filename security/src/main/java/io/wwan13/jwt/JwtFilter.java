@@ -1,37 +1,38 @@
-package io.wwan13.security.jwt;
+package io.wwan13.jwt;
 
+import io.wwan13.exception.WrongJwtTokenException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.GenericFilterBean;
+import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Component
-public class JwtFilter extends GenericFilterBean {
+@RequiredArgsConstructor
+public class JwtFilter extends OncePerRequestFilter {
 
     public static final String AUTHORIZATION_HEADER = "Authorization";
-    private TokenProvider tokenProvider;
-
-    public JwtFilter(TokenProvider tokenProvider) {
-        this.tokenProvider = tokenProvider;
-    }
+    private final TokenProvider tokenProvider;
 
     @Override
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+        String jwt = resolveToken(request);
 
-        HttpServletRequest httpServletRequest = (HttpServletRequest) request;
-        String jwt = resolveToken(httpServletRequest);
-
-        tokenProvider.validateToken(jwt);
-        Authentication authentication = tokenProvider.getAuthentication(jwt);
-        SecurityContextHolder.getContext().setAuthentication(authentication);
+        if (hasToken(jwt)) {
+            tokenProvider.validateToken(jwt, response);
+            Authentication authentication = tokenProvider.getAuthentication(jwt);
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+        }
 
         filterChain.doFilter(request, response);
     }
@@ -44,4 +45,7 @@ public class JwtFilter extends GenericFilterBean {
         return null;
     }
 
+    private boolean hasToken(String jwt) {
+        return StringUtils.hasText(jwt);
+    }
 }
