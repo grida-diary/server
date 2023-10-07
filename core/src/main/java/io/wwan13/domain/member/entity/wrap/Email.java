@@ -29,14 +29,14 @@ public class Email {
     }
 
     private boolean isRightEmailFormat(String email) {
-        return !isContainAtSign(email) || !isContainPeriod(email);
+        return isContainAtSign(email) && isContainPeriod(email);
     }
 
     private boolean isContainAtSign(String email) {
-        return email.split(TEXT_SYMBOL_AT_SIGN).length == 2;
+        return email.contains(TEXT_SYMBOL_AT_SIGN);
     }
 
     private boolean isContainPeriod(String email) {
-        return email.split(TEXT_SYMBOL_AT_SIGN)[1].split(TEXT_SYMBOL_PERIOD).length >= 2;
+        return email.contains(TEXT_SYMBOL_PERIOD);
     }
 }
