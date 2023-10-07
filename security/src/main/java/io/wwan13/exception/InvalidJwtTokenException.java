@@ -2,8 +2,10 @@ package io.wwan13.exception;
 
 import io.wwan13.exeption.base.BaseException;
 
-public class InvalidJwtTokenException extends BaseException {
-    public InvalidJwtTokenException() {
-        super(SecurityErrorCode.INVALID_JWT_TOKEN);
+import javax.servlet.http.HttpServletResponse;
+
+public class InvalidJwtTokenException extends SecurityException {
+    public InvalidJwtTokenException(HttpServletResponse response) {
+        super(SecurityErrorCode.INVALID_JWT_TOKEN, response);
     }
 }
