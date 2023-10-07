@@ -1,8 +1,9 @@
-package io.wwan13.core.domain.member.entity;
+package io.wwan13.domain.member.entity;
 
-import io.wwan13.core.common.basetime.BaseTimeEntity;
-import io.wwan13.core.domain.member.dto.MemberProfileDto;
-import io.wwan13.core.domain.member.entity.wrap.*;
+import io.wwan13.common.basetime.BaseTimeEntity;
+import io.wwan13.domain.member.dto.MemberProfileDto;
+import io.wwan13.domain.member.entity.wrap.*;
+import io.wwan13.domain.member.exception.MemberNotFountException;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -35,13 +36,17 @@ public class Member extends BaseTimeEntity {
     @Embedded
     private Age age;
 
+    @Enumerated(EnumType.STRING)
+    private Authority authority;
+
     @Builder
-    public Member(String email, String password, String nickname, Gender gender, Integer age) {
+    public Member(String email, String password, String nickname, Gender gender, Integer age, Authority authority) {
         this.email = new Email(email);
         this.password = new Password(password);
         this.nickname = new Nickname(nickname);
         this.gender = gender;
         this.age = new Age(age);
+        this.authority = authority;
     }
 
     public void updateProfile(MemberProfileDto memberProfileDto) {
@@ -53,4 +58,17 @@ public class Member extends BaseTimeEntity {
     public void updatePassword(String password) {
         this.password.update(password);
     }
+
+    public String getEmailValue() {
+        return email.getEmail();
+    }
+
+    public String getPasswordValue() {
+        return password.getPassword();
+    }
+
+    public String getAuthorityName() {
+        return authority.name();
+    }
+
 }
