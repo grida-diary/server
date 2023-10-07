@@ -13,7 +13,8 @@ public enum MemberErrorCode implements ErrorCode {
     PASSWORD_SIZE_ERROR(HttpStatusCode.BAD_REQUEST, "비밀번호는 최소 4자리 최대 12자리로 설정해 주세요."),
     NICKNAME_SIZE_ERROR(HttpStatusCode.BAD_REQUEST, "닉네임은 최소 2자 최대 12자리 설정해 주세요."),
     AGE_VALUE_ERROR(HttpStatusCode.BAD_REQUEST, "나이는 1 이하일 수 없슨디ㅏ."),
-    MEMBER_NOT_FOUND(HttpStatusCode.BAD_REQUEST, "해당하는 유저를 찾을 수 없습니다.")
+    MEMBER_NOT_FOUND(HttpStatusCode.BAD_REQUEST, "해당하는 유저를 찾을 수 없습니다."),
+    INCORRECT_PASSWORD(HttpStatusCode.BAD_REQUEST, "비밀번호가 일치하지 않습니다.")
     ;
 
     private final int httpStatus;

@@ -59,6 +59,10 @@ public class Member extends BaseTimeEntity {
         this.password.update(password);
     }
 
+    public void checkPassword(String requestPassword) {
+        password.check(requestPassword);
+    }
+
     public String getEmailValue() {
         return email.getEmail();
     }
