@@ -6,6 +6,7 @@ import io.wwan13.domain.member.entity.wrap.Gender;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -17,10 +18,10 @@ public class SignUpRequestDto {
     private Gender gender;
     private Integer age;
 
-    public Member map() {
+    public Member map(PasswordEncoder passwordEncoder) {
         return Member.builder()
                 .email(email)
-                .password(password)
+                .password(passwordEncoder.encode(password))
                 .nickname(nickname)
                 .gender(gender)
                 .age(age)
