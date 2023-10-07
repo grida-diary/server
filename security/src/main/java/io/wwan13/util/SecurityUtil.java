@@ -1,5 +1,6 @@
 package io.wwan13.util;
 
+import io.wwan13.exception.NoSuchAuthenticationException;
 import io.wwan13.exception.NoValidJwtTokensException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -10,7 +11,7 @@ public class SecurityUtil {
         final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         if (authentication == null) {
-            throw new NoValidJwtTokensException();
+            throw new NoSuchAuthenticationException();
         }
 
         String email = null;

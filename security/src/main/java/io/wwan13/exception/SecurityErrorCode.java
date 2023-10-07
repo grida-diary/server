@@ -16,7 +16,8 @@ public enum SecurityErrorCode implements ErrorCode {
     EXPIRED_JWT_TOKEN(HttpStatusCode.UNAUTHORIZED, "만료된 JWT 토큰 입니다."),
     UNSUPPORTED_JWT_TOKEN(HttpStatusCode.UNAUTHORIZED, "지원되지 않는 JWT 토큰 입니다."),
     WRONG_JWT_TOKEN(HttpStatusCode.UNAUTHORIZED, "잘못된 JWT 토큰 입니다."),
-    NO_VALID_JWT_TOKENS(HttpStatusCode.UNAUTHORIZED, "유효한 JWT 토큰 이 없습니다.")
+    NO_VALID_JWT_TOKENS(HttpStatusCode.UNAUTHORIZED, "유효한 JWT 토큰 이 없습니다."),
+    NO_SUCH_AUTHENTICATION(HttpStatusCode.UNAUTHORIZED, "인증정보가 없습니다.")
     ;
 
     private final int httpStatus;
