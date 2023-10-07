@@ -11,9 +11,9 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
 
 import javax.annotation.PostConstruct;
+import javax.servlet.http.HttpServletResponse;
 import java.security.Key;
 import java.util.Arrays;
 import java.util.Collection;
@@ -75,20 +75,17 @@ public class TokenProvider {
         return new UsernamePasswordAuthenticationToken(principal, token, authorities);
     }
 
-    public void validateToken(String token) {
-        if (!StringUtils.hasText(token)) {
-            throw new NoValidJwtTokensException();
-        }
+    public void validateToken(String token, HttpServletResponse response) {
         try {
             Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
         } catch (io.jsonwebtoken.security.SecurityException | MalformedJwtException e) {
-            throw new InvalidJwtTokenException();
+            new InvalidJwtTokenException(response);
         } catch (ExpiredJwtException e) {
-            throw new ExpiredJwtTokenException();
+            new ExpiredJwtTokenException(response);
         } catch (UnsupportedJwtException e) {
-            throw new UnsupportedJwtTokenException();
+            new UnsupportedJwtTokenException(response);
         } catch (IllegalArgumentException e) {
-            throw new WrongJwtTokenException();
+            new WrongJwtTokenException(response);
         }
     }
 }
