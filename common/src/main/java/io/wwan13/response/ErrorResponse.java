@@ -15,7 +15,17 @@ public class ErrorResponse extends ApiResponse {
         this.code = errorCode.name();
     }
 
+    private ErrorResponse(ErrorCode errorCode, String message) {
+        super(false, errorCode.getHttpStatus(), message);
+        this.code = errorCode.name();
+    }
+
     public static ErrorResponse of(ErrorCode errorCode) {
         return new ErrorResponse(errorCode);
     }
+
+    public static ErrorResponse of(ErrorCode errorCode, String message) {
+        return new ErrorResponse(errorCode, message);
+    }
+
 }
