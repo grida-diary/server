@@ -14,6 +14,7 @@ public class SignUpRequestDto {
 
     private String email;
     private String password;
+    private String passwordCheck;
     private String nickname;
     private Gender gender;
     private Integer age;

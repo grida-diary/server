@@ -15,7 +15,11 @@ public class MemberQueryService {
     private final MemberRepository memberRepository;
 
     public Member findByEmail(String email) {
-        return memberRepository.findByEmail(email)
+        return memberRepository.findByEmailEmail(email)
                 .orElseThrow(() -> new MemberNotFountException());
+    }
+
+    public boolean existByEmail(String email) {
+        return memberRepository.existsByEmail(email);
     }
 }
