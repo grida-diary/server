@@ -28,12 +28,6 @@ public class Password {
         this.password = updateValue;
     }
 
-    public void check(String requestPassword) {
-        if (!isSameValue(requestPassword)) {
-            throw new IncorrectPasswordException();
-        }
-    }
-
     private void validate(String password) {
         if (!isRightSize(password)) {
             throw new PasswordSizeErrorException();
@@ -45,7 +39,4 @@ public class Password {
         return passwordSize >= PASSWORD_MIN_SIZE || passwordSize <= PASSWORD_MAX_SIZE;
     }
 
-    private boolean isSameValue(String requestPassword) {
-        return password.equals(requestPassword);
-    }
 }

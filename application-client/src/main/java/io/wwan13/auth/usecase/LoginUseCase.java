@@ -4,6 +4,7 @@ import io.wwan13.annotation.UseCase;
 import io.wwan13.auth.dto.LoginRequestDto;
 import io.wwan13.auth.dto.LoginResponseDto;
 import io.wwan13.domain.member.entity.Member;
+import io.wwan13.domain.member.exception.IncorrectPasswordException;
 import io.wwan13.domain.member.service.MemberQueryService;
 import io.wwan13.jwt.TokenProvider;
 import lombok.RequiredArgsConstructor;
@@ -12,7 +13,6 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @UseCase
 @RequiredArgsConstructor
@@ -35,14 +35,20 @@ public class LoginUseCase {
         return new LoginResponseDto(jwtToken);
     }
 
-    private void checkPassword(Member member, String requestPassword) {
-        member.checkPassword(passwordEncoder.encode(requestPassword));
-    }
-
     private Authentication getAuthentication(LoginRequestDto loginRequestDto) {
         UsernamePasswordAuthenticationToken authenticationToken
                 = new UsernamePasswordAuthenticationToken(loginRequestDto.getEmail(), loginRequestDto.getPassword());
         return authenticationManagerBuilder.getObject().authenticate(authenticationToken);
+    }
+
+    private void checkPassword(Member member, String requestPassword) {
+        if (!isAccord(requestPassword, member.getPasswordValue())) {
+            throw new IncorrectPasswordException();
+        }
+    }
+
+    private boolean isAccord(String rawPassword, String encodedPassword) {
+        return passwordEncoder.matches(rawPassword, encodedPassword);
     }
 
 }
