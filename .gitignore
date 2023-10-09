@@ -36,3 +36,10 @@ out/
 
 ### VS Code ###
 .vscode/
+
+generated/
+
+.DS_Store
+
+.env.dev
+.env.*
