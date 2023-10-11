@@ -40,7 +40,7 @@ public class AuthController {
     }
 
     @GetMapping("/{memberEmail}/profileImage")
-    public SuccessResponse<GetProfileImageExamplesResponseDto> getExamples(
+    public SuccessResponse<GetProfileImageExamplesResponseDto> getProfileImageExamples(
             @PathVariable String memberEmail) {
         GetProfileImageExamplesResponseDto response = getProfileImageExamplesUseCase.execute(memberEmail);
         return SuccessResponse.ok(response);
