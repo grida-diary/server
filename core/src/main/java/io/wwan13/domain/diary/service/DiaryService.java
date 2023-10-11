@@ -13,8 +13,9 @@ public class DiaryService {
 
     private final DiaryRepository diaryRepository;
 
-    public Diary transientSave(Diary diary) {
-        return diaryRepository.save(diary);
+    public Long save(Diary diary) {
+        Diary createdDiary = diaryRepository.save(diary);
+        return createdDiary.getId();
     }
 
 }

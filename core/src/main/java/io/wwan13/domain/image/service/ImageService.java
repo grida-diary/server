@@ -13,7 +13,8 @@ public class ImageService {
 
     private final ImageRepository imageRepository;
 
-    public Image save(Image image) {
-        return imageRepository.save(image);
+    public Long save(Image image) {
+        Image createdImage = imageRepository.save(image);
+        return createdImage.getId();
     }
 }

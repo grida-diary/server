@@ -13,7 +13,8 @@ public class MemberService {
 
     private final MemberRepository memberRepository;
 
-    public Member save(Member member) {
-        return memberRepository.save(member);
+    public String save(Member member) {
+        Member createdMember = memberRepository.save(member);
+        return createdMember.getEmailValue();
     }
 }

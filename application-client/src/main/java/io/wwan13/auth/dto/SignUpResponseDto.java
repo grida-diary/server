@@ -11,8 +11,4 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class SignUpResponseDto {
     private String email;
-
-    public static SignUpResponseDto map(Member member) {
-        return new SignUpResponseDto(member.getEmailValue());
-    }
 }

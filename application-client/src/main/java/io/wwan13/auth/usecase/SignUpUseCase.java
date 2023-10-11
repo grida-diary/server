@@ -21,8 +21,8 @@ public class SignUpUseCase {
 
     public SignUpResponseDto execute(SignUpRequestDto signUpRequestDto) {
         validate(signUpRequestDto);
-        Member member = memberService.save(signUpRequestDto.map(passwordEncoder));
-        return SignUpResponseDto.map(member);
+        String createdMemberEmail = memberService.save(signUpRequestDto.map(passwordEncoder));
+        return new SignUpResponseDto(createdMemberEmail);
     }
 
     private void validate(SignUpRequestDto signUpRequestDto) {

@@ -21,17 +21,17 @@ public class ProfileImageService {
     private final MemberRepository memberRepository;
     private final ImageRepository imageRepository;
 
-    public ProfileImage save(String memberEmail, Long imageId) {
+    public Long save(String memberEmail, String imageUrl) {
         Member member = memberRepository.findByEmailEmail(memberEmail)
                 .orElseThrow(() -> new MemberNotFountException());
-        Image image = imageRepository.findById(imageId)
-                .orElseThrow(() -> new ImageNotFoundException());
+        Image image = imageRepository.save(new Image(imageUrl));
 
         ProfileImage profileImage = ProfileImage.builder()
                 .member(member)
                 .image(image)
                 .build();
+        ProfileImage createdProfileImage = profileImageRepository.save(profileImage);
 
-        return profileImageRepository.save(profileImage);
+        return createdProfileImage.getId();
     }
 }
