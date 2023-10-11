@@ -5,6 +5,7 @@ import io.wwan13.domain.diary.entity.wrap.DiaryContent;
 import io.wwan13.domain.diary.entity.wrap.DiaryScope;
 import io.wwan13.domain.member.entity.Member;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -29,9 +30,14 @@ public class Diary extends BaseTimeEntity {
 
     private DiaryScope scope;
 
+    @Builder
     public Diary(String content, Member owner, DiaryScope scope) {
         this.content = new DiaryContent(content);
         this.owner = owner;
         this.scope = scope;
+    }
+
+    public String getContentValue() {
+        return content.getContent();
     }
 }
