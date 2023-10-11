@@ -1,5 +1,6 @@
 package io.wwan13.response;
 
+import io.wwan13.constant.HttpStatusCode;
 import lombok.Getter;
 import lombok.ToString;
 
@@ -14,15 +15,27 @@ public class SuccessResponse<T> extends ApiResponse {
         this.data = data;
     }
 
-    public static <T> SuccessResponse of(int httpStatusCode, T data) {
-        return new SuccessResponse(httpStatusCode, data, null);
+    public static <T> SuccessResponse ok(T data) {
+        return new SuccessResponse(HttpStatusCode.OK, data, null);
     }
 
-    public static <T> SuccessResponse of(int httpStatusCode, T data, String message) {
-        return new SuccessResponse(httpStatusCode, data, message);
+    public static <T> SuccessResponse ok(T data, String message) {
+        return new SuccessResponse(HttpStatusCode.OK, data, message);
     }
 
-    public static <T> SuccessResponse of(int httpStatusCode, String message) {
-        return new SuccessResponse(httpStatusCode, null, message);
+    public static <T> SuccessResponse ok(String message) {
+        return new SuccessResponse(HttpStatusCode.OK, null, message);
+    }
+
+    public static <T> SuccessResponse created(T data) {
+        return new SuccessResponse(HttpStatusCode.CREATED, data, null);
+    }
+
+    public static <T> SuccessResponse created(T data, String message) {
+        return new SuccessResponse(HttpStatusCode.CREATED, data, message);
+    }
+
+    public static <T> SuccessResponse created(String message) {
+        return new SuccessResponse(HttpStatusCode.CREATED, null, message);
     }
 }

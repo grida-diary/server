@@ -29,21 +29,21 @@ public class AuthController {
     public SuccessResponse<SignUpResponseDto> signUp(
             @RequestBody SignUpRequestDto signUpRequestDto) {
         SignUpResponseDto response = signUpUseCase.execute(signUpRequestDto);
-        return SuccessResponse.of(HttpStatusCode.CREATED, response);
+        return SuccessResponse.created(response);
     }
 
     @PostMapping("/login")
     public SuccessResponse<LoginResponseDto> login(
             @RequestBody LoginRequestDto loginRequestDto) {
         LoginResponseDto response = loginUseCase.execute(loginRequestDto);
-        return SuccessResponse.of(HttpStatusCode.OK, response);
+        return SuccessResponse.ok(response);
     }
 
     @GetMapping("/{memberEmail}/profileImage")
     public SuccessResponse<GetProfileImageExamplesResponseDto> getExamples(
             @PathVariable String memberEmail) {
         GetProfileImageExamplesResponseDto response = getProfileImageExamplesUseCase.execute(memberEmail);
-        return SuccessResponse.of(HttpStatusCode.OK, response);
+        return SuccessResponse.ok(response);
     }
 
     @PostMapping("/{memberEmail}/profileImage")
@@ -51,6 +51,6 @@ public class AuthController {
             @PathVariable String memberEmail,
             @RequestBody String profileImageUrl) {
         CreateProfileImageResponseDto response = createProfileImageUseCase.execute(memberEmail, profileImageUrl);
-        return SuccessResponse.of(HttpStatusCode.CREATED, response);
+        return SuccessResponse.created(response);
     }
 }
