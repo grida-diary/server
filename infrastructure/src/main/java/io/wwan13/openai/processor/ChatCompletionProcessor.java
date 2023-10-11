@@ -17,7 +17,7 @@ public class ChatCompletionProcessor {
 
     public ProcessResult proceed(String content) {
         String prompt = chatCompletionUtil.createPrompt(content);
-        ChatCreateRequestDto request = ChatCreateRequestDto.prompt(prompt);
+        ChatCreateRequestDto request = new ChatCreateRequestDto(prompt);
 
         ChatCreateResponseDto response = chatClient.createChatCompletion(request);
         return chatCompletionUtil.getResult(response);
