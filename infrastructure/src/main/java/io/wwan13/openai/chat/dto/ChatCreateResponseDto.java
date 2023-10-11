@@ -10,13 +10,19 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ChatCreateResponseDto {
 
-    private String id;
     private List<Choice> choices;
 
     @Getter
     @NoArgsConstructor(access = AccessLevel.PROTECTED)
     public static class Choice {
-        private Integer index;
         private ChatMessageDto message;
+
+        protected String getMessageContent() {
+            return message.getContent();
+        }
+    }
+
+    public String getResultMessage() {
+        return choices.get(0).getMessageContent();
     }
 }

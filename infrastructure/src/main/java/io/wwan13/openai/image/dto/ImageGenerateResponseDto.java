@@ -10,12 +10,15 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ImageGenerateResponseDto {
 
-    private String created;
     private List<ImageUrl> data;
 
     @Getter
     @NoArgsConstructor(access = AccessLevel.PROTECTED)
     public static class ImageUrl {
         private String url;
+    }
+
+    public String getResultUrl() {
+        return data.get(0).getUrl();
     }
 }

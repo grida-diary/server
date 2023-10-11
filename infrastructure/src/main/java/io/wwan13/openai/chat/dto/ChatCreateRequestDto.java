@@ -1,5 +1,6 @@
 package io.wwan13.openai.chat.dto;
 
+import io.wwan13.openai.util.ChatCompletionUtil;
 import lombok.*;
 
 import java.util.Arrays;
@@ -17,7 +18,7 @@ public class ChatCreateRequestDto {
         this.messages = Arrays.asList(message);
     }
 
-    public static ChatCreateRequestDto content(String content) {
-        return new ChatCreateRequestDto(content);
+    public static ChatCreateRequestDto prompt(String prompt) {;
+        return new ChatCreateRequestDto(prompt);
     }
 }
