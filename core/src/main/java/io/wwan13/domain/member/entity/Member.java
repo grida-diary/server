@@ -71,4 +71,12 @@ public class Member extends BaseTimeEntity {
         return authority.name();
     }
 
+    public String getGenderName() {
+        return gender.name();
+    }
+
+    public Integer getAgeValue() {
+        return age.getAge();
+    }
+
 }
