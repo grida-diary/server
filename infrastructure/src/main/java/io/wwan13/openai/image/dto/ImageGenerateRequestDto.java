@@ -10,14 +10,11 @@ import lombok.NoArgsConstructor;
 public class ImageGenerateRequestDto {
 
     private String prompt;
-    private final Integer n = 1;
-    private final String size = "1024x1024";
+    private Integer n;
+    private final String size = "512x512";
 
-    private ImageGenerateRequestDto(String prompt) {
+    public ImageGenerateRequestDto(String prompt, Integer n) {
         this.prompt = prompt;
-    }
-
-    public static ImageGenerateRequestDto prompt(String prompt) {
-        return new ImageGenerateRequestDto(prompt);
+        this.n = n;
     }
 }
