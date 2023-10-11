@@ -20,6 +20,6 @@ public class MemberQueryService {
     }
 
     public boolean existByEmail(String email) {
-        return memberRepository.existsByEmail(email);
+        return memberRepository.existsByEmailEmail(email);
     }
 }
