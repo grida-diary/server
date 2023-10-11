@@ -9,13 +9,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class MemberProfile {
     private String gender;
-    private Integer age;
+    private String age;
     private String profileImageUrl;
 
     @Builder
     public MemberProfile(String gender, Integer age, String profileImageUrl) {
         this.gender = gender;
-        this.age = age;
+        this.age = age.toString();
         this.profileImageUrl = profileImageUrl;
     }
 }
