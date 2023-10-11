@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -20,5 +21,11 @@ public class ImageGenerateResponseDto {
 
     public String getResultUrl() {
         return data.get(0).getUrl();
+    }
+
+    public List<String> getResultUrls() {
+        return data.stream()
+                .map(ImageUrl::getUrl)
+                .collect(Collectors.toList());
     }
 }
