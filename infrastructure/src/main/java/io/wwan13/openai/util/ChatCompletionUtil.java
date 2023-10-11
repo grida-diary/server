@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class ChatCompletionUtil {
 
-    private final static String prompt
+    private final static String PROMPT
             = "아래의 토픽에 대해 지금부터 작성되는 일기의 emotion 과 behavior 을 분석해서 영어로 알려줘. \n" +
             "아래의 옵션들을 지켜줘. \n\n" +
             "- Style : 키워드만 \n" +
@@ -25,7 +25,7 @@ public class ChatCompletionUtil {
             "\"emotion\" 과 \"behavior\" 의 key 와 각각 하나의 문자열 value 를 가지는 JSON 형태로 알려줘";
 
     public String createPrompt(String content) {
-        String result = String.format(prompt, content);
+        String result = String.format(PROMPT, content);
         return result;
     }
 
