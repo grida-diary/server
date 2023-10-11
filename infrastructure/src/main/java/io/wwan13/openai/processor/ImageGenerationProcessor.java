@@ -26,7 +26,7 @@ public class ImageGenerationProcessor {
 
     public List<String> proceed(MemberProfile memberProfile) {
         String prompt = imageGenerationUtil.creatProfilePrompt(memberProfile);
-        ImageGenerateResponseDto response = getResponse(prompt, 1);
+        ImageGenerateResponseDto response = getResponse(prompt, 4);
         return imageGenerationUtil.getResults(response);
     }
 
