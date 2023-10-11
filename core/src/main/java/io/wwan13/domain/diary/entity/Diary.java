@@ -2,6 +2,7 @@ package io.wwan13.domain.diary.entity;
 
 import io.wwan13.common.basetime.BaseTimeEntity;
 import io.wwan13.domain.diary.entity.wrap.DiaryContent;
+import io.wwan13.domain.diary.entity.wrap.DiaryDate;
 import io.wwan13.domain.diary.entity.wrap.DiaryScope;
 import io.wwan13.domain.member.entity.Member;
 import lombok.AccessLevel;
@@ -10,6 +11,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 
 @Entity
 @Getter
@@ -30,11 +32,15 @@ public class Diary extends BaseTimeEntity {
 
     private DiaryScope scope;
 
+    @Embedded
+    private DiaryDate date;
+
     @Builder
-    public Diary(String content, Member owner, DiaryScope scope) {
+    public Diary(String content, Member owner, DiaryScope scope, LocalDate date) {
         this.content = new DiaryContent(content);
         this.owner = owner;
         this.scope = scope;
+        this.date = new DiaryDate(date);
     }
 
     public String getContentValue() {
