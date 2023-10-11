@@ -16,7 +16,7 @@ public class ImageGenerationUtil {
             "doing \"%s\" with a \"%s\" feeling";
 
     private final static String PROFILE_PROMPT
-            = "By Vladimir Kush \n\n" +
+            = "Illustration \n\n" +
             "%s years old %s\n" +
             "profile image";
 
@@ -27,7 +27,7 @@ public class ImageGenerationUtil {
     }
 
     public String creatProfilePrompt(MemberProfile memberProfile) {
-        String result = String.format(DIARY_PROMPT, memberProfile.getAge(), memberProfile.getGender());
+        String result = String.format(PROFILE_PROMPT, memberProfile.getAge(), memberProfile.getGender());
         return result;
     }
 
