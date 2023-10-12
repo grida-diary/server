@@ -8,6 +8,6 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-public class DiaryCreateResponseDto {
+public class DiaryIdResponseDto {
     private Long diaryId;
 }
