@@ -6,6 +6,11 @@ services:
     ports:
       - "8080:8080"
     restart: always
+    environment:
+      JWT_HEADER: ${JWT_HEADER}
+      JWT_SECRET: ${JWT_SECRET}
+      JWT_TOKEN_VALIDITY_IN_SECONDS: ${JWT_TOKEN_VALIDITY_IN_SECONDS}
+      OPEN_AI_SECRET_KEY: ${OPEN_AI_SECRET_KEY}
 
   web:
     image: wwan13/grida-web:0.0.1
@@ -13,3 +18,8 @@ services:
     ports:
       - "8090:8090"
     restart: always
+    environment:
+      JWT_HEADER: ${JWT_HEADER}
+      JWT_SECRET: ${JWT_SECRET}
+      JWT_TOKEN_VALIDITY_IN_SECONDS: ${JWT_TOKEN_VALIDITY_IN_SECONDS}
+      OPEN_AI_SECRET_KEY: ${OPEN_AI_SECRET_KEY}
