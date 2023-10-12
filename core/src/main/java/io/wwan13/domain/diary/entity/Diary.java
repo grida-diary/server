@@ -4,6 +4,7 @@ import io.wwan13.common.basetime.BaseTimeEntity;
 import io.wwan13.domain.diary.entity.wrap.DiaryContent;
 import io.wwan13.domain.diary.entity.wrap.DiaryDate;
 import io.wwan13.domain.diary.entity.wrap.DiaryScope;
+import io.wwan13.domain.diary.entity.wrap.RefreshChance;
 import io.wwan13.domain.member.entity.Member;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -35,12 +36,20 @@ public class Diary extends BaseTimeEntity {
     @Embedded
     private DiaryDate date;
 
+    @Embedded
+    private RefreshChance refreshChance;
+
     @Builder
     public Diary(String content, Member owner, DiaryScope scope, LocalDate date) {
         this.content = new DiaryContent(content);
         this.owner = owner;
         this.scope = scope;
         this.date = new DiaryDate(date);
+        this.refreshChance = new RefreshChance(owner.getAuthority());
+    }
+
+    public Integer refresh() {
+        return refreshChance.refresh();
     }
 
     public String getContentValue() {
