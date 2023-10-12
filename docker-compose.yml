@@ -1,8 +1,6 @@
 version: "3"
 services:
   application:
-    build:
-      context: ./application-client
     image: wwan13/grida-application:0.0.1
     container_name: grida-application-container
     ports:
@@ -10,8 +8,6 @@ services:
     restart: always
 
   web:
-    build:
-      context: ./web-client
     image: wwan13/grida-web:0.0.1
     container_name: grida-web-container
     ports:
