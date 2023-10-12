@@ -25,4 +25,8 @@ public class Image extends BaseTimeEntity {
         this.url = new ImageUrl(url);
     }
 
+    public String getUrl() {
+        return url.getUrl();
+    }
+
 }
