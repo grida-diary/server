@@ -33,4 +33,8 @@ public class ProfileImage extends BaseTimeEntity {
         this.member = member;
         this.image = image;
     }
+
+    public String getImageUrl() {
+        return image.getUrl();
+    }
 }
