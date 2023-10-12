@@ -9,7 +9,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public enum ProfileImageErrorCode implements ErrorCode {
 
-    PROFILE_IMAGE_CANNOT_FOUND(HttpStatusCode.BAD_REQUEST, "프로필 이미지를 찾을 수 없습니다.")
+    PROFILE_IMAGE_NOT_FOUND(HttpStatusCode.BAD_REQUEST, "프로필 이미지를 찾을 수 없습니다.")
     ;
 
     private final int httpStatus;
