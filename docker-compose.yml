@@ -1,13 +1,18 @@
+version: "3"
 services:
   application:
-    image: grida-application:0.0.1
+    build:
+      context: ./application-client
+    image: wwan13/grida-application:0.0.1
     container_name: grida-application-container
     ports:
       - "8080:8080"
     restart: always
 
   web:
-    image: grida-web:0.0.1
+    build:
+      context: ./web-client
+    image: wwan13/grida-web:0.0.1
     container_name: grida-web-container
     ports:
       - "8090:8090"
