@@ -5,8 +5,6 @@ import io.wwan13.diary.dto.DiaryImageExampleResponseDto;
 import io.wwan13.domain.diary.entity.Diary;
 import io.wwan13.domain.diary.service.DiaryQueryService;
 import io.wwan13.domain.diary.service.DiaryService;
-import io.wwan13.domain.diaryimage.entity.DiaryImage;
-import io.wwan13.domain.diaryimage.service.DiaryImageService;
 import io.wwan13.domain.member.entity.Member;
 import io.wwan13.domain.member.service.MemberQueryService;
 import io.wwan13.domain.profileimage.entity.ProfileImage;
@@ -21,7 +19,6 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class GetDiaryImageExampleUseCase {
 
-    private final DiaryImageService diaryImageService;
     private final DiaryService diaryService;
     private final MemberQueryService memberQueryService;
     private final DiaryQueryService diaryQueryService;
