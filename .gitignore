@@ -43,3 +43,4 @@ generated/
 
 .env.dev
 .env.*
+.env
