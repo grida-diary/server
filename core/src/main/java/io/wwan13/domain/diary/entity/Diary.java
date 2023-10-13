@@ -31,6 +31,7 @@ public class Diary extends BaseTimeEntity {
     @JoinColumn(name = "member_id")
     private Member owner;
 
+    @Enumerated(EnumType.STRING)
     private DiaryScope scope;
 
     @Embedded
