@@ -1,15 +1,19 @@
 package io.wwan13.diary.controller;
 
+import io.wwan13.diary.dto.CalendarViewResponseDto;
 import io.wwan13.diary.dto.DiaryCreateRequestDto;
 import io.wwan13.diary.dto.DiaryIdResponseDto;
 import io.wwan13.diary.dto.DiaryImageExampleResponseDto;
 import io.wwan13.diary.usecase.CreateDiaryUseCase;
+import io.wwan13.diary.usecase.GetCalendarViewUseCase;
 import io.wwan13.diary.usecase.GetDiaryImageExampleUseCase;
 import io.wwan13.diary.usecase.SaveDiaryImageUseCase;
 import io.wwan13.response.SuccessResponse;
 import io.wwan13.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDate;
 
 @RestController
 @RequestMapping("/api/diary")
@@ -19,6 +23,7 @@ public class DiaryController {
     private final CreateDiaryUseCase createDiaryUseCase;
     private final GetDiaryImageExampleUseCase getDiaryImageExampleUseCase;
     private final SaveDiaryImageUseCase saveDiaryImageUseCase;
+    private final GetCalendarViewUseCase getCalendarViewUseCase;
 
     @PostMapping
     public SuccessResponse<DiaryIdResponseDto> create(
@@ -42,5 +47,13 @@ public class DiaryController {
             @RequestBody String diaryImageUrl) {
         DiaryIdResponseDto response = saveDiaryImageUseCase.execute(diaryId, diaryImageUrl);
         return SuccessResponse.created(response);
+    }
+
+    @GetMapping("/calendar")
+    public SuccessResponse<CalendarViewResponseDto> getCalendarView(
+            @RequestParam LocalDate date) {
+        String memberEmail = SecurityUtil.getCurrentUserEmail();
+        CalendarViewResponseDto response = getCalendarViewUseCase.execute(memberEmail, date);
+        return SuccessResponse.ok(response);
     }
 }
