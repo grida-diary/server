@@ -37,6 +37,9 @@ public class Member extends BaseTimeEntity {
     private Age age;
 
     @Enumerated(EnumType.STRING)
+    DrawingType drawingType;
+
+    @Enumerated(EnumType.STRING)
     private Authority authority;
 
     @Builder
@@ -59,6 +62,10 @@ public class Member extends BaseTimeEntity {
         this.password.update(password);
     }
 
+    public void changeDrawingType(DrawingType drawingType) {
+        this.drawingType = drawingType;
+    }
+
     public String getEmailValue() {
         return email.getEmail();
     }
@@ -77,6 +84,10 @@ public class Member extends BaseTimeEntity {
 
     public Integer getAgeValue() {
         return age.getAge();
+    }
+
+    public String getPainterName() {
+        return drawingType.getPainterName();
     }
 
 }
