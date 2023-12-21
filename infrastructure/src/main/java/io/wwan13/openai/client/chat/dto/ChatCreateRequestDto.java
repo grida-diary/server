@@ -1,6 +1,5 @@
-package io.wwan13.openai.chat.dto;
+package io.wwan13.openai.client.chat.dto;
 
-import io.wwan13.openai.util.ChatCompletionUtil;
 import lombok.*;
 
 import java.util.Arrays;

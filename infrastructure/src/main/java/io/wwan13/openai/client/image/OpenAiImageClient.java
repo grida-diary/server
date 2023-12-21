@@ -1,11 +1,10 @@
-package io.wwan13.openai.image;
+package io.wwan13.openai.client.image;
 
+import io.wwan13.openai.client.image.dto.ImageGenerateRequestDto;
+import io.wwan13.openai.client.image.dto.ImageGenerateResponseDto;
 import io.wwan13.openai.config.OpenAiHeaderConfig;
-import io.wwan13.openai.image.dto.ImageGenerateRequestDto;
-import io.wwan13.openai.image.dto.ImageGenerateResponseDto;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @FeignClient(
         name = "OpenAiImageGeneration",

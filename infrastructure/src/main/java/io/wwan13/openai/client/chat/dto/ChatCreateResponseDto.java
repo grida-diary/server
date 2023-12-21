@@ -1,4 +1,4 @@
-package io.wwan13.openai.chat.dto;
+package io.wwan13.openai.client.chat.dto;
 
 import lombok.AccessLevel;
 import lombok.Getter;

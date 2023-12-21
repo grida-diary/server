@@ -1,4 +1,4 @@
-package io.wwan13.openai.image.dto;
+package io.wwan13.openai.client.image.dto;
 
 import lombok.AccessLevel;
 import lombok.Getter;

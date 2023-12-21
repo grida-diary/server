@@ -1,7 +1,7 @@
-package io.wwan13.openai.chat;
+package io.wwan13.openai.client.chat;
 
-import io.wwan13.openai.chat.dto.ChatCreateRequestDto;
-import io.wwan13.openai.chat.dto.ChatCreateResponseDto;
+import io.wwan13.openai.client.chat.dto.ChatCreateRequestDto;
+import io.wwan13.openai.client.chat.dto.ChatCreateResponseDto;
 import io.wwan13.openai.config.OpenAiHeaderConfig;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
