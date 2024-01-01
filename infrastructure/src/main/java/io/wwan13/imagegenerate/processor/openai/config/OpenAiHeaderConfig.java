@@ -1,4 +1,4 @@
-package io.wwan13.openai.config;
+package io.wwan13.imagegenerate.processor.openai.config;
 
 import feign.RequestInterceptor;
 import org.springframework.beans.factory.annotation.Value;
