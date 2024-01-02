@@ -17,7 +17,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 @DisplayName("Keywords 는")
 class KeywordsTest {
 
-    class MockKeywords extends Keywords {
+    static class MockKeywords extends Keywords {
 
         public MockKeywords(Map<String, String> keywords) {
             super(keywords);
