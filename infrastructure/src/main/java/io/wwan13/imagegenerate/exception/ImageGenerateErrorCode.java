@@ -16,8 +16,9 @@ public enum ImageGenerateErrorCode implements ErrorCode {
     INVALID_PREFIX_REGEX(HttpStatusCode.INTERNAL_SERVER_ERROR, "프롬프트 REGEX는 #으로 시작해야 합니다."),
     REGEX_CANNOT_BE_LOWER_CASE(HttpStatusCode.INTERNAL_SERVER_ERROR, "프롬프트 REGEX는 소문자일 수 없습니다."),
     INVALID_SIZE_REGEX(HttpStatusCode.INTERNAL_SERVER_ERROR, "프롬프트 REGEX는 최소 2자 이상이여야 합니다."),
+    KEYWORD_CANNOT_BE_EMPTY(HttpStatusCode.INTERNAL_SERVER_ERROR, "키워드가 없습니다."),
 
-    REGEX_NOT_CONTAINS(HttpStatusCode.INTERNAL_SERVER_ERROR, "프롬프트에 REGEX가 포함되어 있지 않습니다."),
+    REGEX_NOT_CONTAINS(HttpStatusCode.INTERNAL_SERVER_ERROR, "프롬프트에 REGEX가 포함되어 있지 않습니다.")
     ;
 
     private final int httpStatus;
