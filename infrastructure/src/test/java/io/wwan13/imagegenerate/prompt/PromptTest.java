@@ -1,5 +1,6 @@
 package io.wwan13.imagegenerate.prompt;
 
+import io.wwan13.imagegenerate.exception.PromptKeywordNotMatchesException;
 import io.wwan13.imagegenerate.exception.RegexNotContainsException;
 import org.junit.jupiter.api.*;
 
@@ -121,6 +122,25 @@ class PromptTest {
             // when, then
             assertThatThrownBy(() -> prompt.create(keywords))
                     .isExactlyInstanceOf(RegexNotContainsException.class);
+        }
+
+        @Test
+        void 프롬프트와_키워드의_클래스명이_일치하지_않는_경우() {
+            // given
+            Prompt prompt = new MockPrompt("this application name is #APPLICATION");
+
+            class MockingKeywords extends Keywords {
+
+                public MockingKeywords(Map<String, String> keywords) {
+                    super(keywords);
+                }
+            }
+            Keywords keywords = new MockingKeywords(
+                    Map.of("#APPLICATION", "grida"));
+
+            // when, then
+            assertThatThrownBy(() -> prompt.create(keywords))
+                    .isExactlyInstanceOf(PromptKeywordNotMatchesException.class);
         }
     }
 }
