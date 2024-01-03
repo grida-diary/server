@@ -18,7 +18,8 @@ public enum ImageGenerateErrorCode implements ErrorCode {
     INVALID_SIZE_REGEX(HttpStatusCode.INTERNAL_SERVER_ERROR, "프롬프트 REGEX는 최소 2자 이상이여야 합니다."),
     KEYWORD_CANNOT_BE_EMPTY(HttpStatusCode.INTERNAL_SERVER_ERROR, "키워드가 없습니다."),
 
-    REGEX_NOT_CONTAINS(HttpStatusCode.INTERNAL_SERVER_ERROR, "프롬프트에 REGEX가 포함되어 있지 않습니다.")
+    REGEX_NOT_CONTAINS(HttpStatusCode.INTERNAL_SERVER_ERROR, "프롬프트에 REGEX가 포함되어 있지 않습니다."),
+    PROMPT_KEYWORDS_NOT_MATCHES(HttpStatusCode.INTERNAL_SERVER_ERROR, "프롬프트와 키워드의 클래스명이 동일하지 않습니다.")
     ;
 
     private final int httpStatus;
