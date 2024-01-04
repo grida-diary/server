@@ -1,11 +1,10 @@
 package io.wwan13.imagegenerate.processor.naturallanguage;
 
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
 public class NaturalLanguageProcessResult {
 
     private String emotion;
