@@ -5,9 +5,7 @@ import io.wwan13.imagegenerate.processor.image.ImageProcessor;
 import io.wwan13.imagegenerate.prompt.profileimagegenerate.ProfileImageGenerateKeywords;
 import io.wwan13.imagegenerate.prompt.profileimagegenerate.ProfileImageGeneratePrompt;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
 
-@Component
 @RequiredArgsConstructor
 public class ProfileImageGenerator {
 

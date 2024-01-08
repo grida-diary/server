@@ -1,20 +1,17 @@
 package io.wwan13.imagegenerate.generator;
 
 import io.wwan13.imagegenerate.processor.image.ImageProcessResult;
+import io.wwan13.imagegenerate.processor.image.ImageProcessor;
 import io.wwan13.imagegenerate.processor.naturallanguage.NaturalLanguageProcessResult;
 import io.wwan13.imagegenerate.processor.naturallanguage.NaturalLanguageProcessor;
-import io.wwan13.imagegenerate.processor.image.ImageProcessor;
 import io.wwan13.imagegenerate.prompt.diaryimagegenerate.DiaryImageGenerateKeywords;
 import io.wwan13.imagegenerate.prompt.diaryimagegenerate.DiaryImageGeneratePrompt;
 import io.wwan13.imagegenerate.prompt.naturallanguageprocess.NaturalLanguageProcessKeywords;
 import io.wwan13.imagegenerate.prompt.naturallanguageprocess.NaturalLanguageProcessPrompt;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Component;
 
-@Component
 @RequiredArgsConstructor
-@Slf4j
 public class DiaryImageGenerator {
 
     private static final int IMAGE_AMOUNT = 1;
