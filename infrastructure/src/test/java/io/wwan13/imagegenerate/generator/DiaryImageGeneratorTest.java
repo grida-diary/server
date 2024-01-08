@@ -1,5 +1,6 @@
 package io.wwan13.imagegenerate.generator;
 
+import io.wwan13.imagegenerate.config.PromptProperties;
 import io.wwan13.imagegenerate.processor.image.ImageProcessResult;
 import io.wwan13.imagegenerate.processor.image.ImageProcessor;
 import io.wwan13.imagegenerate.processor.naturallanguage.NaturalLanguageProcessResult;
@@ -20,6 +21,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 @DisplayName("DiaryImageGenerator 는")
 class DiaryImageGeneratorTest {
 
+    static class MockPromptProperties extends PromptProperties {
+        public MockPromptProperties(String naturalLanguageProcessPrompt, String profileImageGeneratePrompt) {
+            super(naturalLanguageProcessPrompt,
+                    profileImageGeneratePrompt,
+                    "profileImage");
+        }
+    }
+
     static class MockNaturalLanguageProcessor implements NaturalLanguageProcessor {
 
         @Override
@@ -39,9 +48,11 @@ class DiaryImageGeneratorTest {
     @Test
     void 일기_이미지를_생성할_수_있다() {
         // given
-        NaturalLanguageProcessPrompt naturalLanguageProcessPrompt = new NaturalLanguageProcessPrompt("#DIARY");
+        PromptProperties promptProperties = new MockPromptProperties("#DIARY",
+                "#EMOTION #BEHAVIOR #GENDER #AGE");
+        NaturalLanguageProcessPrompt naturalLanguageProcessPrompt = new NaturalLanguageProcessPrompt(promptProperties);
         DiaryImageGeneratePrompt diaryImageGeneratePrompt
-                = new DiaryImageGeneratePrompt("#EMOTION #BEHAVIOR #GENDER #AGE");
+                = new DiaryImageGeneratePrompt(promptProperties);
 
         NaturalLanguageProcessor naturalLanguageProcessor = new MockNaturalLanguageProcessor();
         ImageProcessor imageProcessor = new MockImageProcessor();

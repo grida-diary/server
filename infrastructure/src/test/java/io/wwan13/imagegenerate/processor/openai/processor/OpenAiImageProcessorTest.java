@@ -1,5 +1,6 @@
 package io.wwan13.imagegenerate.processor.openai.processor;
 
+import io.wwan13.imagegenerate.config.OpenAiProperties;
 import io.wwan13.imagegenerate.exception.InvalidNumberOfImagesException;
 import io.wwan13.imagegenerate.processor.openai.client.image.OpenAiImageClient;
 import io.wwan13.imagegenerate.processor.openai.client.image.dto.ImageGenerateRequestDto;
@@ -20,6 +21,16 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 @DisplayName("OpenAiImageProcessor 는")
 class OpenAiImageProcessorTest {
 
+    static class MockOpenAiProperties extends OpenAiProperties {
+
+        public MockOpenAiProperties() {
+            super("secretKey",
+                    "imageModel",
+                    "chatModel",
+                    "chatRole");
+        }
+    }
+
     @Test
     void 이미지_한_개를_생성할_수_있다() {
         // given
@@ -32,7 +43,7 @@ class OpenAiImageProcessorTest {
         }
 
         int n = 1;
-        OpenAiImageProcessor processor = new OpenAiImageProcessor(new MockImageClient(), "model");
+        OpenAiImageProcessor processor = new OpenAiImageProcessor(new MockOpenAiProperties(), new MockImageClient());
 
         // when
         String url = processor.proceed("prompt", n).getUrl();
@@ -56,7 +67,7 @@ class OpenAiImageProcessorTest {
             }
         }
 
-        OpenAiImageProcessor processor = new OpenAiImageProcessor(new MockImageClient(), "model");
+        OpenAiImageProcessor processor = new OpenAiImageProcessor(new MockOpenAiProperties(), new MockImageClient());
 
         // when
         List<String> urls = processor.proceed("prompt", n).getUrls();
@@ -66,11 +77,11 @@ class OpenAiImageProcessorTest {
         IntStream.range(0, n)
                 .forEach(index -> assertThat(urls.get(index)).isEqualTo("imageUrl" + index));
     }
-    
+
     @Nested
     @DisplayName("다음과 같은 경우에 예외가 발생한다")
     class ExceptionTest {
-        
+
         @ParameterizedTest(name = "{0}개의 이미지를 생성하려는 경우")
         @ValueSource(ints = {0, -1, -2, -3})
         void 한_개_미만의_이미지를_생성하려는_경우(int n) {
@@ -86,8 +97,9 @@ class OpenAiImageProcessorTest {
                 }
             }
 
-            OpenAiImageProcessor processor = new OpenAiImageProcessor(new MockImageClient(), "model");
-          
+            OpenAiImageProcessor processor
+                    = new OpenAiImageProcessor(new MockOpenAiProperties(), new MockImageClient());
+
             // when, then
             assertThatThrownBy(() -> processor.proceed("prompt", n))
                     .isExactlyInstanceOf(InvalidNumberOfImagesException.class);

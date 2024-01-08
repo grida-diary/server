@@ -1,5 +1,6 @@
 package io.wwan13.imagegenerate.processor.openai.processor;
 
+import io.wwan13.imagegenerate.config.OpenAiProperties;
 import io.wwan13.imagegenerate.exception.CannotParsingResponseException;
 import io.wwan13.imagegenerate.processor.naturallanguage.NaturalLanguageProcessResult;
 import io.wwan13.imagegenerate.processor.openai.client.chat.OpenAiChatClient;
@@ -18,6 +19,16 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 @DisplayName("OpenAiNaturalLanguageProcessor 는")
 class OpenAiNaturalLanguageProcessorTest {
 
+    static class MockOpenAiProperties extends OpenAiProperties {
+
+        public MockOpenAiProperties() {
+            super("secretKey",
+                    "imageModel",
+                    "chatModel",
+                    "chatRole");
+        }
+    }
+
     @Test
     void 자연어_처리_작업을_수행할_수_있다() {
         // given
@@ -32,7 +43,7 @@ class OpenAiNaturalLanguageProcessorTest {
         }
 
         OpenAiNaturalLanguageProcessor naturalLanguageProcessor
-                = new OpenAiNaturalLanguageProcessor(new MockChatClient(), "role", "model");
+                = new OpenAiNaturalLanguageProcessor(new MockOpenAiProperties(), new MockChatClient());
 
         // when
         NaturalLanguageProcessResult result = naturalLanguageProcessor.proceed("prompt");
@@ -60,7 +71,7 @@ class OpenAiNaturalLanguageProcessorTest {
             }
 
             OpenAiNaturalLanguageProcessor naturalLanguageProcessor
-                    = new OpenAiNaturalLanguageProcessor(new MockChatClient(), "role", "model");
+                    = new OpenAiNaturalLanguageProcessor(new MockOpenAiProperties(), new MockChatClient());
 
             // when, then
             assertThatThrownBy(() -> naturalLanguageProcessor.proceed("prompt"))

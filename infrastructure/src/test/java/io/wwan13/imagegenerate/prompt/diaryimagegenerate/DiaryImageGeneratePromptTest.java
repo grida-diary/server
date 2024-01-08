@@ -1,5 +1,6 @@
 package io.wwan13.imagegenerate.prompt.diaryimagegenerate;
 
+import io.wwan13.imagegenerate.config.PromptProperties;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -12,11 +13,19 @@ import static org.assertj.core.api.Assertions.assertThat;
 @DisplayName("DiaryImageGeneratePrompt 는")
 class DiaryImageGeneratePromptTest {
 
+    static class MockPromptProperties extends PromptProperties {
+        public MockPromptProperties(String diaryImageGeneratePrompt) {
+            super("naturalLanguageProcess",
+                    diaryImageGeneratePrompt,
+                    "profileImage");
+        }
+    }
+
     @Test
     void 일기_이미지를_생성하는_프롬프트를_생성할_수_있다() {
         // given
         String promptValue = "성별: #GENDER ,나이: #AGE , 감정: #EMOTION , 행동: #BEHAVIOR";
-        DiaryImageGeneratePrompt prompt = new DiaryImageGeneratePrompt(promptValue);
+        DiaryImageGeneratePrompt prompt = new DiaryImageGeneratePrompt(new MockPromptProperties(promptValue));
 
         DiaryImageGenerateKeywords keywords = DiaryImageGenerateKeywords.builder()
                 .gender("gender")

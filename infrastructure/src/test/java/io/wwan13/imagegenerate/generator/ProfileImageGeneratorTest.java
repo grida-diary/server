@@ -1,5 +1,6 @@
 package io.wwan13.imagegenerate.generator;
 
+import io.wwan13.imagegenerate.config.PromptProperties;
 import io.wwan13.imagegenerate.processor.image.ImageProcessResult;
 import io.wwan13.imagegenerate.processor.image.ImageProcessor;
 import io.wwan13.imagegenerate.prompt.profileimagegenerate.ProfileImageGeneratePrompt;
@@ -17,6 +18,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 @DisplayName("ProfileImageGenerator 는")
 class ProfileImageGeneratorTest {
 
+    static class MockPromptProperties extends PromptProperties {
+        public MockPromptProperties(String profileImageGeneratePrompt) {
+            super("naturalLanguageProcess",
+                    "diaryImageGenerate",
+                    profileImageGeneratePrompt);
+        }
+    }
+
     static class MockImageProcessor implements ImageProcessor {
 
         @Override
@@ -28,7 +37,8 @@ class ProfileImageGeneratorTest {
     @Test
     void 프로필_이미지를_생성할_수_있다() {
         // given
-        ProfileImageGeneratePrompt prompt = new ProfileImageGeneratePrompt("#GENDER #AGE");
+        ProfileImageGeneratePrompt prompt
+                = new ProfileImageGeneratePrompt(new MockPromptProperties("#GENDER #AGE"));
         ImageProcessor imageProcessor = new MockImageProcessor();
         ProfileImageGenerator generator = new ProfileImageGenerator(prompt, imageProcessor);
 
