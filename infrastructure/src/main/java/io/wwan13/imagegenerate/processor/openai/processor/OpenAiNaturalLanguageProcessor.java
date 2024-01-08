@@ -1,34 +1,28 @@
 package io.wwan13.imagegenerate.processor.openai.processor;
 
+import io.wwan13.imagegenerate.config.OpenAiProperties;
+import io.wwan13.imagegenerate.processor.naturallanguage.NaturalLanguageProcessResult;
+import io.wwan13.imagegenerate.processor.naturallanguage.NaturalLanguageProcessor;
 import io.wwan13.imagegenerate.processor.openai.client.chat.OpenAiChatClient;
 import io.wwan13.imagegenerate.processor.openai.client.chat.dto.ChatCreateRequestDto;
 import io.wwan13.imagegenerate.processor.openai.client.chat.dto.ChatCreateResponseDto;
-import io.wwan13.imagegenerate.processor.naturallanguage.NaturalLanguageProcessResult;
-import io.wwan13.imagegenerate.processor.naturallanguage.NaturalLanguageProcessor;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
 
-@Component
 public class OpenAiNaturalLanguageProcessor implements NaturalLanguageProcessor {
 
+    private final OpenAiProperties properties;
     private final OpenAiChatClient chatClient;
-    private final String model;
-    private final String role;
 
 
-    public OpenAiNaturalLanguageProcessor(OpenAiChatClient chatClient,
-                                          @Value("${open-ai.chat.model}") String model,
-                                          @Value("${open-ai.chat.role}") String role) {
+    public OpenAiNaturalLanguageProcessor(OpenAiProperties properties, OpenAiChatClient chatClient) {
+        this.properties = properties;
         this.chatClient = chatClient;
-        this.model = model;
-        this.role = role;
     }
 
     @Override
     public NaturalLanguageProcessResult proceed(String prompt) {
         ChatCreateRequestDto request = ChatCreateRequestDto.builder()
-                .model(model)
-                .role(role)
+                .model(properties.getChatModel())
+                .role(properties.getChatRole())
                 .content(prompt)
                 .build();
 

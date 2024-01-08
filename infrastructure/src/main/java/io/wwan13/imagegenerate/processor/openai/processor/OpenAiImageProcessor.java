@@ -1,27 +1,24 @@
 package io.wwan13.imagegenerate.processor.openai.processor;
 
+import io.wwan13.imagegenerate.config.OpenAiProperties;
 import io.wwan13.imagegenerate.exception.InvalidNumberOfImagesException;
+import io.wwan13.imagegenerate.processor.image.ImageProcessResult;
+import io.wwan13.imagegenerate.processor.image.ImageProcessor;
 import io.wwan13.imagegenerate.processor.openai.client.image.OpenAiImageClient;
 import io.wwan13.imagegenerate.processor.openai.client.image.dto.ImageGenerateRequestDto;
 import io.wwan13.imagegenerate.processor.openai.client.image.dto.ImageGenerateResponseDto;
-import io.wwan13.imagegenerate.processor.image.ImageProcessResult;
-import io.wwan13.imagegenerate.processor.image.ImageProcessor;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
 
-@Component
 public class OpenAiImageProcessor implements ImageProcessor {
 
     private static final String IMAGE_SIZE = "1024x1024";
     private static final int NUMBER_OF_IMAGES_MIN_VALUE = 1;
 
+    private final OpenAiProperties properties;
     private final OpenAiImageClient imageClient;
-    private final String model;
 
-    public OpenAiImageProcessor(OpenAiImageClient imageClient,
-                                @Value("${open-ai.image.model}") String model) {
+    public OpenAiImageProcessor(OpenAiProperties properties, OpenAiImageClient imageClient) {
+        this.properties = properties;
         this.imageClient = imageClient;
-        this.model = model;
     }
 
     @Override
@@ -29,7 +26,7 @@ public class OpenAiImageProcessor implements ImageProcessor {
         validateNumberOfImages(n);
 
         ImageGenerateRequestDto request = ImageGenerateRequestDto.builder()
-                .model(model)
+                .model(properties.getImageModel())
                 .prompt(prompt)
                 .n(n)
                 .size(IMAGE_SIZE)
