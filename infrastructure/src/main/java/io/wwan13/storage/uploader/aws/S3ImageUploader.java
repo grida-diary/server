@@ -2,13 +2,13 @@ package io.wwan13.storage.uploader.aws;
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.ObjectMetadata;
+import io.wwan13.storage.config.S3Properties;
 import io.wwan13.storage.exception.CannotReadImageException;
 import io.wwan13.storage.exception.WrongImageUrlException;
 import io.wwan13.storage.filenamegenerator.FileNameGenerator;
 import io.wwan13.storage.uploader.ImageType;
 import io.wwan13.storage.uploader.ImageUploader;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
+import lombok.RequiredArgsConstructor;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -19,22 +19,14 @@ import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-@Component
+@RequiredArgsConstructor
 public class S3ImageUploader implements ImageUploader {
 
     private static final String IMAGE_EXTENSION = "png";
 
-    private final String s3Bucket;
+    private final S3Properties properties;
     private final AmazonS3 amazonS3;
     private final FileNameGenerator fileNameGenerator;
-
-    public S3ImageUploader(@Value("${storage.aws.bucket}") String s3Bucket,
-                           AmazonS3 amazonS3,
-                           FileNameGenerator fileNameGenerator) {
-        this.s3Bucket = s3Bucket;
-        this.amazonS3 = amazonS3;
-        this.fileNameGenerator = fileNameGenerator;
-    }
 
     @Override
     public String upload(String imageUrl, ImageType imageType) {
@@ -43,7 +35,7 @@ public class S3ImageUploader implements ImageUploader {
         ObjectMetadata metadata = new ObjectMetadata();
         metadata.setContentType(IMAGE_EXTENSION);
 
-        amazonS3.putObject(s3Bucket, fileName, imageInputStream, metadata);
+        amazonS3.putObject(properties.getBucket(), fileName, imageInputStream, metadata);
         return imageType.getDirectory(fileName);
     }
 
