@@ -6,6 +6,7 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectResult;
+import io.wwan13.storage.config.S3Properties;
 import io.wwan13.storage.exception.CannotReadImageException;
 import io.wwan13.storage.exception.WrongImageUrlException;
 import io.wwan13.storage.filenamegenerator.FileNameGenerator;
@@ -22,6 +23,13 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 @DisplayName("S3ImageUploader 는")
 class S3ImageUploaderTest {
+
+    static class MockS3Properties extends S3Properties {
+
+        public MockS3Properties(String bucket) {
+            super("accessKey", "secretKey", "region", bucket);
+        }
+    }
 
     static class MockAmazonS3 extends AmazonS3Client {
 
@@ -47,7 +55,7 @@ class S3ImageUploaderTest {
         AmazonS3 amazonS3 = new MockAmazonS3();
         FileNameGenerator fileNameGenerator = new MockFileNameGenerator();
 
-        S3ImageUploader imageUploader = new S3ImageUploader(bucket, amazonS3, fileNameGenerator);
+        S3ImageUploader imageUploader = new S3ImageUploader(new MockS3Properties(bucket), amazonS3, fileNameGenerator);
 
         String imageUrl = "https://avatars.githubusercontent.com/u/64270501?v=4";
 
@@ -69,7 +77,7 @@ class S3ImageUploaderTest {
             AmazonS3 amazonS3 = new MockAmazonS3();
             FileNameGenerator fileNameGenerator = new MockFileNameGenerator();
 
-            S3ImageUploader imageUploader = new S3ImageUploader(bucket, amazonS3, fileNameGenerator);
+            S3ImageUploader imageUploader = new S3ImageUploader(new MockS3Properties(bucket), amazonS3, fileNameGenerator);
 
             String imageUrl = "wrong.url/";
 
@@ -85,7 +93,7 @@ class S3ImageUploaderTest {
             AmazonS3 amazonS3 = new MockAmazonS3();
             FileNameGenerator fileNameGenerator = new MockFileNameGenerator();
 
-            S3ImageUploader imageUploader = new S3ImageUploader(bucket, amazonS3, fileNameGenerator);
+            S3ImageUploader imageUploader = new S3ImageUploader(new MockS3Properties(bucket), amazonS3, fileNameGenerator);
 
             String imageUrl = "https://www.naver.com";
 
