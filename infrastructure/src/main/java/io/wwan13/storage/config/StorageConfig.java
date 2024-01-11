@@ -22,6 +22,12 @@ public class StorageConfig {
     }
 
     @Bean
+    @ConditionalOnMissingBean
+    public CdnProcessor cdnProcessor(CdnProperties properties) {
+        return new CdnProcessor(properties);
+    }
+
+    @Bean
     public FileNameGenerator fileNameGenerator() {
         return new UuidFileNameGenerator();
     }
