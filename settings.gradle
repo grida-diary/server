@@ -1,8 +1,15 @@
 rootProject.name = 'grida'
 
-include 'application-client'
-include 'web-client'
-include 'common'
-include 'core'
-include 'infrastructure'
-include 'security'
+include 'grida-apis'
+include 'grida-apis:apis-core'
+include 'grida-apis:trial-user-app'
+include 'grida-apis:end-user-app'
+
+include 'grida-clients'
+include 'grida-clients:awss3-client'
+
+include 'grida-domains'
+include 'grida-domains:domain'
+include 'grida-domains:domain-rds'
+
+include 'grida-core'

@@ -1,0 +1,26 @@
+plugins {
+    id 'java-library'
+}
+
+dependencies {
+    // jpa
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+    // mysql
+    implementation 'com.mysql:mysql-connector-j'
+
+    // H2 for test
+    testImplementation 'com.h2database:h2'
+}
+
+clean {
+    delete file('src/main/generated')
+}
+
+bootJar {
+    enabled = false
+}
+
+jar {
+    enabled = true
+}
