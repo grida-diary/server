@@ -1,15 +1,6 @@
 storage:
-  cdn:
-    domain: https://storage.gridadiary.site
   aws:
-    access-key: access-key
-    secret-key: secret-key
-    region: ap-northeast-2
-    bucket: arn:aws:s3:::grida-storage
-
-cloud:
-  aws:
-    stack:
-      auto: false
-    region:
-      static: ap-northeast-2
+    access-key: ${S3_ACCESS_KEY}
+    secret-key: ${S3_SECRET_KEY}
+    region: ${S3_REGION}
+    bucket: ${S3_BUCKET}
