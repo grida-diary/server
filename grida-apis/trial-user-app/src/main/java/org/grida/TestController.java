@@ -13,6 +13,12 @@ public class TestController {
 
     @GetMapping("/test/1")
     public ApiResponse test1() {
-        return ApiResponse.ok("asd");
+        return ApiResponse.created(1);
+    }
+
+    @GetMapping("/test/2")
+    public ApiResponse test2() {
+        throw new IllegalArgumentException("asd");
+//        return ApiResponse.created(1);
     }
 }
