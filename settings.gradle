@@ -12,5 +12,7 @@ include 'grida-clients:cdn-client'
 include 'grida-domains'
 include 'grida-domains:domain'
 include 'grida-domains:domain-rds'
+include 'grida-domains:domain-image'
+include 'grida-domains:domain-ai'
 
 include 'grida-core'
