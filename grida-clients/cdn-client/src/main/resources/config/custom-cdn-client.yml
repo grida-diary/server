@@ -1,0 +1,2 @@
+cdn:
+  domain: ${CDN_DOMAIN}
