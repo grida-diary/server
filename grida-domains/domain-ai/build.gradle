@@ -13,6 +13,7 @@ dependencies {
 
     // module dependencies
     compileOnly project(":grida-domains:domain-image")
+    testImplementation project(":grida-domains:domain-image")
 }
 
 clean {
