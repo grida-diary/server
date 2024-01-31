@@ -7,7 +7,9 @@ import org.grida.client.chat.dto.ChatResponseDto;
 import org.grida.config.OpenAiProperties;
 import org.grida.processor.emotionanalysis.EmotionAnalysisProcessor;
 import org.grida.processor.emotionanalysis.EmotionAnalysisResult;
+import org.springframework.stereotype.Component;
 
+@Component
 @RequiredArgsConstructor
 public class OpenAiEmotionAnalysisProcessor implements EmotionAnalysisProcessor {
 

@@ -8,9 +8,11 @@ import org.grida.config.OpenAiProperties;
 import org.grida.exception.DomainAiException;
 import org.grida.processor.imagegenerate.ImageGenerateProcessor;
 import org.grida.processor.imagegenerate.ImageGenerateResult;
+import org.springframework.stereotype.Component;
 
 import static org.grida.exception.DomainAiErrorCode.INVALID_IMAGE_COUNT;
 
+@Component
 @RequiredArgsConstructor
 public class OpenAiImageGenerateProcessor implements ImageGenerateProcessor {
 
