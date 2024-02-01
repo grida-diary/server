@@ -1,0 +1,20 @@
+plugins {
+    id 'java-library'
+}
+
+dependencies {
+    // redis
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+}
+
+clean {
+    delete file('src/main/generated')
+}
+
+bootJar {
+    enabled = false
+}
+
+jar {
+    enabled = true
+}
