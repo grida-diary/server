@@ -7,7 +7,8 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
 
     // module dependencies
-    implementation project(':grida-apis:apis-core')\
+    implementation project(':grida-apis:apis-core')
+    implementation project(':grida-apis:apis-security')
 }
 
 clean {

@@ -1,7 +1,6 @@
 package org.grida.filter;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.web.util.ContentCachingRequestWrapper;
@@ -15,7 +14,6 @@ import java.io.IOException;
 import java.security.Principal;
 import java.util.List;
 
-@Component
 @Slf4j
 public class LogFilter extends OncePerRequestFilter {
 
@@ -40,7 +38,7 @@ public class LogFilter extends OncePerRequestFilter {
     }
 
     private void logHttpRequest(ContentCachingRequestWrapper request, String clientIp) {
-        log.info("[Request  ({})] Method:'{}', Uri:'{}', User:'{}', Body:'{}'",
+        log.info("\n[Request ({})]\nMethod: {}\nUri: {}\nUser: {}\nBody:\n{}",
                 clientIp,
                 request.getMethod(),
                 request.getRequestURI(),
@@ -49,7 +47,7 @@ public class LogFilter extends OncePerRequestFilter {
     }
 
     private void logHttpResponse(ContentCachingResponseWrapper response, String clientIp) {
-        log.info("[Response ({})] Status:'{}', Body:'{}''",
+        log.info("\n[Response ({})]\nStatus: {}\nBody:\n{}",
                 clientIp,
                 response.getStatus(),
                 new String(response.getContentAsByteArray()));
