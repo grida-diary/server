@@ -5,6 +5,7 @@ include 'grida-apis:apis-core'
 include 'grida-apis:apis-security'
 include 'grida-apis:trial-user-app'
 include 'grida-apis:end-user-app'
+include 'grida-apis:sso-app'
 
 include 'grida-clients'
 include 'grida-clients:awss3-client'
