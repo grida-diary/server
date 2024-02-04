@@ -1,0 +1,4 @@
+jwt:
+  secret-key: ${JWT_SECRET_KEY}
+  access-token-validity-in-second: ${ACCESS_TOKEN_EXPIRED}
+  refresh-token-validity-in-second: ${REFRESH_TOKEN_EXPIRED}
