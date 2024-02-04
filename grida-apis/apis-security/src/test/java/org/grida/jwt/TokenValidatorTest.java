@@ -26,8 +26,8 @@ class TokenValidatorTest {
         return new JwtProperties("secretkey", -1, -1);
     }
 
-    private TokenProvider tokenProvider() {
-        return new TokenProvider(jwtProperties(), key());
+    private TokenCreator tokenCreator() {
+        return new TokenCreator(jwtProperties(), key());
     }
 
     @Test
@@ -46,7 +46,7 @@ class TokenValidatorTest {
     void 토큰이_만료_되었다면_예외가_발생한다() {
         // given
         TokenValidator tokenValidator = new TokenValidator(key());
-        String token = tokenProvider().createToken(TokenType.ACCESS_TOKEN, new TokenClaims(1l, "ROLE_USER"));
+        String token = tokenCreator().createToken(TokenType.ACCESS_TOKEN, new TokenClaims(1l, "ROLE_USER"));
 
         // when, then
         assertThatThrownBy(() -> tokenValidator.validateToken(token))

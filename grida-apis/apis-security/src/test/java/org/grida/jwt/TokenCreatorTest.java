@@ -13,8 +13,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @SuppressWarnings("NonAsciiCharacters")
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
-@DisplayName("TokenProvider 는")
-class TokenProviderTest {
+@DisplayName("TokenCreator 는")
+class TokenCreatorTest {
 
     private Key key() {
         return Keys.hmacShaKeyFor("secretkeysecretkeysecretkeysecretkey".getBytes());
@@ -30,30 +30,14 @@ class TokenProviderTest {
     @Test
     void jwt_토큰을_생성할_수_있다() {
         // given
-        TokenProvider tokenProvider = new TokenProvider(jwtProperties(), key());
+        TokenCreator tokenCreator = new TokenCreator(jwtProperties(), key());
         TokenType tokenType = TokenType.ACCESS_TOKEN;
         TokenClaims tokenClaims = new TokenClaims(1L, "ROLE_USER");
 
         // when
-        String jwtToken = tokenProvider.createToken(tokenType, tokenClaims);
+        String jwtToken = tokenCreator.createToken(tokenType, tokenClaims);
 
         // then
         assertThat(jwtToken.length()).isGreaterThan(1);
-    }
-
-    @Test
-    void jwt_토큰을_해석할_수_있다() {
-        // given
-        TokenProvider tokenProvider = new TokenProvider(jwtProperties(), key());
-        TokenType tokenType = TokenType.ACCESS_TOKEN;
-        TokenClaims tokenClaims = new TokenClaims(1L, "ROLE_USER");
-        String jwtToken = tokenProvider.createToken(tokenType, tokenClaims);
-
-        // when
-        TokenClaims decodedClaims = tokenProvider.decodeToken(jwtToken);
-
-        // then
-        assertThat(decodedClaims.userId()).isEqualTo(1L);
-        assertThat(decodedClaims.role()).isEqualTo("ROLE_USER");
     }
 }
