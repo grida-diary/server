@@ -11,7 +11,7 @@ import java.util.Date;
 
 @Component
 @RequiredArgsConstructor
-public class TokenProvider {
+public class TokenCreator {
 
     private static final String CLAIM_NAME_TYPE = "type";
     private static final String CLAIM_NAME_ROLE = "role";
@@ -29,21 +29,5 @@ public class TokenProvider {
                 .claim(CLAIM_NAME_ROLE, claims.role())
                 .signWith(key)
                 .compact();
-    }
-
-    public TokenClaims decodeToken(String token) {
-        Claims claims = getClaim(token);
-        return new TokenClaims(
-                Long.parseLong(claims.getSubject()),
-                String.valueOf(claims.get(CLAIM_NAME_ROLE))
-        );
-    }
-
-    private Claims getClaim(String token) {
-        return Jwts.parserBuilder()
-                .setSigningKey(key)
-                .build()
-                .parseClaimsJws(token)
-                .getBody();
     }
 }
