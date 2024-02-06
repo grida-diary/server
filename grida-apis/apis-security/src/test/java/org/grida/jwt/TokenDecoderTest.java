@@ -2,12 +2,14 @@ package org.grida.jwt;
 
 import io.jsonwebtoken.security.Keys;
 import org.grida.config.JwtProperties;
+import org.grida.datetime.DateTimePicker;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 
 import java.security.Key;
+import java.time.LocalDateTime;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -27,13 +29,20 @@ class TokenDecoderTest {
                 1260000);
     }
 
+    static class StubDateTimePicker extends DateTimePicker {
+        @Override
+        public LocalDateTime now() {
+            return LocalDateTime.of(2024, 1, 1, 12, 0, 0, 0);
+        }
+    }
+
     @Test
     void jwt_토큰을_해석할_수_있다() {
         // given
-        TokenCreator tokenCreator = new TokenCreator(jwtProperties(), key());
+        TokenGenerator tokenGenerator = new TokenGenerator(jwtProperties(), key(), new StubDateTimePicker());
         TokenType tokenType = TokenType.ACCESS_TOKEN;
         TokenClaims tokenClaims = new TokenClaims(1L, "ROLE_USER");
-        String jwtToken = tokenCreator.createToken(tokenType, tokenClaims);
+        String jwtToken = tokenGenerator.createToken(tokenType, tokenClaims);
 
         TokenDecoder tokenDecoder = new TokenDecoder(key());
 
