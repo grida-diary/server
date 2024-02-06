@@ -21,7 +21,7 @@ import static org.grida.exception.ApisSecurityErrorCode.HTTP_UNAUTHORIZED;
 @RequiredArgsConstructor
 public class AuthFilter extends OncePerRequestFilter {
 
-    private static final String USER_ID_ATTRIBUTE_KEY = "userId";
+    private static final String PROVIDER_ATTRIBUTE_KEY = "provider";
     private static final String AUTHORIZATION_HEADER = "Authorization";
     private static final String AUTHENTICATION_TOKEN_PREFIX = "Bearer ";
     private static final int AUTHENTICATION_TOKEN_START_INDEX = 7;
@@ -41,7 +41,7 @@ public class AuthFilter extends OncePerRequestFilter {
         TokenClaims tokenClaims = decodeToken(request);
         validateRequestMatches(request.getRequestURI(), tokenClaims.role());
         if (tokenClaims.userId() != ANONYMOUS_USER_ID) {
-            request.setAttribute(USER_ID_ATTRIBUTE_KEY, tokenClaims.userId());
+            request.setAttribute(PROVIDER_ATTRIBUTE_KEY, tokenClaims.userId());
         }
 
         filterChain.doFilter(request, response);

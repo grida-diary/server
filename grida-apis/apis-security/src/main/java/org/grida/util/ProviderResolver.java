@@ -11,14 +11,15 @@ import javax.servlet.http.HttpServletRequest;
 
 import static org.grida.exception.ApisSecurityErrorCode.NO_AUTHENTICATED_USER;
 
-public class UserIdResolver implements HandlerMethodArgumentResolver {
+public class ProviderResolver implements HandlerMethodArgumentResolver {
 
-    private static final String USER_ID_ATTRIBUTE_KEY = "userId";
+    private static final String PROVIDER_ATTRIBUTE_KEY = "provider";
 
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
-        boolean hasAnnotation = parameter.hasParameterAnnotation(RequestUserId.class);
-        boolean isLongValue = Long.class.isAssignableFrom(parameter.getParameterType());
+        boolean hasAnnotation = parameter.hasParameterAnnotation(RequestProvider.class);
+        boolean isLongValue = Long.class.isAssignableFrom(parameter.getParameterType())
+                || long.class.isAssignableFrom(parameter.getParameterType());
 
         return hasAnnotation && isLongValue;
     }
@@ -30,7 +31,7 @@ public class UserIdResolver implements HandlerMethodArgumentResolver {
                                   WebDataBinderFactory binderFactory) throws Exception {
 
         HttpServletRequest request = (HttpServletRequest) webRequest.getNativeRequest();
-        Object userId = request.getAttribute(USER_ID_ATTRIBUTE_KEY);
+        Object userId = request.getAttribute(PROVIDER_ATTRIBUTE_KEY);
         validateHasUserId(userId);
         return userId;
     }

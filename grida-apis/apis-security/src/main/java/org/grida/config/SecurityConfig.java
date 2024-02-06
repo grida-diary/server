@@ -1,7 +1,7 @@
 package org.grida.config;
 
 import io.jsonwebtoken.security.Keys;
-import org.grida.util.UserIdResolver;
+import org.grida.util.ProviderResolver;
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,7 +20,7 @@ public class SecurityConfig extends WebMvcConfigurationSupport {
 
     @Override
     protected void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
-        argumentResolvers.add(new UserIdResolver());
+        argumentResolvers.add(new ProviderResolver());
     }
 
     @Bean
