@@ -1,6 +1,7 @@
 package org.grida.config;
 
 import io.jsonwebtoken.security.Keys;
+import org.grida.datetime.DateTimePicker;
 import org.grida.util.ProviderResolver;
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 import org.springframework.context.annotation.Bean;
@@ -36,5 +37,10 @@ public class SecurityConfig extends WebMvcConfigurationSupport {
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public DateTimePicker dateTimePicker() {
+        return new DateTimePicker();
     }
 }
