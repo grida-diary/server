@@ -11,6 +11,10 @@ dependencies {
 
     // H2 for test
     testImplementation 'com.h2database:h2'
+
+    // module dependencies
+    compileOnly project(':grida-domains:domain')
+    testImplementation project(':grida-domains:domain')
 }
 
 clean {
