@@ -2,12 +2,12 @@ package org.grida.config;
 
 import io.jsonwebtoken.security.Keys;
 import org.grida.datetime.DateTimePicker;
-import org.grida.util.ProviderResolver;
+import org.grida.filter.UserEmailResolver;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
@@ -21,7 +21,7 @@ public class SecurityConfig extends WebMvcConfigurationSupport {
 
     @Override
     protected void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
-        argumentResolvers.add(new ProviderResolver());
+        argumentResolvers.add(new UserEmailResolver());
     }
 
     @Bean
@@ -35,11 +35,11 @@ public class SecurityConfig extends WebMvcConfigurationSupport {
     }
 
     @Bean
-    public PasswordEncoder passwordEncoder() {
+    public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
-    @Bean
+    @ConditionalOnMissingBean
     public DateTimePicker dateTimePicker() {
         return new DateTimePicker();
     }
