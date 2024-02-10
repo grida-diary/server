@@ -1,6 +1,5 @@
 package org.grida.entity.user;
 
-import org.grida.domain.core.Target;
 import org.grida.domain.user.*;
 import org.grida.exception.DomainRdsException;
 import org.junit.jupiter.api.*;
@@ -27,135 +26,103 @@ class UserEntityRepositoryTest {
     @Test
     void 유저_한_명을_저장할_수_있다() {
         // given
-        List<Long> ids = generateTestData();
-        Long expectedId = ids.get(ids.size() - 1) + 1L;
+        generateTestData();
 
         UserAccount account = new UserAccount(
-                String.format("email_%d@gmail.com", expectedId),
-                String.format("password_%d", expectedId)
+                UserRole.ROLE_BASIC_USER,
+                "email_saved@gmail.com",
+                "password_saved"
         );
         UserProfile profile = new UserProfile(
-                String.format("nickname_%d", expectedId),
+                "nickname_saved",
                 20,
                 Gender.MAN
         );
 
         // when
-        Long createdUserId = userEntityRepository.save(
+        String createdUserEmail = userEntityRepository.save(
                 account,
-                UserRole.ROLE_BASIC_USER,
                 profile,
                 LocalDateTime.of(2024, 1, 1, 1, 1)
         );
 
         // then
-        assertThat(createdUserId).isEqualTo(expectedId);
+        assertThat(createdUserEmail).isEqualTo("email_saved@gmail.com");
     }
 
     @Test
-    void 유저_한_명을_불러올_수_있다() {
+    void 요청자의_정보를_불러올_수_있다() {
         // given
-        List<Long> ids = generateTestData();
-        Target target = new Target(1L);
+        List<String> emails = generateTestData();
+        String email = emails.get(0);
 
         // when
-        User user = userEntityRepository.find(target);
+        User user = userEntityRepository.findByEmail(email);
 
         // then
-        assertThat(user.id()).isEqualTo(target.id());
-        assertThat(user.account().email()).isEqualTo(String.format("email_%d@gmail.com", target.id()));
-        assertThat(user.account().password()).isEqualTo(String.format("password_%d", target.id()));
-        assertThat(user.profile().nickname()).isEqualTo(String.format("nickname_%d", target.id()));
-    }
-
-    @Test
-    void 유저_한_명을_삭제할_수_있다() {
-        // given
-        generateTestData();
-        Target target = new Target(2L);
-
-        // when
-        userEntityRepository.delete(target);
-
-        // then
-        assertThatThrownBy(() -> userEntityRepository.find(target))
-                .isInstanceOf(DomainRdsException.class);
+        assertThat(user.account().email()).isEqualTo(email);
     }
 
     @Test
     void 이메일의_기존_등록_여부를_알려준다() {
         // given
-        generateTestData();
-        Target target = new Target(3L);
-        String email = String.format("email_%d@gmail.com", target.id());
+        List<String> emails = generateTestData();
+        String existEmail = emails.get(0);
+        String nonExistEmail = "email_notExist@gmail.com";
 
         // when
-        boolean result = userEntityRepository.existByEmail(email);
+        boolean exist = userEntityRepository.existByEmail(existEmail);
+        boolean nonExist = userEntityRepository.existByEmail(nonExistEmail);
 
         // then
-        assertThat(result).isFalse();
+        assertThat(exist).isTrue();
+        assertThat(nonExist).isFalse();
     }
 
     @Test
-    void 이메일을_바탕으로_유저의_계정_정보를_제공한다() {
+    void 요청자의_권한_정보를_제공한다() {
         // given
-        generateTestData();
-        Target target = new Target(4L);
-        String email = String.format("email_%d@gmail.com", target.id());
+        List<String> emails = generateTestData();
+        String email = emails.get(0);
 
         // when
-        UserAccount account = userEntityRepository.findAccountByEmail(email);
-
-        // then
-        assertThat(account.email()).isEqualTo(String.format("email_%d@gmail.com", target.id()));
-        assertThat(account.password()).isEqualTo(String.format("password_%d", target.id()));
-    }
-
-    @Test
-    void 유저의_권한_정보를_제공한다() {
-        // given
-        generateTestData();
-        Target target = new Target(5L);
-
-        // when
-        UserRole role = userEntityRepository.findRole(target);
+        UserRole role = userEntityRepository.findRoleByEmail(email);
 
         // then
         assertThat(role).isEqualTo(UserRole.ROLE_BASIC_USER);
     }
 
+    @Test
+    void 이메일을_사용해_계정_정보를_제공한다() {
+        // given
+        List<String> emails = generateTestData();
+        String email = emails.get(0);
+
+        // when
+        UserAccount account = userEntityRepository.findAccountByEmail(email);
+
+        // then
+        assertThat(account.email()).isEqualTo(email);
+    }
+
     @Nested
     @DisplayName("다음과 같은 경우에 예외가 발생한다")
     class ExceptionTest {
-
         @Test
-        void 존재하지_않는_유저를_불러오려고_하는_경우() {
+        void 존재하지_않는_요청자의_정보를_불러오려고_하는_경우() {
             // given
             generateTestData();
-            Target target = new Target(-1L);
+            String email = "email@gmail.com";
 
             // when, then
-            assertThatThrownBy(() -> userEntityRepository.find(target))
+            assertThatThrownBy(() -> userEntityRepository.findByEmail(email))
                     .isInstanceOf(DomainRdsException.class);
         }
 
         @Test
-        void 존재하지_않는_유저를_삭제하려고_하는_경우() {
+        void 존재하지_않는_이메일의_계정_정보를_불러오려는_경우() {
             // given
-            generateTestData();
-            Target target = new Target(-1L);
-
-            // when, then
-            assertThatThrownBy(() -> userEntityRepository.delete(target))
-                    .isInstanceOf(DomainRdsException.class);
-        }
-
-        @Test
-        void 존재하지_않는_이메일_에서_계정_정보를_얻으려고_하는_경우() {
-            // given
-            generateTestData();
-            Target target = new Target(-1L);
-            String email = String.format("email_%d@gmail.com", target.id());
+            String email = "email_notExist@gmail.com";
 
             // when, then
             assertThatThrownBy(() -> userEntityRepository.findAccountByEmail(email))
@@ -163,12 +130,13 @@ class UserEntityRepositoryTest {
         }
     }
 
-    private List<Long> generateTestData() {
-        List<Long> ids = new ArrayList<>();
+    private List<String> generateTestData() {
+        List<String> ids = new ArrayList<>();
 
         IntStream.range(1, 11)
                 .forEach(i -> {
                     UserAccount account = new UserAccount(
+                            UserRole.ROLE_BASIC_USER,
                             String.format("email_%d@gmail.com", i),
                             String.format("password_%d", i)
                     );
@@ -178,14 +146,13 @@ class UserEntityRepositoryTest {
                             Gender.MAN
                     );
 
-                    long id = userEntityRepository.save(
+                    String email = userEntityRepository.save(
                             account,
-                            UserRole.ROLE_BASIC_USER,
                             profile,
                             LocalDateTime.of(2024, 1, 1, 1, 1)
                     );
 
-                    ids.add(id);
+                    ids.add(email);
                 });
 
         return ids;
