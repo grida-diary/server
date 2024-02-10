@@ -41,7 +41,7 @@ class TokenGeneratorTest {
         // given
         TokenGenerator tokenGenerator = new TokenGenerator(jwtProperties(), key(), new StubDateTimePicker());
         TokenType tokenType = TokenType.ACCESS_TOKEN;
-        TokenClaims tokenClaims = new TokenClaims(1L, "ROLE_USER");
+        TokenClaims tokenClaims = new TokenClaims("email@email.com", "ROLE_USER");
 
         // when
         String jwtToken = tokenGenerator.createToken(tokenType, tokenClaims);

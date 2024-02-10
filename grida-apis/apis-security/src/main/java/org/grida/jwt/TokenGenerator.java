@@ -26,7 +26,7 @@ public class TokenGenerator {
         LocalDateTime expiration = now.plusSeconds(type.getValidityInSeconds(jwtProperties));
 
         return Jwts.builder()
-                .setSubject(Long.toString(claims.userId()))
+                .setSubject(claims.userEmail())
                 .setIssuedAt(DateTimeUtil.toDate(now))
                 .setExpiration(DateTimeUtil.toDate(expiration))
                 .claim(CLAIM_NAME_TYPE, type.name())

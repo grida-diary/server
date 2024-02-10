@@ -23,7 +23,7 @@ public class TokenDecoder {
                 .getBody();
 
         return new TokenClaims(
-                Long.parseLong(claims.getSubject()),
+                claims.getSubject(),
                 String.valueOf(claims.get(CLAIM_NAME_ROLE))
         );
     }

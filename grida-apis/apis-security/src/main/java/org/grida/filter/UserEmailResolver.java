@@ -1,6 +1,7 @@
-package org.grida.util;
+package org.grida.filter;
 
 import org.grida.exception.ApisSecurityException;
+import org.grida.util.RequestUserEmail;
 import org.springframework.core.MethodParameter;
 import org.springframework.web.bind.support.WebDataBinderFactory;
 import org.springframework.web.context.request.NativeWebRequest;
@@ -11,17 +12,16 @@ import javax.servlet.http.HttpServletRequest;
 
 import static org.grida.exception.ApisSecurityErrorCode.NO_AUTHENTICATED_USER;
 
-public class ProviderResolver implements HandlerMethodArgumentResolver {
+public class UserEmailResolver implements HandlerMethodArgumentResolver {
 
-    private static final String PROVIDER_ATTRIBUTE_KEY = "provider";
+    private static final String PROVIDER_ATTRIBUTE_KEY = "userEmail";
 
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
-        boolean hasAnnotation = parameter.hasParameterAnnotation(RequestProvider.class);
-        boolean isLongValue = Long.class.isAssignableFrom(parameter.getParameterType())
-                || long.class.isAssignableFrom(parameter.getParameterType());
+        boolean hasAnnotation = parameter.hasParameterAnnotation(RequestUserEmail.class);
+        boolean isStringValue = String.class.isAssignableFrom(parameter.getParameterType());
 
-        return hasAnnotation && isLongValue;
+        return hasAnnotation && isStringValue;
     }
 
     @Override
@@ -31,13 +31,13 @@ public class ProviderResolver implements HandlerMethodArgumentResolver {
                                   WebDataBinderFactory binderFactory) throws Exception {
 
         HttpServletRequest request = (HttpServletRequest) webRequest.getNativeRequest();
-        Object userId = request.getAttribute(PROVIDER_ATTRIBUTE_KEY);
-        validateHasUserId(userId);
-        return userId;
+        Object provider = request.getAttribute(PROVIDER_ATTRIBUTE_KEY);
+        validateHasProvider(provider);
+        return provider;
     }
 
-    private void validateHasUserId(Object userId) {
-        if (userId == null) {
+    private void validateHasProvider(Object provider) {
+        if (provider == null) {
             throw new ApisSecurityException(NO_AUTHENTICATED_USER);
         }
     }

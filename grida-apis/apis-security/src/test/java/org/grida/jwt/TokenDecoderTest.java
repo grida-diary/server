@@ -41,7 +41,7 @@ class TokenDecoderTest {
         // given
         TokenGenerator tokenGenerator = new TokenGenerator(jwtProperties(), key(), new StubDateTimePicker());
         TokenType tokenType = TokenType.ACCESS_TOKEN;
-        TokenClaims tokenClaims = new TokenClaims(1L, "ROLE_USER");
+        TokenClaims tokenClaims = new TokenClaims("email@email.com", "ROLE_USER");
         String jwtToken = tokenGenerator.createToken(tokenType, tokenClaims);
 
         TokenDecoder tokenDecoder = new TokenDecoder(key());
@@ -50,7 +50,7 @@ class TokenDecoderTest {
         TokenClaims decodedClaims = tokenDecoder.decode(jwtToken);
 
         // then
-        assertThat(decodedClaims.userId()).isEqualTo(1L);
+        assertThat(decodedClaims.userEmail()).isEqualTo(1L);
         assertThat(decodedClaims.role()).isEqualTo("ROLE_USER");
     }
 }
