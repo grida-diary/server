@@ -10,8 +10,7 @@ public class UserMapper {
     public static User toUser(UserEntity entity) {
         return new User(
                 entity.getId(),
-                entity.getRole(),
-                new UserAccount(entity.getEmail(), entity.getPassword()),
+                new UserAccount(entity.getRole(), entity.getEmail(), entity.getPassword()),
                 new UserProfile(entity.getNickname(), entity.getAge(), entity.getGender()),
                 new DefaultDateTime(entity.getCreatedAt(), entity.getLastModifiedAt())
         );
@@ -19,12 +18,11 @@ public class UserMapper {
 
     public static UserEntity toUserEntity(
             UserAccount account,
-            UserRole role,
             UserProfile profile,
             LocalDateTime createdAt
     ) {
         return UserEntity.builder()
-                .role(role)
+                .role(account.role())
                 .email(account.email())
                 .password(account.password())
                 .nickname(profile.nickname())
