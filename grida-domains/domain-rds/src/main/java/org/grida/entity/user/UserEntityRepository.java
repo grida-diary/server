@@ -1,6 +1,5 @@
 package org.grida.entity.user;
 
-import org.grida.domain.core.Target;
 import org.grida.domain.user.*;
 import org.grida.exception.DomainRdsException;
 import org.springframework.stereotype.Repository;
@@ -21,33 +20,36 @@ public class UserEntityRepository implements UserRepository {
 
     @Override
     @Transactional
-    public Long save(
+    public String save(
             UserAccount authentication,
-            UserRole role,
             UserProfile profile,
             LocalDateTime lastActionAt
     ) {
-        UserEntity userEntity = UserMapper.toUserEntity(authentication, role, profile, lastActionAt);
+        UserEntity userEntity = UserMapper.toUserEntity(authentication, profile, lastActionAt);
         entityManager.persist(userEntity);
 
-        return userEntity.getId();
+        return userEntity.getEmail();
     }
 
     @Override
-    public User find(Target target) {
-        return UserMapper.toUser(findById(target.id()));
-    }
+    public User findByEmail(String email) {
+        UserEntity userEntity = entityManager.createQuery(
+                        "select u from UserEntity u " +
+                                "where u.email = :email ",
+                        UserEntity.class
+                )
+                .setParameter("email", email)
+                .setMaxResults(1)
+                .getResultStream()
+                .findFirst()
+                .orElseThrow(() -> new DomainRdsException(USER_NOT_FOUND));
 
-    @Override
-    @Transactional
-    public void delete(Target target) {
-        UserEntity entity = findById(target.id());
-        entityManager.remove(entity);
+        return UserMapper.toUser(userEntity);
     }
 
     @Override
     public boolean existByEmail(String email) {
-        return entityManager.createQuery(
+        return !entityManager.createQuery(
                         "select u.email from UserEntity u " +
                                 "where u.email = :email " +
                                 "order by u.id asc ",
@@ -62,9 +64,9 @@ public class UserEntityRepository implements UserRepository {
     @Override
     public UserAccount findAccountByEmail(String email) {
         return entityManager.createQuery(
-                        "select new org.grida.domain.user.UserAccount(u.email, u.password) " +
+                        "select new org.grida.domain.user.UserAccount(u.role, u.email, u.password) " +
                                 "from UserEntity u " +
-                                "where u.email = :email",
+                                "where u.email = :email ",
                         UserAccount.class
                 )
                 .setParameter("email", email)
@@ -75,25 +77,16 @@ public class UserEntityRepository implements UserRepository {
     }
 
     @Override
-    public UserRole findRole(Target target) {
+    public UserRole findRoleByEmail(String email) {
         return entityManager.createQuery(
                         "select u.role from UserEntity u " +
-                                "where u.id = :id",
+                                "where u.email = :email",
                         UserRole.class
                 )
-                .setParameter("id", target.id())
+                .setParameter("email", email)
                 .setMaxResults(1)
                 .getResultStream()
                 .findFirst()
                 .orElseThrow(() -> new DomainRdsException(USER_NOT_FOUND));
-    }
-
-    private UserEntity findById(long id) {
-        UserEntity entity = entityManager.find(UserEntity.class, id);
-        if (entity == null) {
-            throw new DomainRdsException(USER_NOT_FOUND);
-        }
-
-        return entity;
     }
 }
