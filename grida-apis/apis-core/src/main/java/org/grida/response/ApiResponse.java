@@ -1,10 +1,8 @@
 package org.grida.response;
 
 import lombok.Getter;
-import org.grida.dto.LongIdIdDto;
-import org.grida.dto.UuidDto;
+import org.grida.dto.IdResponse;
 import org.grida.exception.ErrorCode;
-import org.springframework.lang.Nullable;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -39,20 +37,20 @@ public abstract class ApiResponse {
         return new SuccessResponse<>(data, SUCCESS_DEFAULT_MESSAGE);
     }
 
+    public static ApiResponse empty() {
+        return new SuccessResponse<>(EMPTY_DATA, SUCCESS_DEFAULT_MESSAGE);
+    }
+
     public static ApiResponse created(long id) {
-        return new SuccessResponse<>(new LongIdIdDto(id), SUCCESS_DEFAULT_MESSAGE);
+        return new SuccessResponse<>(new IdResponse(id), SUCCESS_DEFAULT_MESSAGE);
     }
 
     public static ApiResponse created(long id, String message) {
-        return new SuccessResponse<>(new LongIdIdDto(id), message);
+        return new SuccessResponse<>(new IdResponse(id), message);
     }
 
-    public static ApiResponse created(UUID id) {
-        return new SuccessResponse<>(new UuidDto(id), SUCCESS_DEFAULT_MESSAGE);
-    }
-
-    public static ApiResponse created(UUID id, String message) {
-        return new SuccessResponse<>(new UuidDto(id), message);
+    public static <T> ApiResponse created(T data) {
+        return new SuccessResponse<>(data, SUCCESS_DEFAULT_MESSAGE);
     }
 
     public static ApiResponse error(ErrorCode errorCode, String cause) {
