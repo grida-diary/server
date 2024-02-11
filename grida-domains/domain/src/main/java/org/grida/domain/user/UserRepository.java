@@ -8,5 +8,5 @@ public interface UserRepository {
     User findByEmail(String email);
     boolean existByEmail(String email);
     UserAccount findAccountByEmail(String email);
-    UserRole findRoleByEmail(String provider);
+    UserRole findRoleByEmail(String email);
 }
