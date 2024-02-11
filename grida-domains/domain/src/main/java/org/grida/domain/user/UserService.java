@@ -34,6 +34,6 @@ public class UserService {
     }
 
     public boolean isUsableEmail(String email) {
-        return userRepository.existByEmail(email);
+        return !userRepository.existByEmail(email);
     }
 }

@@ -32,7 +32,7 @@ public class StubUserRepository implements UserRepository {
 
     @Override
     public boolean existByEmail(String email) {
-        return !email.equals(USER_EMAIL);
+        return email.equals(USER_EMAIL);
     }
 
     @Override
