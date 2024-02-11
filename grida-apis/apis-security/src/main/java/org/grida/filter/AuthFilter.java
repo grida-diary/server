@@ -49,8 +49,7 @@ public class AuthFilter extends OncePerRequestFilter {
 
     private TokenClaims decodeToken(HttpServletRequest request) {
         String bearerToken = request.getHeader(AUTHORIZATION_HEADER);
-
-        if (StringUtils.hasText(bearerToken) || !bearerToken.startsWith(AUTHENTICATION_TOKEN_PREFIX)) {
+        if (!StringUtils.hasText(bearerToken) || !bearerToken.startsWith(AUTHENTICATION_TOKEN_PREFIX)) {
             return new TokenClaims(ANONYMOUS_USER_EMAIL, ANONYMOUS_ROLE);
         }
 
