@@ -5,7 +5,7 @@ import org.grida.exception.ApisSecurityException;
 import org.grida.jwt.TokenClaims;
 import org.grida.jwt.TokenDecoder;
 import org.grida.jwt.TokenValidator;
-import org.grida.model.RequestMatcher;
+import org.grida.authorizedrequest.AuthorizedRequest;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -31,7 +31,7 @@ public class AuthFilter extends OncePerRequestFilter {
 
     private final TokenDecoder tokenDecoder;
     private final TokenValidator tokenValidator;
-    private final RequestMatcher requestMatcher;
+    private final AuthorizedRequest authorizedRequest;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request,
@@ -39,7 +39,7 @@ public class AuthFilter extends OncePerRequestFilter {
                                     FilterChain filterChain) throws ServletException, IOException {
 
         TokenClaims tokenClaims = decodeToken(request);
-        validateRequestMatches(request.getRequestURI(), tokenClaims.role());
+        validateRequestMatches(request.getMethod(), request.getRequestURI(), tokenClaims.role());
         if (!tokenClaims.userEmail().equals(ANONYMOUS_USER_EMAIL)) {
             request.setAttribute(PROVIDER_ATTRIBUTE_KEY, tokenClaims.userEmail());
         }
@@ -58,11 +58,11 @@ public class AuthFilter extends OncePerRequestFilter {
         return tokenDecoder.decode(token);
     }
 
-    private void validateRequestMatches(String requestUri, String role) {
-        if (role.equals(ANONYMOUS_ROLE) && !requestMatcher.matches(requestUri, role)) {
+    private void validateRequestMatches(String method, String requestUri, String role) {
+        if (role.equals(ANONYMOUS_ROLE) && !authorizedRequest.matches(method, requestUri, role)) {
             throw new ApisSecurityException(HTTP_UNAUTHORIZED);
         }
-        if (!role.equals(ANONYMOUS_ROLE) && !requestMatcher.matches(requestUri, role)) {
+        if (!role.equals(ANONYMOUS_ROLE) && !authorizedRequest.matches(method, requestUri, role)) {
             throw new ApisSecurityException(HTTP_FORBIDDEN);
         }
     }
