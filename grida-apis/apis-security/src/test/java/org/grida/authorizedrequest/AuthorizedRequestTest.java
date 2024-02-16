@@ -21,24 +21,27 @@ class AuthorizedRequestTest {
         return AuthorizedRequestBuilder.withPatterns()
                 .antMatchers(
                         httpMethods(GET, POST),
-                        "/api/admin/**",
+                        uriPatterns("/api/admin/**"),
                         hasRoles("ROLE_ADMIN")
                 )
                 .antMatchers(
-                        "/api/user/admin",
+                        allHttpMethods(),
+                        uriPatterns("/api/user/admin"),
                         hasRoles("ROLE_ADMIN")
                 )
                 .antMatchers(
-                        "/api/user/**",
+                        allHttpMethods(),
+                        uriPatterns("/api/user/**"),
                         hasRoles("ROLE_USER")
                 )
                 .antMatchers(
-                        "/api/item/permit/**",
+                        allHttpMethods(),
+                        uriPatterns("/api/item/permit/**"),
                         permitAll()
                 )
                 .antMatchers(
                         allHttpMethods(),
-                        "/api/item/authenticated/**",
+                        uriPatterns("/api/item/authenticated/**"),
                         authenticated()
                 )
                 .elseRequestPermit();
@@ -47,7 +50,8 @@ class AuthorizedRequestTest {
     private AuthorizedRequest createElseAuthenticatedRequestMatcher() {
         return AuthorizedRequestBuilder.withPatterns()
                 .antMatchers(
-                        "/api/member/**",
+                        allHttpMethods(),
+                        uriPatterns("/api/member/**"),
                         hasRoles("ROLE_ADMIN", "ROLE_USER")
                 )
                 .elseRequestAuthenticated();

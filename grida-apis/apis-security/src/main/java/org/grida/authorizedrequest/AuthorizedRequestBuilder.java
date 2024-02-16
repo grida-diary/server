@@ -26,17 +26,14 @@ public class AuthorizedRequestBuilder {
         return new AuthorizedRequestBuilder();
     }
 
-    public AuthorizedRequestBuilder antMatchers(String pattern, Set<String> hasRoles) {
-        patternAndRoles.put(new MethodAndPattern(allHttpMethods, pattern), hasRoles);
-        return this;
-    }
-
     public AuthorizedRequestBuilder antMatchers(
             Set<HttpMethod> httpMethods,
-            String pattern,
+            Set<String> patterns,
             Set<String> hasRoles
     ) {
-        patternAndRoles.put(new MethodAndPattern(httpMethods, pattern), hasRoles);
+        patterns.forEach(pattern -> {
+            patternAndRoles.put(new MethodAndPattern(httpMethods, pattern), hasRoles);
+        });
         return this;
     }
 
@@ -73,6 +70,10 @@ public class AuthorizedRequestBuilder {
 
         public static Set<HttpMethod> allHttpMethods() {
             return allHttpMethods;
+        }
+
+        public static Set<String> uriPatterns(String... uriPattern) {
+            return Set.of(uriPattern);
         }
     }
 }
