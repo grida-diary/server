@@ -1,0 +1,21 @@
+= Authentication API
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 3
+
+https://xxx[service-api-document] +
+https://xxx[trial-api-document] +
+
+== Signup
+include::src/docs/asciidoc/signup.adoc[]
+
+== CheckEmail
+include::src/docs/asciidoc/checkEmail.adoc[]
+
+== Login
+include::src/docs/asciidoc/login.adoc[]
+
+== GetRole
+include::src/docs/asciidoc/getRole.adoc[]

@@ -1,0 +1,1 @@
+operation::auth/signup[snippets="http-request,http-response,request-fields,response-fields"]
