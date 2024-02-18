@@ -9,13 +9,15 @@ public record CheckEmailRequest(
         String email
 ) {
 
+    private static final String EMAIL_ADDRESS_DIVIDER = "@";
+
     public CheckEmailRequest {
         required("email", email);
-        validateEmailFormat();
+        validateEmailFormat(email);
     }
 
-    private void validateEmailFormat() {
-        if (!email.contains("@")) {
+    private void validateEmailFormat(String email) {
+        if (!email.contains(EMAIL_ADDRESS_DIVIDER)) {
             throw new SsoAppException(INVALID_EMAIL);
         }
     }
