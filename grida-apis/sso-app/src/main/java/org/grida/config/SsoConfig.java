@@ -18,19 +18,10 @@ import static org.grida.authorizedrequest.AuthorizedRequestBuilder.Support.*;
 public class SsoConfig {
 
     @Bean
-    public FilterRegistrationBean<LogFilter> logFilter() {
-        FilterRegistrationBean<LogFilter> registrationBean = new FilterRegistrationBean<>();
-        registrationBean.setFilter(new LogFilter());
-        registrationBean.setOrder(1);
-
-        return registrationBean;
-    }
-
-    @Bean
     public FilterRegistrationBean<AuthFilterExceptionHandler> authFilterExceptionHandler() {
         FilterRegistrationBean<AuthFilterExceptionHandler> registrationBean = new FilterRegistrationBean<>();
         registrationBean.setFilter(new AuthFilterExceptionHandler());
-        registrationBean.setOrder(2);
+        registrationBean.setOrder(1);
 
         return registrationBean;
     }
@@ -43,8 +34,13 @@ public class SsoConfig {
         FilterRegistrationBean<AuthFilter> registrationBean = new FilterRegistrationBean<>();
         AuthorizedRequest authorizedRequest = AuthorizedRequestBuilder.withPatterns()
                 .antMatchers(
+                        allHttpMethods(),
+                        uriPatterns("/docs/**"),
+                        permitAll()
+                )
+                .antMatchers(
                         httpMethods(HttpMethod.POST),
-                        uriPatterns("/api/login", "/api/signup", "/api/signup/email"),
+                        uriPatterns("/api/auth/login", "/api/auth/signup", "/api/auth/signup/email"),
                         permitAll()
                 )
                 .antMatchers(
@@ -54,6 +50,16 @@ public class SsoConfig {
                 )
                 .elseRequestAuthenticated();
         registrationBean.setFilter(new AuthFilter(tokenDecoder, tokenValidator, authorizedRequest));
+        registrationBean.setOrder(2);
+
+        return registrationBean;
+    }
+
+
+    @Bean
+    public FilterRegistrationBean<LogFilter> logFilter() {
+        FilterRegistrationBean<LogFilter> registrationBean = new FilterRegistrationBean<>();
+        registrationBean.setFilter(new LogFilter());
         registrationBean.setOrder(3);
 
         return registrationBean;
