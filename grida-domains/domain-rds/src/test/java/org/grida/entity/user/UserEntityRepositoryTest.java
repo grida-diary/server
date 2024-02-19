@@ -5,10 +5,12 @@ import org.grida.exception.DomainRdsException;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.IntStream;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -18,6 +20,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 @SuppressWarnings("NonAsciiCharacters")
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 @DisplayName("UserEntityRepository 는")
+@ActiveProfiles("test")
 class UserEntityRepositoryTest {
 
     @Autowired
@@ -137,7 +140,7 @@ class UserEntityRepositoryTest {
                 .forEach(i -> {
                     UserAccount account = new UserAccount(
                             UserRole.ROLE_BASIC_USER,
-                            String.format("email_%d@gmail.com", i),
+                            String.format("%s@gmail.com", UUID.randomUUID().toString()),
                             String.format("password_%d", i)
                     );
                     UserProfile profile = new UserProfile(
