@@ -34,18 +34,13 @@ class UserEntityRepositoryTest {
         UserAccount account = new UserAccount(
                 UserRole.ROLE_BASIC_USER,
                 "email_saved@gmail.com",
-                "password_saved"
-        );
-        UserProfile profile = new UserProfile(
-                "nickname_saved",
-                20,
-                Gender.MAN
+                "password_saved",
+                "nickname"
         );
 
         // when
-        String createdUserEmail = userEntityRepository.save(
+        String createdUserEmail = userEntityRepository.saveAccount(
                 account,
-                profile,
                 LocalDateTime.of(2024, 1, 1, 1, 1)
         );
 
@@ -141,17 +136,12 @@ class UserEntityRepositoryTest {
                     UserAccount account = new UserAccount(
                             UserRole.ROLE_BASIC_USER,
                             String.format("%s@gmail.com", UUID.randomUUID().toString()),
-                            String.format("password_%d", i)
-                    );
-                    UserProfile profile = new UserProfile(
-                            String.format("nickname_%d", i),
-                            20,
-                            Gender.MAN
+                            String.format("password_%d", i),
+                            String.format("nickname_%d", i)
                     );
 
-                    String email = userEntityRepository.save(
+                    String email = userEntityRepository.saveAccount(
                             account,
-                            profile,
                             LocalDateTime.of(2024, 1, 1, 1, 1)
                     );
 

@@ -13,10 +13,12 @@ public class StubUserRepository implements UserRepository {
     public static final String USER_NICKNAME = "nickname";
     public static final int USER_AGE = 20;
     public static final Gender USER_GENDER = Gender.MAN;
+    public static final String USER_HAIRSTYLE = "permed long black";
+    public static final String USER_GLASSES = "no glasses";
     public static final String NON_EXIST_USER_EMAIL = "nonExistEmail@gmail.com";
 
     @Override
-    public String save(UserAccount account, UserProfile profile, LocalDateTime lastActionAt) {
+    public String saveAccount(UserAccount account, LocalDateTime lastActionAt) {
         return account.email();
     }
 
@@ -24,8 +26,8 @@ public class StubUserRepository implements UserRepository {
     public User findByEmail(String email) {
         return new User(
                 USER_ID,
-                new UserAccount(USER_ROLE, email, USER_PASSWORD),
-                new UserProfile(USER_NICKNAME, USER_AGE, USER_GENDER),
+                new UserAccount(USER_ROLE, email, USER_PASSWORD, USER_NICKNAME),
+                new UserAppearance(USER_AGE, USER_GENDER, USER_HAIRSTYLE, USER_GLASSES),
                 new DefaultDateTime(LocalDateTime.MIN, LocalDateTime.MIN)
         );
     }
@@ -37,11 +39,21 @@ public class StubUserRepository implements UserRepository {
 
     @Override
     public UserAccount findAccountByEmail(String email) {
-        return new UserAccount(USER_ROLE, email, USER_PASSWORD);
+        return new UserAccount(USER_ROLE, email, USER_PASSWORD, USER_NICKNAME);
+    }
+
+    @Override
+    public UserAppearance findAppearanceByEmail(String email) {
+        return null;
     }
 
     @Override
     public UserRole findRoleByEmail(String provider) {
         return USER_ROLE;
+    }
+
+    @Override
+    public String modifyAppearance(String email, UserAppearance appearance) {
+        return null;
     }
 }

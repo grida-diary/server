@@ -14,11 +14,21 @@ public class UserService {
     private final DateTimePicker dateTimePicker;
     private final UserRepository userRepository;
 
-    public String join(UserAccount authentication, UserProfile profile) {
-        if (!isUsableEmail(authentication.email())) {
+    public String join(UserAccount account) {
+        if (!isUsableEmail(account.email())) {
             throw new DomainException(ALREADY_REGISTERED_EMAIL);
         }
-        return userRepository.save(authentication, profile, dateTimePicker.now());
+        return userRepository.saveAccount(account, dateTimePicker.now());
+    }
+
+    public boolean needOnboarding(String email) {
+        UserAppearance appearance = userRepository.findAppearanceByEmail(email);
+        return appearance.isAllEmpty();
+    }
+
+    public String onboarding(String email, UserAppearance appearance) {
+        userRepository.modifyAppearance(email, appearance);
+        return email;
     }
 
     public User read(String email) {

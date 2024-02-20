@@ -4,9 +4,11 @@ import java.time.LocalDateTime;
 
 public interface UserRepository {
 
-    String save(UserAccount account, UserProfile profile, LocalDateTime lastActionAt);
+    String saveAccount(UserAccount account, LocalDateTime lastActionAt);
     User findByEmail(String email);
     boolean existByEmail(String email);
     UserAccount findAccountByEmail(String email);
+    UserAppearance findAppearanceByEmail(String email);
     UserRole findRoleByEmail(String email);
+    String modifyAppearance(String email, UserAppearance appearance);
 }

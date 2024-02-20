@@ -5,7 +5,7 @@ import org.grida.domain.core.DefaultDateTime;
 public record User(
         long id,
         UserAccount account,
-        UserProfile profile,
-        DefaultDateTime defaultDateTime
+        UserAppearance appearance,
+        DefaultDateTime dateTime
 ) {
 }

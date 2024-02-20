@@ -26,16 +26,12 @@ class UserServiceTest {
         UserAccount account = new UserAccount(
                 StubUserRepository.USER_ROLE,
                 StubUserRepository.NON_EXIST_USER_EMAIL,
-                StubUserRepository.USER_PASSWORD
-        );
-        UserProfile profile = new UserProfile(
-                StubUserRepository.USER_NICKNAME,
-                StubUserRepository.USER_AGE,
-                StubUserRepository.USER_GENDER
+                StubUserRepository.USER_PASSWORD,
+                StubUserRepository.USER_NICKNAME
         );
 
         // when
-        String email = userService.join(account, profile);
+        String email = userService.join(account);
 
         // then
         assertThat(email).isEqualTo(StubUserRepository.NON_EXIST_USER_EMAIL);
@@ -55,9 +51,7 @@ class UserServiceTest {
         assertThat(user.account().email()).isEqualTo(StubUserRepository.USER_EMAIL);
         assertThat(user.account().password()).isEqualTo(StubUserRepository.USER_PASSWORD);
         assertThat(user.account().role()).isEqualTo(StubUserRepository.USER_ROLE);
-        assertThat(user.profile().nickname()).isEqualTo(StubUserRepository.USER_NICKNAME);
-        assertThat(user.profile().age()).isEqualTo(StubUserRepository.USER_AGE);
-        assertThat(user.profile().gender()).isEqualTo(StubUserRepository.USER_GENDER);
+        assertThat(user.account().nickname()).isEqualTo(StubUserRepository.USER_NICKNAME);
     }
 
     @Test
@@ -114,16 +108,12 @@ class UserServiceTest {
             UserAccount account = new UserAccount(
                     StubUserRepository.USER_ROLE,
                     StubUserRepository.USER_EMAIL,
-                    StubUserRepository.USER_PASSWORD
-            );
-            UserProfile profile = new UserProfile(
-                    StubUserRepository.USER_NICKNAME,
-                    StubUserRepository.USER_AGE,
-                    StubUserRepository.USER_GENDER
+                    StubUserRepository.USER_PASSWORD,
+                    StubUserRepository.USER_NICKNAME
             );
 
             // when, then
-            assertThatThrownBy(() -> userService.join(account, profile))
+            assertThatThrownBy(() -> userService.join(account))
                     .isInstanceOf(DomainException.class);
         }
     }

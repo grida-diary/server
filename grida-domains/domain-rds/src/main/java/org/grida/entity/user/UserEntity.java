@@ -2,6 +2,7 @@ package org.grida.entity.user;
 
 import lombok.*;
 import org.grida.domain.user.Gender;
+import org.grida.domain.user.UserAppearance;
 import org.grida.domain.user.UserRole;
 import org.grida.entity.base.BaseEntity;
 
@@ -35,22 +36,31 @@ public class UserEntity extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private Gender gender;
 
+    @Column
+    private String hairStyle;
+
+    @Column
+    private String glasses;
+
     @Builder
     public UserEntity(
             LocalDateTime createdAt,
             LocalDateTime lastModifiedAt,
             String email, String password,
             UserRole role,
-            String nickname,
-            Integer age,
-            Gender gender
+            String nickname
     ) {
         super(createdAt, lastModifiedAt);
         this.email = email;
         this.password = password;
         this.role = role;
         this.nickname = nickname;
-        this.age = age;
-        this.gender = gender;
+    }
+
+    public void modifyAppearance(UserAppearance appearance) {
+        this.age = appearance.age();
+        this.gender = appearance.gender();
+        this.hairStyle = appearance.hairStyle();
+        this.glasses = appearance.glasses();
     }
 }
