@@ -74,9 +74,7 @@ class SsoApiDocuments {
                 "user@gmail.com",
                 "password",
                 "password",
-                "nickname",
-                23,
-                "MAN"
+                "nickname"
         );
 
         // when, then
@@ -94,9 +92,7 @@ class SsoApiDocuments {
                                         fieldWithPath("email").type(JsonFieldType.STRING).description("이메일"),
                                         fieldWithPath("password").type(JsonFieldType.STRING).description("비밀번호"),
                                         fieldWithPath("passwordCheck").type(JsonFieldType.STRING).description("비밀번호 확인"),
-                                        fieldWithPath("nickname").type(JsonFieldType.STRING).description("닉네임"),
-                                        fieldWithPath("age").type(JsonFieldType.NUMBER).description("나이"),
-                                        fieldWithPath("gender").type(JsonFieldType.STRING).description("성별 [MAN(man) / WOMAN(woman)]")
+                                        fieldWithPath("nickname").type(JsonFieldType.STRING).description("닉네임")
                                 ),
                                 responseFields(
                                         fieldWithPath("timeStamp").type(JsonFieldType.STRING).description("요청 시간"),
@@ -146,7 +142,7 @@ class SsoApiDocuments {
     void 로그인_API() throws Exception {
         // given
         when(loginUseCase.execute(any()))
-                .thenReturn(new LoginResponse("accessToken", "refreshToken"));
+                .thenReturn(new LoginResponse("accessToken", "refreshToken", false));
 
         LoginRequest request = new LoginRequest("user@gmail.com", "password");
 
@@ -169,7 +165,8 @@ class SsoApiDocuments {
                                         fieldWithPath("status").type(JsonFieldType.STRING).description("http 상태 코드"),
                                         fieldWithPath("message").type(JsonFieldType.STRING).description("메세지"),
                                         fieldWithPath("data.accessToken").type(JsonFieldType.STRING).description("accessToken"),
-                                        fieldWithPath("data.refreshToken").type(JsonFieldType.STRING).description("refreshToken")
+                                        fieldWithPath("data.refreshToken").type(JsonFieldType.STRING).description("refreshToken"),
+                                        fieldWithPath("data.needOnboarding").type(JsonFieldType.BOOLEAN).description("온보딩 과정 필요 여부")
                                 )
                         )
                 )

@@ -21,10 +21,7 @@ public class SignupUseCase {
     public SignupResponse execute(SignupRequest request) {
         validatePasswordCheck(request);
 
-        String email = userService.join(
-                request.toAccount(UserRole.ROLE_BASIC_USER, passwordEncoder),
-                request.toProfile()
-        );
+        String email = userService.join(request.toAccount(UserRole.ROLE_BASIC_USER, passwordEncoder));
 
         return new SignupResponse(email);
     }

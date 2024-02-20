@@ -30,7 +30,8 @@ public class LoginUseCase {
         TokenClaims claims = new TokenClaims(account.email(), account.role().name());
         return new LoginResponse(
                 tokenGenerator.createToken(TokenType.ACCESS_TOKEN, claims),
-                tokenGenerator.createToken(TokenType.REFRESH_TOKEN, claims)
+                tokenGenerator.createToken(TokenType.REFRESH_TOKEN, claims),
+                userService.needOnboarding(request.email())
         );
     }
 
