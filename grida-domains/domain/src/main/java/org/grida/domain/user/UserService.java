@@ -26,11 +26,6 @@ public class UserService {
         return appearance.isAllEmpty();
     }
 
-    public String onboarding(String email, UserAppearance appearance) {
-        userRepository.modifyAppearance(email, appearance);
-        return email;
-    }
-
     public User read(String email) {
         return userRepository.findByEmail(email);
     }
