@@ -2,13 +2,13 @@ package org.grida.documents;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.grida.controller.SsoController;
+import org.grida.dto.UserEmailResponse;
 import org.grida.dto.request.CheckEmailRequest;
 import org.grida.dto.request.LoginRequest;
 import org.grida.dto.request.SignupRequest;
 import org.grida.dto.response.CheckEmailResponse;
 import org.grida.dto.response.GetRoleResponse;
 import org.grida.dto.response.LoginResponse;
-import org.grida.dto.response.SignupResponse;
 import org.grida.filter.UserEmailResolver;
 import org.grida.usecase.CheckEmailUseCase;
 import org.grida.usecase.GetRoleUseCase;
@@ -24,8 +24,6 @@ import org.springframework.http.MediaType;
 import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MockMvcBuilder;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
@@ -38,7 +36,6 @@ import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @AutoConfigureRestDocs
@@ -68,7 +65,7 @@ class SsoApiDocuments {
     void 회원가입_API() throws Exception {
         // given
         when(signupUseCase.execute(any()))
-                .thenReturn(new SignupResponse("user@gmail.com"));
+                .thenReturn(new UserEmailResponse("user@gmail.com"));
 
         SignupRequest request = new SignupRequest(
                 "user@gmail.com",
@@ -98,7 +95,7 @@ class SsoApiDocuments {
                                         fieldWithPath("timeStamp").type(JsonFieldType.STRING).description("요청 시간"),
                                         fieldWithPath("status").type(JsonFieldType.STRING).description("http 상태 코드"),
                                         fieldWithPath("message").type(JsonFieldType.STRING).description("메세지"),
-                                        fieldWithPath("data.email").type(JsonFieldType.STRING).description("생성된 이메일")
+                                        fieldWithPath("data.userEmail").type(JsonFieldType.STRING).description("생성된 이메일")
                                 )
                         )
                 )

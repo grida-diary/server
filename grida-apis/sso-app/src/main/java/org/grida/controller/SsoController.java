@@ -1,13 +1,13 @@
 package org.grida.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.grida.dto.UserEmailResponse;
 import org.grida.dto.request.CheckEmailRequest;
 import org.grida.dto.request.LoginRequest;
 import org.grida.dto.request.SignupRequest;
 import org.grida.dto.response.CheckEmailResponse;
 import org.grida.dto.response.GetRoleResponse;
 import org.grida.dto.response.LoginResponse;
-import org.grida.dto.response.SignupResponse;
 import org.grida.response.ApiResponse;
 import org.grida.usecase.CheckEmailUseCase;
 import org.grida.usecase.GetRoleUseCase;
@@ -36,7 +36,7 @@ public class SsoController {
     @PostMapping("/signup")
     @ResponseStatus(value = HttpStatus.CREATED)
     public ApiResponse signup(@RequestBody SignupRequest request) {
-        SignupResponse response = signupUseCase.execute(request);
+        UserEmailResponse response = signupUseCase.execute(request);
         return ApiResponse.created(response);
     }
 
