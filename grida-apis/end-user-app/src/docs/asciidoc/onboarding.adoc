@@ -1,0 +1,1 @@
+operation::user/onboarding[snippets="http-request,http-response,request-headers,request-fields,response-fields"]

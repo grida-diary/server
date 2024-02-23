@@ -1,0 +1,1 @@
+operation::user/getProfileImageHistory[snippets="http-response,request-headers,response-fields"]
