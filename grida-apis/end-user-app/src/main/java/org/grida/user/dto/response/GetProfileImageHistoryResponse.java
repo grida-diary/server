@@ -10,7 +10,7 @@ public record GetProfileImageHistoryResponse(
         List<HistoryElement> images
 ) {
 
-    record HistoryElement(
+    public record HistoryElement(
             long imageId,
             String imageUrl,
             LocalDateTime createdAt,
