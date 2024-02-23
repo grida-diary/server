@@ -43,4 +43,9 @@ public class ProfileImageEntity extends BaseEntity {
         this.isActivate = false;
         this.lastModifiedAt = lastModifiedAt;
     }
+
+    public void activate(LocalDateTime lastModifiedAt) {
+        this.isActivate = true;
+        this.lastModifiedAt = lastModifiedAt;
+    }
 }

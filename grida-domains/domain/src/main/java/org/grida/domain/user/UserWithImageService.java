@@ -50,6 +50,11 @@ public class UserWithImageService {
         });
     }
 
+    public boolean canRefreshProfileImage(String userEmail) {
+        LocalDate nextRefreshableDate = calculateNextRefreshableDate(userEmail);
+        return nextRefreshableDate.isAfter(dateTimePicker.now().toLocalDate());
+    }
+
     public LocalDate calculateNextRefreshableDate(String userEmail) {
         LocalDate mostRecentCreatedDate =
                 profileImageRepository.findMostRecentCreatedDateByUserEmail(userEmail);

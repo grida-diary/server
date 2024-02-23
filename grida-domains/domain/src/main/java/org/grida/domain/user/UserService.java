@@ -38,6 +38,10 @@ public class UserService {
         return userRepository.findRoleByEmail(email);
     }
 
+    public UserAppearance readAppearance(String email) {
+        return userRepository.findAppearanceByEmail(email);
+    }
+
     public boolean isUsableEmail(String email) {
         return !userRepository.existByEmail(email);
     }

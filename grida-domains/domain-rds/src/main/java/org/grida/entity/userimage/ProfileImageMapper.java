@@ -15,6 +15,7 @@ public class ProfileImageMapper {
     public static ProfileImage toProfileImage(ProfileImageEntity entity) {
         return new ProfileImage(
                 entity.getId(),
+                entity.getUserEmail(),
                 new ImageDetail(entity.getImagePath(), entity.getIsActivate()),
                 new DefaultDateTime(entity.getCreatedAt(), entity.getLastModifiedAt())
         );
