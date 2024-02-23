@@ -52,22 +52,16 @@ clean {
     delete file('src/main/generated')
 }
 
-tasks.register('copyDocument', Copy) {
-    dependsOn asciidoctor
-    from file("${asciidoctor.outputDir}")
-    into file("src/main/resources/static/docs")
-}
-
 bootJar {
     enabled = true
+    dependsOn asciidoctor
+    from("${asciidoctor.outputDir}") {
+        into 'statc/docs'
+    }
 }
 
 jar {
     enabled = false
-}
-
-build {
-    dependsOn copyDocument
 }
 
 tasks.register("prepareKotlinBuildScriptModel"){}
