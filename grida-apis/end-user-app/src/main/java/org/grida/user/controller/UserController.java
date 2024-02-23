@@ -1,15 +1,14 @@
 package org.grida.user.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.grida.dto.IdResponse;
 import org.grida.dto.UserEmailResponse;
 import org.grida.response.ApiResponse;
+import org.grida.user.dto.request.ChangeActivateImageRequest;
 import org.grida.user.dto.request.ProfileImageRequest;
 import org.grida.user.dto.response.GetActivateImageResponse;
 import org.grida.user.dto.response.GetProfileImageHistoryResponse;
-import org.grida.user.usecase.GetActivateImageUseCase;
-import org.grida.user.usecase.GetProfileImageHistoryUseCase;
-import org.grida.user.usecase.OnboardingUseCase;
-import org.grida.user.usecase.RefreshProfileImageUseCase;
+import org.grida.user.usecase.*;
 import org.grida.util.RequestUserEmail;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,6 +21,7 @@ public class UserController {
     private final GetActivateImageUseCase getActivateImageUseCase;
     private final RefreshProfileImageUseCase refreshProfileImageUseCase;
     private final GetProfileImageHistoryUseCase getProfileImageHistoryUseCase;
+    private final ChangeActivateImageUseCase changeActivateImageUseCase;
 
     @PostMapping("/onboarding")
     public ApiResponse onboarding(
@@ -50,6 +50,15 @@ public class UserController {
     @GetMapping("/image/history")
     public ApiResponse getProfileImageHistory(@RequestUserEmail String userEmail) {
         GetProfileImageHistoryResponse response = getProfileImageHistoryUseCase.execute(userEmail);
+        return ApiResponse.ok(response);
+    }
+
+    @PatchMapping("/image/change")
+    public ApiResponse changeActivateProfileImage(
+            @RequestUserEmail String userEmail,
+            @RequestBody ChangeActivateImageRequest request
+    ) {
+        IdResponse response = changeActivateImageUseCase.execute(userEmail, request);
         return ApiResponse.ok(response);
     }
 }
