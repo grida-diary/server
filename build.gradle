@@ -37,20 +37,12 @@ allprojects {
 }
 
 configure(subprojects.findAll {it.name != 'grida-core'}) {
-	repositories {
-		// yaml importer
-		maven { url 'https://jitpack.io' }
-	}
-
 	dependencies {
 		// spring boot
 		implementation 'org.springframework.boot:spring-boot-starter'
 
 		// properties
 		annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
-
-		// yaml importer
-		compileOnly 'com.github.kingbbode:spring-boot-custom-yaml-importer:0.3.0'
 
 		// core module
 		implementation project(':grida-core')

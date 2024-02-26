@@ -1,0 +1,2 @@
+cdn:
+  host: ${CDN_HOST}
