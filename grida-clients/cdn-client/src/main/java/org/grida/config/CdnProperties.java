@@ -8,8 +8,8 @@ import org.springframework.boot.context.properties.ConstructorBinding;
 @Getter
 @RequiredArgsConstructor
 @ConstructorBinding
-@ConfigurationProperties(prefix = "cdn.domain")
+@ConfigurationProperties(prefix = "cdn")
 public class CdnProperties {
 
-    private final String domain;
+    private final String host;
 }

@@ -8,13 +8,13 @@ public class CdnClient {
 
     private static final String URL_FORMAT = "%s%s";
 
-    private final String domain;
+    private final String host;
 
     public CdnClient(CdnProperties cdnProperties) {
-        this.domain = cdnProperties.getDomain();
+        this.host = cdnProperties.getHost();
     }
 
     public String getUrl(String filePath) {
-        return String.format(URL_FORMAT, domain, filePath);
+        return String.format(URL_FORMAT, host, filePath);
     }
 }
