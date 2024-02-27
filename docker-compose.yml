@@ -70,7 +70,12 @@ services:
     command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
 
   certbot:
-    image: certbot/certbot
+    depends_on:
+      - database
+      - grida-sso-app
+      - grida-end-user-app
+      - grida-trial-user-app
+    image: certbot/certbot:arm32v6-latest
     restart: unless-stopped
     volumes:
       - ./nginx/certbot/conf:/etc/letsencrypt
