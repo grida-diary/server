@@ -64,7 +64,7 @@ services:
       - "80:80"
       - "443:443"
     volumes:
-      - ./nginx/app.conf:/etc/nginx/app.conf
+      - ./nginx/config:/etc/nginx/app.conf
       - ./nginx/certbot/conf:/etc/letsencrypt
       - ./nginx/certbot/www:/var/www/certbot
     command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
@@ -75,7 +75,7 @@ services:
       - grida-sso-app
       - grida-end-user-app
       - grida-trial-user-app
-    image: certbot/certbot:arm32v6-latest
+    image: certbot/certbot:latest
     restart: unless-stopped
     volumes:
       - ./nginx/certbot/conf:/etc/letsencrypt
