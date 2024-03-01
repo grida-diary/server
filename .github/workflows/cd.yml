@@ -37,7 +37,7 @@ jobs:
           context: .
           file: ./grida-apis/sso-app/Dockerfile
           push: true
-          tags: prod
+          tags: wwan13/grida-sso-app:prod
 
       ## end-user-app
       - name: gradle build end-user-application
@@ -49,7 +49,7 @@ jobs:
           context: .
           file: ./grida-apis/end-user-app/Dockerfile
           push: true
-          tags: prod
+          tags: wwan13/grida-end-user-app:prod
 
       ## trial-user-app
       - name: gradle build trial-user-application
@@ -61,7 +61,7 @@ jobs:
           context: .
           file: ./grida-apis/trial-user-app/Dockerfile
           push: true
-          tags: prod
+          tags: wwan13/grida-trial-user-app:prod
 
       # deploy
       - name: deploy to instance
@@ -72,5 +72,5 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           script: |
             sudo killall containerd-shim-runc-v2
-            sudo docker-compose -f ./grida-server/docker-compose.yml down --rmi all
+            sudo docker-compose -f ${{ REMOTE_DOCKER_COMPOSE_PATH }} down --rmi all
             sudo docker-compose -f ./grida-server/docker-compose.yml up -d
