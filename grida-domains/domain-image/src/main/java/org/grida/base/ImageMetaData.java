@@ -9,6 +9,8 @@ public record ImageMetaData(
         String extension
 ) {
 
+    private static final String IMAGE_PATH_FORMAT = "%s/%s.%s";
+
     public static ImageMetaData withRandomUuidFilename(String url, ImageType imageType) {
         return new ImageMetaData(
                 url,
@@ -16,5 +18,9 @@ public record ImageMetaData(
                 UUID.randomUUID().toString(),
                 imageType.getExtension()
         );
+    }
+
+    public String toImagePath() {
+        return String.format(IMAGE_PATH_FORMAT, directory, name, extension);
     }
 }
