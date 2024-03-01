@@ -31,3 +31,4 @@ echo "[2] build and push to docker hub"
 BuildAndPushToDockerHub 1 sso-app
 BuildAndPushToDockerHub 2 end-user-app
 BuildAndPushToDockerHub 3 trial-user-app
+가
