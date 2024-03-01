@@ -72,5 +72,5 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           script: |
             sudo killall containerd-shim-runc-v2
-            sudo docker-compose -f ${{ REMOTE_DOCKER_COMPOSE_PATH }} down --rmi all
-            sudo docker-compose -f ${{ REMOTE_DOCKER_COMPOSE_PATH }} up -d
+            sudo docker-compose -f ${{ secrets.REMOTE_DOCKER_COMPOSE_PATH }} down --rmi all
+            sudo docker-compose -f ${{ secrets.REMOTE_DOCKER_COMPOSE_PATH }} up -d
