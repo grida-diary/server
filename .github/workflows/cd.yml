@@ -34,7 +34,7 @@ jobs:
       - name: docker build and push to hub sso-application
         uses: docker/build-push-action@v3
         with:
-          context: .
+          context: ./grida-apis/sso-app
           file: ./grida-apis/sso-app/Dockerfile
           push: true
           tags: wwan13/grida-sso-app:prod
@@ -46,7 +46,7 @@ jobs:
       - name: docker build and push to hub end-user-application
         uses: docker/build-push-action@v3
         with:
-          context: .
+          context: ./grida-apis/end-user-app
           file: ./grida-apis/end-user-app/Dockerfile
           push: true
           tags: wwan13/grida-end-user-app:prod
@@ -58,7 +58,7 @@ jobs:
       - name: docker build and push to hub trial-user-application
         uses: docker/build-push-action@v3
         with:
-          context: .
+          context: ./grida-apis/trial-user-app
           file: ./grida-apis/trial-user-app/Dockerfile
           push: true
           tags: wwan13/grida-trial-user-app:prod
