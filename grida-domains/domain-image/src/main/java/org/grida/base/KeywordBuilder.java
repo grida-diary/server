@@ -1,7 +1,5 @@
 package org.grida.base;
 
-import org.grida.diaryimage.DiaryImageGenerateKeywordBuilder;
-import org.grida.diaryimage.EmotionAnalysisKeywordBuilder;
 import org.grida.exception.DomainImageException;
 import org.grida.profileimage.ProfileImageGenerateKeywordBuilder;
 
