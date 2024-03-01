@@ -1,0 +1,76 @@
+name: deploy all grida apis
+
+on:
+  push:
+    branches: [ "prod" ]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-java@v3
+        with:
+          distribution: 'corretto'
+          java-version: '17'
+
+      # login docker
+      - name: login docker
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_EMAIL }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: clean gradle projects
+        run: ./gradlew clean
+
+      # build and push
+      ## sso-app
+      - name: gradle build sso-application
+        run: ./gradlew grida-apis:sso-app:build
+
+      - name: docker build and push to hub sso-application
+        uses: docker/build-push-action@v3
+        with:
+          context: .
+          file: ./grida-apis/sso-app/Dockerfile
+          push: true
+          tags: prod
+
+      ## end-user-app
+      - name: gradle build end-user-application
+        run: ./gradlew grida-apis:end-user-app:build
+
+      - name: docker build and push to hub end-user-application
+        uses: docker/build-push-action@v3
+        with:
+          context: .
+          file: ./grida-apis/end-user-app/Dockerfile
+          push: true
+          tags: prod
+
+      ## trial-user-app
+      - name: gradle build trial-user-application
+        run: ./gradlew grida-apis:trial-user-app:build
+
+      - name: docker build and push to hub trial-user-application
+        uses: docker/build-push-action@v3
+        with:
+          context: .
+          file: ./grida-apis/trial-user-app/Dockerfile
+          push: true
+          tags: prod
+
+      # deploy
+      - name: deploy to instance
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.REMOTE_HOST }}
+          username: ${{ secrets.REMOTE_USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            sudo killall containerd-shim-runc-v2
+            sudo docker-compose -f ./grida-server/docker-compose.yml down --rmi all
+            sudo docker-compose -f ./grida-server/docker-compose.yml up -d
