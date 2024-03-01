@@ -1,8 +1,9 @@
 package org.grida.exceptionhandler;
 
-import org.grida.response.ApiResponse;
 import org.grida.exception.BaseException;
 import org.grida.exception.ErrorCode;
+import org.grida.response.ApiResponse;
+import org.grida.validator.exception.RequestFieldException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
@@ -53,11 +54,24 @@ public class ApIExceptionHandler {
                 .body(ApiResponse.error(getCause(e), errorCode.name(), errorCode.getMessage()));
     }
 
-    // cannot read http request
+    // cannot read http message
     @ExceptionHandler(HttpMessageNotReadableException.class)
     private ResponseEntity<ApiResponse> handleHttpMessageNotReadableException(
             HttpMessageNotReadableException e) {
+
+        if (e.getRootCause() instanceof RequestFieldException requestFieldException) {
+            ErrorCode requestFieltErrorCode = requestFieldException.getErrorCode();
+
+            return ResponseEntity.status(requestFieltErrorCode.getHttpStatus())
+                    .body(ApiResponse.error(
+                            getCause(requestFieldException),
+                            requestFieltErrorCode.name(),
+                            requestFieldException.getErrorMessage()
+                    ));
+        }
+
         ErrorCode errorCode = INVALID_HTTP_REQUEST;
+
         return ResponseEntity.status(errorCode.getHttpStatus())
                 .body(ApiResponse.error(getCause(e), errorCode.name(), errorCode.getMessage()));
     }

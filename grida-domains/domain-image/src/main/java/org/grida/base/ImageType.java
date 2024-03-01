@@ -7,8 +7,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public enum ImageType {
 
-    DIARY("/image/diary", "png"),
-    PROFILE("/image/profile", "png");
+    DIARY("image/diary", "png"),
+    PROFILE("image/profile", "png");
 
     private final String directory;
     private final String extension;

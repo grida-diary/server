@@ -14,7 +14,7 @@ import static org.grida.exception.ApisSecurityErrorCode.NO_AUTHENTICATED_USER;
 
 public class UserEmailResolver implements HandlerMethodArgumentResolver {
 
-    private static final String PROVIDER_ATTRIBUTE_KEY = "userEmail";
+    private static final String USER_EMAIL_ATTRIBUTE_KEY = "userEmail";
 
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
@@ -25,19 +25,16 @@ public class UserEmailResolver implements HandlerMethodArgumentResolver {
     }
 
     @Override
-    public Object resolveArgument(MethodParameter parameter,
-                                  ModelAndViewContainer mavContainer,
-                                  NativeWebRequest webRequest,
-                                  WebDataBinderFactory binderFactory) throws Exception {
-
+    public Object resolveArgument(
+            MethodParameter parameter,
+            ModelAndViewContainer mavContainer,
+            NativeWebRequest webRequest,
+            WebDataBinderFactory binderFactory
+    ) {
         HttpServletRequest request = (HttpServletRequest) webRequest.getNativeRequest();
-        Object provider = request.getAttribute(PROVIDER_ATTRIBUTE_KEY);
-        validateHasProvider(provider);
-        return provider;
-    }
-
-    private void validateHasProvider(Object provider) {
-        if (provider == null) {
+        try {
+            return request.getAttribute(USER_EMAIL_ATTRIBUTE_KEY);
+        } catch (NullPointerException e) {
             throw new ApisSecurityException(NO_AUTHENTICATED_USER);
         }
     }
