@@ -30,6 +30,7 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
+    @Bean
     @ConditionalOnMissingBean
     public DateTimePicker dateTimePicker() {
         return new DateTimePicker();
