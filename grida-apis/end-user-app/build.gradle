@@ -60,7 +60,7 @@ bootJar {
     enabled = true
     dependsOn asciidoctor
     from("${asciidoctor.outputDir}") {
-        into 'statc/docs'
+        into 'static/docs'
     }
 }
 
