@@ -36,13 +36,13 @@ public abstract class KeywordBuilder {
 
     protected abstract Set<String> allKeys();
 
-    public static EmotionAnalysisKeywordBuilder emotionAnalysis() {
-        return new EmotionAnalysisKeywordBuilder();
-    }
-
-    public static DiaryImageGenerateKeywordBuilder diaryImageGenerate() {
-        return new DiaryImageGenerateKeywordBuilder();
-    }
+//    public static EmotionAnalysisKeywordBuilder emotionAnalysis() {
+//        return new EmotionAnalysisKeywordBuilder();
+//    }
+//
+//    public static DiaryImageGenerateKeywordBuilder diaryImageGenerate() {
+//        return new DiaryImageGenerateKeywordBuilder();
+//    }
 
     public static ProfileImageGenerateKeywordBuilder profileImageGenerate() {
         return new ProfileImageGenerateKeywordBuilder();
