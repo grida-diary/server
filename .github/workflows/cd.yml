@@ -69,7 +69,7 @@ jobs:
         with:
           host: ${{ secrets.REMOTE_HOST }}
           username: ${{ secrets.REMOTE_USERNAME }}
-          key: ${{ secrets.SSH_KEY }}
+          password: ${{ secrets.REMOTE_PASSWORD }}
           script: |
             sudo killall containerd-shim-runc-v2
             sudo docker-compose -f ${{ secrets.REMOTE_DOCKER_COMPOSE_PATH }} down --rmi all
