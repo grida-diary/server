@@ -1,4 +1,4 @@
-name: deploy all grida apis
+name: deploy grida apis
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  deploy:
+  setup:
     runs-on: ubuntu-latest
 
     steps:
@@ -16,7 +16,6 @@ jobs:
           distribution: 'corretto'
           java-version: '17'
 
-      # login docker
       - name: login docker
         uses: docker/login-action@v2
         with:
@@ -26,7 +25,9 @@ jobs:
       - name: clean gradle projects
         run: ./gradlew clean
 
-      # build and push
+  build:
+    runs-on: ubuntu-latest
+    steps:
       ## sso-app
       - name: gradle build sso-application
         run: ./gradlew grida-apis:sso-app:build
@@ -63,7 +64,9 @@ jobs:
           push: true
           tags: wwan13/grida-trial-user-app:prod
 
-      # deploy
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
       - name: deploy to instance
         uses: appleboy/ssh-action@master
         with:
