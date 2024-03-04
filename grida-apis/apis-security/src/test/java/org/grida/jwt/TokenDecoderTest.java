@@ -42,7 +42,7 @@ class TokenDecoderTest {
         TokenGenerator tokenGenerator = new TokenGenerator(jwtProperties(), key(), new StubDateTimePicker());
         TokenType tokenType = TokenType.ACCESS_TOKEN;
         TokenClaims tokenClaims = new TokenClaims("email@email.com", "ROLE_USER");
-        String jwtToken = tokenGenerator.createToken(tokenType, tokenClaims);
+        String jwtToken = tokenGenerator.generate(tokenType, tokenClaims);
 
         TokenDecoder tokenDecoder = new TokenDecoder(key());
 

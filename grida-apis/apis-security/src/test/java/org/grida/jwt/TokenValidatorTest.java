@@ -55,7 +55,7 @@ class TokenValidatorTest {
     void 토큰이_만료_되었다면_예외가_발생한다() {
         // given
         TokenValidator tokenValidator = new TokenValidator(key());
-        String token = tokenGenerator().createToken(TokenType.ACCESS_TOKEN, new TokenClaims("email@email.com", "ROLE_USER"));
+        String token = tokenGenerator().generate(TokenType.ACCESS_TOKEN, new TokenClaims("email@email.com", "ROLE_USER"));
 
         // when, then
         assertThatThrownBy(() -> tokenValidator.validateToken(token))

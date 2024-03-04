@@ -21,7 +21,7 @@ public class TokenGenerator {
     private final Key key;
     private final DateTimePicker dateTimePicker;
 
-    public String createToken(TokenType type, TokenClaims claims) {
+    public String generate(TokenType type, TokenClaims claims) {
         LocalDateTime now = dateTimePicker.now();
         LocalDateTime expiration = now.plusSeconds(type.getValidityInSeconds(jwtProperties));
 

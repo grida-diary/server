@@ -44,7 +44,7 @@ class TokenGeneratorTest {
         TokenClaims tokenClaims = new TokenClaims("email@email.com", "ROLE_USER");
 
         // when
-        String jwtToken = tokenGenerator.createToken(tokenType, tokenClaims);
+        String jwtToken = tokenGenerator.generate(tokenType, tokenClaims);
 
         // then
         assertThat(jwtToken.length()).isGreaterThan(1);
