@@ -14,9 +14,7 @@ import static org.springframework.http.HttpMethod.*;
 
 public class AuthorizedRequestBuilder {
 
-    private static final Set<HttpMethod> allHttpMethods = Set.of(GET, POST, PATCH, PUT, DELETE);
-
-    private final Map<MethodAndPattern, Set<String>> patternAndRoles;
+    private final Map<MethodAndPattern, Roles> patternAndRoles;
 
     private AuthorizedRequestBuilder() {
         this.patternAndRoles = new LinkedHashMap<>();
@@ -29,7 +27,7 @@ public class AuthorizedRequestBuilder {
     public AuthorizedRequestBuilder antMatchers(
             Set<HttpMethod> httpMethods,
             Set<String> patterns,
-            Set<String> hasRoles
+            Roles hasRoles
     ) {
         patterns.forEach(pattern -> {
             patternAndRoles.put(new MethodAndPattern(httpMethods, pattern), hasRoles);
@@ -50,18 +48,20 @@ public class AuthorizedRequestBuilder {
         private Support() {
         }
 
-        public static Set<String> permitAll() {
-            return Set.of(PERMIT_ALL.getPattern());
+        public static Roles permitAll() {
+            return new Roles(Set.of(PERMIT_ALL.getPattern()));
         }
 
-        public static Set<String> authenticated() {
-            return Set.of(AUTHENTICATED.getPattern());
+        public static Roles authenticated() {
+            return new Roles(Set.of(AUTHENTICATED.getPattern()));
         }
 
-        public static Set<String> hasRoles(Object... roles) {
-            return Arrays.stream(roles)
-                    .map(Object::toString)
-                    .collect(Collectors.toSet());
+        public static Roles hasRoles(Object... roles) {
+            return new Roles(
+                    Arrays.stream(roles)
+                            .map(Object::toString)
+                            .collect(Collectors.toSet())
+            );
         }
 
         public static Set<HttpMethod> httpMethods(HttpMethod... methods) {
@@ -69,7 +69,7 @@ public class AuthorizedRequestBuilder {
         }
 
         public static Set<HttpMethod> allHttpMethods() {
-            return allHttpMethods;
+            return Set.of(GET, POST, PATCH, PUT, DELETE);
         }
 
         public static Set<String> uriPatterns(String... uriPattern) {
