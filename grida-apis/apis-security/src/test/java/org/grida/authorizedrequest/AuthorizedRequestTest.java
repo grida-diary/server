@@ -72,7 +72,7 @@ class AuthorizedRequestTest {
         AuthorizedRequest authorizedRequest = createElsePermitRequestMatcher();
 
         // when
-        boolean result = authorizedRequest.matches(method, requestUri, role);
+        boolean result = authorizedRequest.isAccessibleRequest(method, requestUri, role);
 
         // then
         assertThat(result).isEqualTo(expected);
@@ -89,7 +89,7 @@ class AuthorizedRequestTest {
         AuthorizedRequest authorizedRequest = createElsePermitRequestMatcher();
 
         // when
-        boolean result = authorizedRequest.matches("POST", requestUri, role);
+        boolean result = authorizedRequest.isAccessibleRequest("POST", requestUri, role);
 
         // then
         assertThat(result).isEqualTo(expected);
@@ -103,7 +103,7 @@ class AuthorizedRequestTest {
         String role = "ROLE_USER";
 
         // when
-        boolean result = authorizedRequest.matches("POST", requestUri, role);
+        boolean result = authorizedRequest.isAccessibleRequest("POST", requestUri, role);
 
         // then
         assertThat(result).isTrue();
@@ -117,7 +117,7 @@ class AuthorizedRequestTest {
         String role = "ROLE_USER";
 
         // when
-        boolean result = authorizedRequest.matches("POST", requestUri, role);
+        boolean result = authorizedRequest.isAccessibleRequest("POST", requestUri, role);
 
         // then
         assertThat(result).isFalse();
