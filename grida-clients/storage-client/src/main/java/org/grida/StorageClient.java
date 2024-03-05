@@ -5,8 +5,8 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.grida.config.S3Properties;
-import org.grida.exception.AwsS3ClientException;
+import org.grida.config.StorageProperties;
+import org.grida.exception.StorageClientException;
 import org.grida.model.FileData;
 import org.springframework.stereotype.Component;
 
@@ -19,14 +19,14 @@ import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import static org.grida.exception.AwsS3ClientErrorCode.*;
+import static org.grida.exception.StorageClientErrorCode.*;
 
 @Component
 @RequiredArgsConstructor
 @Slf4j
-public class S3Client {
+public class StorageClient {
 
-    private final S3Properties properties;
+    private final StorageProperties properties;
     private final AmazonS3 amazonS3;
 
     public void upload(String imageUrl, FileData fileData) {
@@ -39,7 +39,7 @@ public class S3Client {
             amazonS3.putObject(properties.getBucket(), fileData.getFilePath(), imageInputStream, metadata);
         } catch (AmazonClientException e) {
             log.error("Fail to upload {}", fileData.getFilePath());
-            throw new AwsS3ClientException(IMAGE_UPLOAD_FAIL);
+            throw new StorageClientException(IMAGE_UPLOAD_FAIL);
         }
     }
 
@@ -52,10 +52,10 @@ public class S3Client {
             return new ByteArrayInputStream(outputStream.toByteArray());
         } catch (MalformedURLException e) {
             log.error("{} is invalid image URL", imageUrl);
-            throw new AwsS3ClientException(INVALID_IMAGE_URL);
+            throw new StorageClientException(INVALID_IMAGE_URL);
         } catch (IOException | IllegalArgumentException e) {
             log.error("No readable image in URL {}", imageUrl);
-            throw new AwsS3ClientException(CANNOT_READ_IMAGE);
+            throw new StorageClientException(CANNOT_READ_IMAGE);
         }
     }
 }

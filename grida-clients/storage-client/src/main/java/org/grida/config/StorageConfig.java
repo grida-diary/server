@@ -11,10 +11,10 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @ConfigurationPropertiesScan(basePackages = "org.grida")
-public class S3Config {
+public class StorageConfig {
 
     @Bean
-    public AmazonS3 amazonS3Client(S3Properties properties) {
+    public AmazonS3 amazonS3Client(StorageProperties properties) {
         AWSCredentials credentials = new BasicAWSCredentials(properties.getAccessKey(), properties.getSecretKey());
 
         return AmazonS3ClientBuilder

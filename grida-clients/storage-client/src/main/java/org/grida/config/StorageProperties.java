@@ -9,7 +9,7 @@ import org.springframework.boot.context.properties.ConstructorBinding;
 @RequiredArgsConstructor
 @ConstructorBinding
 @ConfigurationProperties(prefix = "storage.aws")
-public class S3Properties {
+public class StorageProperties {
 
     private final String accessKey;
     private final String secretKey;

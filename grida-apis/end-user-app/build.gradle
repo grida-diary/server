@@ -20,7 +20,7 @@ dependencies {
     // module dependencies
     implementation project(':grida-apis:apis-core')
     implementation project(':grida-apis:apis-security')
-    implementation project(':grida-clients:awss3-client')
+    implementation project(':grida-clients:storage-client')
     implementation project(':grida-clients:cdn-client')
     implementation project(':grida-domains:domain')
     runtimeOnly project(':grida-domains:domain-rds')

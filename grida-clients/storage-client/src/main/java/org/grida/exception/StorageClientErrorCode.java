@@ -7,7 +7,7 @@ import static org.grida.http.HttpStatusCode.INTERNAL_SERVER_ERROR;
 
 @Getter
 @RequiredArgsConstructor
-public enum AwsS3ClientErrorCode implements ErrorCode {
+public enum StorageClientErrorCode implements ErrorCode {
 
     INVALID_IMAGE_URL(INTERNAL_SERVER_ERROR, "지원하는 이미지 URL 형식이 아닙니다."),
     CANNOT_READ_IMAGE(INTERNAL_SERVER_ERROR, "URL 에서 이미지를 읽을 수 없습니다."),

@@ -4,11 +4,11 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest(classes = {S3Properties.class})
-class S3PropertiesTest {
+@SpringBootTest(classes = {StorageProperties.class})
+class StoragePropertiesTest {
 
     @Autowired
-    S3Properties s3Properties;
+    StorageProperties storageProperties;
 
     @Test
     void yml_값을_불러올_수_있다() {
@@ -18,6 +18,6 @@ class S3PropertiesTest {
 
         // then
 //        assertThat(s3)
-        System.out.println(s3Properties.getAccessKey());
+        System.out.println(storageProperties.getAccessKey());
     }
 }

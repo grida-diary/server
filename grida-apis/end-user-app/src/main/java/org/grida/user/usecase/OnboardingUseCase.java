@@ -1,7 +1,7 @@
 package org.grida.user.usecase;
 
 import lombok.RequiredArgsConstructor;
-import org.grida.S3Client;
+import org.grida.StorageClient;
 import org.grida.base.ImageMetaData;
 import org.grida.domain.user.UserService;
 import org.grida.domain.user.UserWithImageService;
@@ -21,7 +21,7 @@ public class OnboardingUseCase {
     private final UserService userService;
     private final UserWithImageService userWithImageService;
     private final ProfileImageGenerator profileImageGenerator;
-    private final S3Client s3Client;
+    private final StorageClient storageClient;
 
     public UserEmailResponse execute(String userEmail, ProfileImageRequest request) {
         validateAlreadyCompleteOnboarding(userEmail);
@@ -46,6 +46,6 @@ public class OnboardingUseCase {
                 .directory(generatedImage.directory())
                 .extension(generatedImage.extension())
                 .build();
-        s3Client.upload(generatedImage.url(), fileData);
+        storageClient.upload(generatedImage.url(), fileData);
     }
 }

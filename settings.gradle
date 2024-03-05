@@ -8,7 +8,7 @@ include 'grida-apis:end-user-app'
 include 'grida-apis:sso-app'
 
 include 'grida-clients'
-include 'grida-clients:awss3-client'
+include 'grida-clients:storage-client'
 include 'grida-clients:cdn-client'
 
 include 'grida-domains'
