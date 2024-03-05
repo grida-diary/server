@@ -89,7 +89,7 @@ public class ApIExceptionHandler {
     @ExceptionHandler(BaseException.class)
     private ResponseEntity<ApiResponse> handleBusinessException(BaseException e) {
         ErrorCode errorCode = e.getErrorCode();
-        return ResponseEntity.internalServerError()
+        return ResponseEntity.status(errorCode.getHttpStatus())
                 .body(ApiResponse.error(getCause(e), errorCode.name(), e.getErrorMessage()));
     }
 
