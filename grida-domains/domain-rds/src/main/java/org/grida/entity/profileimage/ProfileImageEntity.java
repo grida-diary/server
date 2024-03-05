@@ -1,4 +1,4 @@
-package org.grida.entity.userimage;
+package org.grida.entity.profileimage;
 
 import lombok.*;
 import org.grida.entity.base.BaseEntity;
@@ -6,7 +6,6 @@ import org.grida.entity.base.BaseEntity;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity

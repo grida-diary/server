@@ -1,4 +1,4 @@
-package org.grida.entity.userimage;
+package org.grida.entity.profileimage;
 
 import lombok.RequiredArgsConstructor;
 import org.grida.domain.user.ImageDetail;

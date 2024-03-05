@@ -1,9 +1,8 @@
-package org.grida.entity.userimage;
+package org.grida.entity.profileimage;
 
 import org.grida.domain.core.DefaultDateTime;
 import org.grida.domain.user.ImageDetail;
 import org.grida.domain.user.ProfileImage;
-import org.grida.entity.user.UserEntity;
 
 import java.time.LocalDateTime;
 
