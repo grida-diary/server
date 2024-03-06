@@ -74,6 +74,7 @@ jobs:
           username: ${{ secrets.REMOTE_USERNAME }}
           password: ${{ secrets.REMOTE_PASSWORD }}
           script: |
+            sudo killall mysqld 
             sudo killall containerd-shim-runc-v2
             sudo docker-compose -f ${{ secrets.REMOTE_DOCKER_COMPOSE_PATH }} down --rmi all
             sudo docker-compose -f ${{ secrets.REMOTE_DOCKER_COMPOSE_PATH }} up -d
