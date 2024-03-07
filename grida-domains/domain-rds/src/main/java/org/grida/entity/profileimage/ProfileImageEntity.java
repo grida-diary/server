@@ -5,11 +5,12 @@ import org.grida.entity.base.BaseEntity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Index;
 import javax.persistence.Table;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "profile_image")
+@Table(name = "profile_image", indexes = {@Index(name = "idx_user_email", columnList = "userEmail")})
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
