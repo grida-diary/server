@@ -42,7 +42,7 @@ public class UserWithImageService {
     public String refreshProfileImage(String userEmail, UserAppearance appearance, String imagePath) {
         validateCanRefresh(userEmail);
 
-        ImageDetail imageDetail = new ImageDetail(imagePath, true);
+        ImageDetail imageDetail = ImageDetail.activateImage(imagePath);
 
         return transactionHandler.execute(() -> {
             profileImageRepository.deactivateImage(userEmail, dateTimePicker.now());
