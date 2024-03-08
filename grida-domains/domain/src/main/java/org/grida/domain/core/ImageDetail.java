@@ -1,4 +1,4 @@
-package org.grida.domain.user;
+package org.grida.domain.core;
 
 public record ImageDetail(
         String imagePath,

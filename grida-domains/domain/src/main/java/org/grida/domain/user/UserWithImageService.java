@@ -2,6 +2,7 @@ package org.grida.domain.user;
 
 import lombok.RequiredArgsConstructor;
 import org.grida.datetime.DateTimePicker;
+import org.grida.domain.core.ImageDetail;
 import org.grida.exception.DomainException;
 import org.grida.transaction.TransactionHandler;
 import org.springframework.stereotype.Service;

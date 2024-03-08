@@ -1,5 +1,7 @@
 package org.grida.domain.user;
 
+import org.grida.domain.core.ImageDetail;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;

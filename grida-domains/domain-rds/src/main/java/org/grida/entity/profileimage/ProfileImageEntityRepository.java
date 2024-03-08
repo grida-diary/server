@@ -1,7 +1,7 @@
 package org.grida.entity.profileimage;
 
 import lombok.RequiredArgsConstructor;
-import org.grida.domain.user.ImageDetail;
+import org.grida.domain.core.ImageDetail;
 import org.grida.domain.user.ProfileImage;
 import org.grida.domain.user.ProfileImageRepository;
 import org.grida.exception.DomainRdsException;
