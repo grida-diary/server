@@ -1,8 +1,8 @@
 package org.grida.entity.profileimage;
 
-import org.grida.domain.core.DefaultDateTime;
 import org.grida.domain.core.ImageDetail;
 import org.grida.domain.user.ProfileImage;
+import org.grida.entity.base.BaseMapper;
 
 import java.time.LocalDateTime;
 
@@ -16,7 +16,7 @@ public class ProfileImageMapper {
                 entity.getId(),
                 entity.getUserEmail(),
                 new ImageDetail(entity.getImagePath(), entity.getIsActivate()),
-                new DefaultDateTime(entity.getCreatedAt(), entity.getLastModifiedAt())
+                BaseMapper.toDefaultDateTime(entity)
         );
     }
 

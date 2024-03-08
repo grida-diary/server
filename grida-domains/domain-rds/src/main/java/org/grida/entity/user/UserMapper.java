@@ -1,7 +1,9 @@
 package org.grida.entity.user;
 
-import org.grida.domain.core.DefaultDateTime;
-import org.grida.domain.user.*;
+import org.grida.domain.user.User;
+import org.grida.domain.user.UserAccount;
+import org.grida.domain.user.UserAppearance;
+import org.grida.entity.base.BaseMapper;
 
 import java.time.LocalDateTime;
 
@@ -12,7 +14,7 @@ public class UserMapper {
                 entity.getId(),
                 new UserAccount(entity.getRole(), entity.getEmail(), entity.getPassword(), entity.getNickname()),
                 new UserAppearance(entity.getAge(), entity.getGender(), entity.getHairStyle(), entity.getGlasses()),
-                new DefaultDateTime(entity.getCreatedAt(), entity.getLastModifiedAt())
+                BaseMapper.toDefaultDateTime(entity)
         );
     }
 
