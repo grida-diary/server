@@ -10,7 +10,7 @@ import javax.persistence.Table;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "diary_image", indexes = {@Index(name = "idx_diary_id", columnList = "userEmail")})
+@Table(name = "diary_image", indexes = {@Index(name = "idx_diary_id", columnList = "diary_id")})
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
@@ -37,5 +37,13 @@ public class DiaryImageEntity extends BaseEntity {
         this.diaryId = diaryId;
         this.imagePath = imagePath;
         this.isActivate = isActivate;
+    }
+
+    public void deactivate() {
+        this.isActivate = false;
+    }
+
+    public void activate() {
+        this.isActivate = true;
     }
 }
