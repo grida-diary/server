@@ -21,8 +21,28 @@ public class TransactionTemplateHandler implements TransactionHandler {
     }
 
     @Override
-    public <T> T readOnly(Supplier<T> supplier) {
-        transactionTemplate.setReadOnly(true);
+    public <T> T executeAsRequiresNew(Supplier<T> supplier) throws TransactionException {
+        transactionTemplate.setReadOnly(false);
+        transactionTemplate.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
         return transactionTemplate.execute(status -> supplier.get());
+    }
+
+    @Override
+    public void execute(Runnable runnable) throws TransactionException {
+        transactionTemplate.setReadOnly(false);
+        transactionTemplate.execute(status -> {
+            runnable.run();
+            return null;
+        });
+    }
+
+    @Override
+    public void executeAsRequiresNew(Runnable runnable) throws TransactionException {
+        transactionTemplate.setReadOnly(false);
+        transactionTemplate.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
+        transactionTemplate.execute(status -> {
+            runnable.run();
+            return null;
+        });
     }
 }
