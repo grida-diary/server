@@ -1,6 +1,7 @@
 package org.grida.entity.diary;
 
 import lombok.*;
+import org.grida.domain.diary.DiaryContents;
 import org.grida.entity.base.BaseEntity;
 
 import javax.persistence.Column;
@@ -42,5 +43,12 @@ public class DiaryEntity extends BaseEntity {
         this.targetDate = targetDate;
         this.content = content;
         this.imageRefreshChance = imageRefreshChance;
+    }
+
+    public long modifyContents(DiaryContents contents, LocalDateTime lastActionAt) {
+        this.content = contents.content();
+        this.targetDate = contents.targetDate();
+        this.lastModifiedAt = lastActionAt;
+        return id;
     }
 }

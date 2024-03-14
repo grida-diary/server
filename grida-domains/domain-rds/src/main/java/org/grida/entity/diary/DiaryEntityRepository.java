@@ -44,19 +44,18 @@ public class DiaryEntityRepository implements DiaryRepository {
     }
 
     @Override
-    public List<Diary> findAllByUserEmailAndTargetDateBetween(String userEmail, DateTimeRange range) {
+    public List<Long> findIdsByUserEmailAndTargetDateBetween(String userEmail, DateTimeRange range) {
         return entityManager.createQuery(
-                        "select d from DiaryEntity d " +
+                        "select d.id from DiaryEntity d " +
                                 "where d.userEmail = :userEmail " +
                                 "and d.targetDate between :start and :end " +
                                 "order by targetDate asc ",
-                        DiaryEntity.class
+                        Long.class
                 )
                 .setParameter("userEmail", userEmail)
                 .setParameter("start", range.start())
                 .setParameter("end", range.end())
                 .getResultStream()
-                .map(DiaryMapper::toDiary)
                 .toList();
     }
 
@@ -75,6 +74,13 @@ public class DiaryEntityRepository implements DiaryRepository {
                 .getResultStream()
                 .map(DiaryMapper::toDiary)
                 .toList();
+    }
+
+    @Override
+    @Transactional
+    public long modifyContents(long id, DiaryContents contents, LocalDateTime lastActionAt) {
+        DiaryEntity entity = findEntityById(id);
+        return entity.modifyContents(contents, lastActionAt);
     }
 
     @Override
