@@ -46,9 +46,14 @@ public class DiaryEntity extends BaseEntity {
     }
 
     public long modifyContents(DiaryContents contents, LocalDateTime lastActionAt) {
-        this.content = contents.content();
-        this.targetDate = contents.targetDate();
-        this.lastModifiedAt = lastActionAt;
+        content = contents.content();
+        targetDate = contents.targetDate();
+        lastModifiedAt = lastActionAt;
         return id;
+    }
+
+    public void useImageRefreshChange(LocalDateTime lastActionAt) {
+        imageRefreshChance -= 1;
+        lastModifiedAt = lastActionAt;
     }
 }

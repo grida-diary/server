@@ -77,10 +77,29 @@ public class DiaryEntityRepository implements DiaryRepository {
     }
 
     @Override
+    public int findImageRefreshChanceById(long id) {
+        return entityManager.createQuery(
+                        "select d.imageRefreshChance from DiaryEntity d " +
+                                "where d.id = :id",
+                        Integer.class
+                )
+                .setParameter("id", id)
+                .getResultStream()
+                .findFirst()
+                .orElseThrow(() -> new DomainRdsException(DIARY_NOT_FOUND));
+    }
+
+    @Override
     @Transactional
     public long modifyContents(long id, DiaryContents contents, LocalDateTime lastActionAt) {
         DiaryEntity entity = findEntityById(id);
         return entity.modifyContents(contents, lastActionAt);
+    }
+
+    @Override
+    public void useImageRefreshChance(long id, LocalDateTime lastActionAt) {
+        DiaryEntity entity = findEntityById(id);
+        entity.useImageRefreshChange(lastActionAt);
     }
 
     @Override

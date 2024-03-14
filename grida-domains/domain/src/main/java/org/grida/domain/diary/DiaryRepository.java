@@ -10,6 +10,8 @@ public interface DiaryRepository {
     Diary findById(long id);
     List<Long> findIdsByUserEmailAndTargetDateBetween(String userEmail, DateTimeRange range);
     List<Diary> findAllByUseEmailAndDiaryCursor(String userEmail, DiaryCursor cursor);
+    int findImageRefreshChanceById(long id);
     long modifyContents(long id, DiaryContents contents, LocalDateTime lastActionAt);
+    void useImageRefreshChance(long id, LocalDateTime lastActionAt);
     void delete(long id);
 }
