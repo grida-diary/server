@@ -2,8 +2,8 @@ package org.grida.processor;
 
 import lombok.RequiredArgsConstructor;
 import org.grida.client.image.OpenAiImageClient;
-import org.grida.client.image.dto.ImageRequestDto;
-import org.grida.client.image.dto.ImageResponseDto;
+import org.grida.client.image.dto.ImageGenerateRequest;
+import org.grida.client.image.dto.ImageResponse;
 import org.grida.config.OpenAiProperties;
 import org.grida.exception.DomainAiException;
 import org.grida.processor.imagegenerate.ImageGenerateProcessor;
@@ -26,23 +26,23 @@ public class OpenAiImageGenerateProcessor implements ImageGenerateProcessor {
     public ImageGenerateResult proceed(String prompt, int n) {
         validateNumberOfImages(n);
 
-        ImageRequestDto request = creatRequest(prompt, n);
-        ImageResponseDto response = imageClient.generateImage(request);
+        ImageGenerateRequest request = creatRequest(prompt, n);
+        ImageResponse response = imageClient.generateImage(request);
         return response.toResult();
+    }
+
+    private ImageGenerateRequest creatRequest(String prompt, int n) {
+        return ImageGenerateRequest.builder()
+                .model(properties.getImageModel())
+                .prompt(prompt)
+                .n(n)
+                .size(IMAGE_SIZE)
+                .build();
     }
 
     private void validateNumberOfImages(int n) {
         if (n < MIN_IMAGE_COUNT) {
             throw new DomainAiException(INVALID_IMAGE_COUNT, MIN_IMAGE_COUNT);
         }
-    }
-
-    private ImageRequestDto creatRequest(String prompt, int n) {
-        return ImageRequestDto.builder()
-                .model(properties.getImageModel())
-                .prompt(prompt)
-                .n(n)
-                .size(IMAGE_SIZE)
-                .build();
     }
 }

@@ -4,7 +4,7 @@ import org.grida.processor.imagegenerate.ImageGenerateResult;
 
 import java.util.List;
 
-public record ImageResponseDto(
+public record ImageResponse(
         List<ImageUrl> data
 ) {
 
