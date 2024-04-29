@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.grida.exception.DomainAiException;
-import org.grida.processor.emotionanalysis.DiaryAnalysisResult;
+import org.grida.processor.diaryanalyze.DiaryAnalyzeResult;
 
 import java.util.List;
 
@@ -24,11 +24,11 @@ public record ChatResponse(
         }
     }
 
-    public DiaryAnalysisResult toResult() {
+    public DiaryAnalyzeResult toResult() {
         String chatResult = choices.get(0).getMessageContent();
         ObjectMapper objectMapper = new ObjectMapper();
         try {
-            return objectMapper.readValue(chatResult, DiaryAnalysisResult.class);
+            return objectMapper.readValue(chatResult, DiaryAnalyzeResult.class);
         } catch (JsonProcessingException e) {
             log.error("Cannot parsing open ai chat result. Result is '{}'", chatResult);
             throw new DomainAiException(CANNOT_PARSING_CHAT_RESPONSE);
