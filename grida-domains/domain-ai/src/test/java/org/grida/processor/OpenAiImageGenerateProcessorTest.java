@@ -1,13 +1,14 @@
 package org.grida.processor;
 
 import org.grida.client.image.OpenAiImageClient;
-import org.grida.client.image.dto.ImageRequestDto;
-import org.grida.client.image.dto.ImageResponseDto;
+import org.grida.client.image.dto.ImageGenerateRequest;
+import org.grida.client.image.dto.ImageResponse;
 import org.grida.config.OpenAiProperties;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
+import org.springframework.util.MultiValueMap;
 
 import java.util.List;
 import java.util.stream.IntStream;
@@ -28,13 +29,19 @@ class OpenAiImageGenerateProcessorTest {
     static class StubImageClient implements OpenAiImageClient {
 
         @Override
-        public ImageResponseDto generateImage(ImageRequestDto imageGenerateRequestDto) {
-            List<ImageResponseDto.ImageUrl> imageUrls = IntStream.range(0, imageGenerateRequestDto.n())
-                    .mapToObj(n -> new ImageResponseDto.ImageUrl("imageUrl" + n))
+        public ImageResponse generateImage(ImageGenerateRequest imageGenerateRequestDto) {
+            List<ImageResponse.ImageUrl> imageUrls = IntStream.range(0, imageGenerateRequestDto.n())
+                    .mapToObj(n -> new ImageResponse.ImageUrl("imageUrl" + n))
                     .toList();
 
-            return new ImageResponseDto(imageUrls);
+            return new ImageResponse(imageUrls);
         }
+
+        @Override
+        public ImageResponse editImage(MultiValueMap<String, Object> imageEditRequest) {
+            return null;
+        }
+
     }
 
     @Test
