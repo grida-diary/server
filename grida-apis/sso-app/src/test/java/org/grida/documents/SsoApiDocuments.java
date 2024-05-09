@@ -9,7 +9,7 @@ import org.grida.dto.request.SignupRequest;
 import org.grida.dto.response.CheckEmailResponse;
 import org.grida.dto.response.GetRoleResponse;
 import org.grida.dto.response.LoginResponse;
-import org.grida.filter.UserEmailResolver;
+import org.grida.config.UserEmailResolver;
 import org.grida.usecase.CheckEmailUseCase;
 import org.grida.usecase.GetRoleUseCase;
 import org.grida.usecase.LoginUseCase;

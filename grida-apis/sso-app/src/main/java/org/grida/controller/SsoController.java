@@ -13,7 +13,7 @@ import org.grida.usecase.CheckEmailUseCase;
 import org.grida.usecase.GetRoleUseCase;
 import org.grida.usecase.LoginUseCase;
 import org.grida.usecase.SignupUseCase;
-import org.grida.util.RequestUserEmail;
+import org.grida.annotation.RequestUserEmail;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
