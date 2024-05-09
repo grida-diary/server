@@ -1,21 +1,23 @@
-package org.grida.filter;
+package org.grida.interceptor;
 
 import lombok.RequiredArgsConstructor;
+import org.grida.config.WebSecurityConfigurer;
 import org.grida.jwt.TokenClaims;
 import org.grida.jwt.TokenDecoder;
 import org.grida.jwt.TokenValidator;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
+import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
-import org.springframework.web.filter.OncePerRequestFilter;
+import org.springframework.web.servlet.HandlerInterceptor;
 
-import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.util.Optional;
 
+@Component
+@ConditionalOnBean(value = {WebSecurityConfigurer.class})
 @RequiredArgsConstructor
-public class DecodeTokenFilter extends OncePerRequestFilter {
+public class DecodeTokenInterceptor implements HandlerInterceptor {
 
     private static final String USER_EMAIL_ATTRIBUTE_KEY = "userEmail";
     private static final String USER_ROLE_ATTRIBUTE_KEY = "userRole";
@@ -27,18 +29,18 @@ public class DecodeTokenFilter extends OncePerRequestFilter {
     private final TokenValidator tokenValidator;
 
     @Override
-    protected void doFilterInternal(
+    public boolean preHandle(
             HttpServletRequest request,
             HttpServletResponse response,
-            FilterChain filterChain
-    ) throws ServletException, IOException {
+            Object handler
+    ) {
 
-        decodeToken(request).ifPresent((tokenClaims) -> {
+        decodeToken(request).ifPresent(tokenClaims -> {
             request.setAttribute(USER_EMAIL_ATTRIBUTE_KEY, tokenClaims.userEmail());
             request.setAttribute(USER_ROLE_ATTRIBUTE_KEY, tokenClaims.role());
         });
 
-        filterChain.doFilter(request, response);
+        return true;
     }
 
     private Optional<TokenClaims> decodeToken(HttpServletRequest request) {

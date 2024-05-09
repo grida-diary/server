@@ -1,21 +1,23 @@
-package org.grida.filter;
+package org.grida.interceptor;
 
 import lombok.RequiredArgsConstructor;
-import org.grida.exception.ApisSecurityException;
 import org.grida.authorizedrequest.AuthorizedRequest;
-import org.springframework.web.filter.OncePerRequestFilter;
+import org.grida.config.WebSecurityConfigurer;
+import org.grida.exception.ApisSecurityException;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
+import org.springframework.stereotype.Component;
+import org.springframework.web.servlet.HandlerInterceptor;
 
-import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
 import static org.grida.exception.ApisSecurityErrorCode.HTTP_FORBIDDEN;
 import static org.grida.exception.ApisSecurityErrorCode.HTTP_UNAUTHORIZED;
 
+@Component
+@ConditionalOnBean(value = {WebSecurityConfigurer.class})
 @RequiredArgsConstructor
-public class AuthenticationFilter extends OncePerRequestFilter {
+public class AuthenticationInterceptor implements HandlerInterceptor {
 
     private static final String USER_ROLE_ATTRIBUTE_KEY = "userRole";
     private static final String ANONYMOUS_ROLE = "ROLE_ANONYMOUS";
@@ -23,12 +25,11 @@ public class AuthenticationFilter extends OncePerRequestFilter {
     private final AuthorizedRequest authorizedRequest;
 
     @Override
-    protected void doFilterInternal(
+    public boolean preHandle(
             HttpServletRequest request,
             HttpServletResponse response,
-            FilterChain filterChain
-    ) throws ServletException, IOException {
-
+            Object handler
+    ) {
         String method = request.getMethod();
         String requestUri = request.getRequestURI();
         String role = readUserRole(request);
@@ -36,7 +37,7 @@ public class AuthenticationFilter extends OncePerRequestFilter {
         validateUnauthorized(method, requestUri, role);
         validateForbidden(method, requestUri, role);
 
-        filterChain.doFilter(request, response);
+        return true;
     }
 
     private String readUserRole(HttpServletRequest request) {
