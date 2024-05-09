@@ -3,7 +3,7 @@ package org.grida.documents;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.grida.dto.IdResponse;
 import org.grida.dto.UserEmailResponse;
-import org.grida.filter.UserEmailResolver;
+import org.grida.config.UserEmailResolver;
 import org.grida.user.controller.UserController;
 import org.grida.user.dto.request.ChangeActivateImageRequest;
 import org.grida.user.dto.request.ProfileImageRequest;
