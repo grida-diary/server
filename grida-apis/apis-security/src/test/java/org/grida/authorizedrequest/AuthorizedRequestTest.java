@@ -8,7 +8,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.grida.authorizedrequest.AuthorizedRequestBuilder.Support.*;
 import static org.springframework.http.HttpMethod.GET;
 import static org.springframework.http.HttpMethod.POST;
 
@@ -18,43 +17,44 @@ import static org.springframework.http.HttpMethod.POST;
 class AuthorizedRequestTest {
 
     private AuthorizedRequest createElsePermitRequestMatcher() {
-        return AuthorizedRequestBuilder.withPatterns()
-                .antMatchers(
-                        httpMethods(GET, POST),
-                        uriPatterns("/api/admin/**"),
-                        hasRoles("ROLE_ADMIN")
-                )
-                .antMatchers(
-                        allHttpMethods(),
-                        uriPatterns("/api/user/admin"),
-                        hasRoles("ROLE_ADMIN")
-                )
-                .antMatchers(
-                        allHttpMethods(),
-                        uriPatterns("/api/user/**"),
-                        hasRoles("ROLE_USER")
-                )
-                .antMatchers(
-                        allHttpMethods(),
-                        uriPatterns("/api/item/permit/**"),
-                        permitAll()
-                )
-                .antMatchers(
-                        allHttpMethods(),
-                        uriPatterns("/api/item/authenticated/**"),
-                        authenticated()
-                )
+        AuthorizedRequest authorizedRequest = AuthorizedRequest.of();
+        authorizedRequest
+                .uriPatterns("/api/admin/**")
+                .httpMethods(GET, POST)
+                .hasRoles("ROLE_ADMIN")
+
+                .uriPatterns("/api/user/admin")
+                .allHttpMethods()
+                .hasRoles("ROLE_ADMIN")
+
+                .uriPatterns("/api/user/**")
+                .allHttpMethods()
+                .hasRoles("ROLE_USER")
+
+                .uriPatterns("/api/item/permit/**")
+                .allHttpMethods()
+                .permitAll()
+
+                .uriPatterns("/api/item/authenticated/**")
+                .allHttpMethods()
+                .authenticated()
+
                 .elseRequestPermit();
+
+        return authorizedRequest;
     }
 
     private AuthorizedRequest createElseAuthenticatedRequestMatcher() {
-        return AuthorizedRequestBuilder.withPatterns()
-                .antMatchers(
-                        allHttpMethods(),
-                        uriPatterns("/api/member/**"),
-                        hasRoles("ROLE_ADMIN", "ROLE_USER")
-                )
+        AuthorizedRequest authorizedRequest = AuthorizedRequest.of();
+
+        authorizedRequest
+                .uriPatterns("/api/member/**")
+                .allHttpMethods()
+                .hasRoles("ROLE_ADMIN", "ROLE_USER")
+
                 .elseRequestAuthenticated();
+
+        return authorizedRequest;
     }
 
     @ParameterizedTest(name = "HttpMethod = {0}, RequestUri = {1}, Role = {2}, Expected = {3}")
