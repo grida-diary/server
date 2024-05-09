@@ -1,4 +1,4 @@
-package org.grida.util;
+package org.grida.annotation;
 
 import java.lang.annotation.*;
 

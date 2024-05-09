@@ -1,8 +1,9 @@
-package org.grida.filter;
+package org.grida.config;
 
 import org.grida.exception.ApisSecurityException;
-import org.grida.util.RequestUserEmail;
+import org.grida.annotation.RequestUserEmail;
 import org.springframework.core.MethodParameter;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.support.WebDataBinderFactory;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import static org.grida.exception.ApisSecurityErrorCode.NO_AUTHENTICATED_USER;
 
+@Component
 public class UserEmailResolver implements HandlerMethodArgumentResolver {
 
     private static final String USER_EMAIL_ATTRIBUTE_KEY = "userEmail";
