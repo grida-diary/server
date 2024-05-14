@@ -2,6 +2,7 @@ package org.grida.config;
 
 import org.grida.annotation.EnableWebSecurity;
 import org.grida.authorizedrequest.AuthorizedRequest;
+import org.grida.authorizedrequest.AuthorizedRequestFactory;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
@@ -9,8 +10,8 @@ import org.springframework.context.annotation.Configuration;
 public class SsoAppSecurityConfig implements WebSecurityConfigurer {
 
     @Override
-    public void addPatterns(AuthorizedRequest authorizedRequest) {
-        authorizedRequest
+    public void addPatterns(AuthorizedRequestFactory factory) {
+        factory
                 .uriPatterns("/docs/**")
                 .allHttpMethods()
                 .permitAll()

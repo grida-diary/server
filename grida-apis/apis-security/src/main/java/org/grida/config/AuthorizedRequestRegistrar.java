@@ -1,6 +1,8 @@
 package org.grida.config;
 
 import org.grida.authorizedrequest.AuthorizedRequest;
+import org.grida.authorizedrequest.AuthorizedRequestApplier;
+import org.grida.authorizedrequest.AuthorizedRequestFactory;
 import org.springframework.context.annotation.Bean;
 
 public class AuthorizedRequestRegistrar {
@@ -13,8 +15,8 @@ public class AuthorizedRequestRegistrar {
 
     @Bean
     public AuthorizedRequest authorizedRequest() {
-        AuthorizedRequest authorizedRequest = AuthorizedRequest.of();
-        configurer.addPatterns(authorizedRequest);
-        return authorizedRequest;
+        AuthorizedRequestFactory factory = AuthorizedRequestFactory.of();
+        configurer.addPatterns(factory);
+        return AuthorizedRequestApplier.apply(factory);
     }
 }

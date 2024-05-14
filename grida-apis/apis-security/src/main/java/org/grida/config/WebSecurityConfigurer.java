@@ -1,8 +1,8 @@
 package org.grida.config;
 
-import org.grida.authorizedrequest.AuthorizedRequest;
+import org.grida.authorizedrequest.AuthorizedRequestFactory;
 
 public interface WebSecurityConfigurer {
 
-    void addPatterns(AuthorizedRequest authorizedRequest);
+    void addPatterns(AuthorizedRequestFactory factory);
 }

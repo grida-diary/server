@@ -17,8 +17,8 @@ import static org.springframework.http.HttpMethod.POST;
 class AuthorizedRequestTest {
 
     private AuthorizedRequest createElsePermitRequestMatcher() {
-        AuthorizedRequest authorizedRequest = AuthorizedRequest.of();
-        authorizedRequest
+        AuthorizedRequestFactory factory = AuthorizedRequestFactory.of();
+        factory
                 .uriPatterns("/api/admin/**")
                 .httpMethods(GET, POST)
                 .hasRoles("ROLE_ADMIN")
@@ -41,20 +41,20 @@ class AuthorizedRequestTest {
 
                 .elseRequestPermit();
 
-        return authorizedRequest;
+        return AuthorizedRequestApplier.apply(factory);
     }
 
     private AuthorizedRequest createElseAuthenticatedRequestMatcher() {
-        AuthorizedRequest authorizedRequest = AuthorizedRequest.of();
+        AuthorizedRequestFactory factory = AuthorizedRequestFactory.of();
 
-        authorizedRequest
+        factory
                 .uriPatterns("/api/member/**")
                 .allHttpMethods()
                 .hasRoles("ROLE_ADMIN", "ROLE_USER")
 
                 .elseRequestAuthenticated();
 
-        return authorizedRequest;
+        return AuthorizedRequestApplier.apply(factory);
     }
 
     @ParameterizedTest(name = "HttpMethod = {0}, RequestUri = {1}, Role = {2}, Expected = {3}")
