@@ -14,13 +14,13 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @EnableSecureRequest
 @EnableJwtProvider
-public class SsoAppSecurityConfig implements SecureRequestConfigurer, JwtProviderConfigurer {
+public class EndUserAppSecurityConfig implements SecureRequestConfigurer, JwtProviderConfigurer {
 
     private final String secretKey;
     private final long accessTokenValidity;
     private final long refreshTokenValidity;
 
-    public SsoAppSecurityConfig(
+    public EndUserAppSecurityConfig(
             @Value("${JWT_SECRET_KEY}") String secretKey,
             @Value("${ACCESS_TOKEN_EXPIRED}") long accessTokenValidity,
             @Value("${REFRESH_TOKEN_EXPIRED}") long refreshTokenValidity

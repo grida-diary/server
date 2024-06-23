@@ -11,6 +11,9 @@ dependencies {
     // web
     implementation 'org.springframework.boot:spring-boot-starter-web'
 
+    // security
+    implementation 'com.github.wwan13:winter-security:0.0.5'
+
     // rest docs
     asciidoctorExt 'org.springframework.restdocs:spring-restdocs-asciidoctor'
 
@@ -19,7 +22,6 @@ dependencies {
 
     // module dependencies
     implementation project(':grida-apis:apis-core')
-    implementation project(':grida-apis:apis-security')
     implementation project(':grida-clients:storage-client')
     implementation project(':grida-clients:cdn-client')
     implementation project(':grida-domains:domain')

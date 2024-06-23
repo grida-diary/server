@@ -1,5 +1,6 @@
 package org.grida.controller;
 
+import io.wwan13.wintersecurity.resolve.RequestUserSubject;
 import lombok.RequiredArgsConstructor;
 import org.grida.dto.UserEmailResponse;
 import org.grida.dto.request.CheckEmailRequest;
@@ -13,7 +14,6 @@ import org.grida.usecase.CheckEmailUseCase;
 import org.grida.usecase.GetRoleUseCase;
 import org.grida.usecase.LoginUseCase;
 import org.grida.usecase.SignupUseCase;
-import org.grida.annotation.RequestUserEmail;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -47,7 +47,7 @@ public class SsoController {
     }
 
     @GetMapping("/role")
-    public ApiResponse getRole(@RequestUserEmail String userEmail) {
+    public ApiResponse getRole(@RequestUserSubject String userEmail) {
         GetRoleResponse response = getRoleUseCase.execute(userEmail);
         return ApiResponse.ok(response);
     }
