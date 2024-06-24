@@ -1,11 +1,4 @@
 dependencies {
-    // spring boot
-    implementation("org.springframework.boot:spring-boot-starter")
-
-    // lombok
-    compileOnly("org.projectlombok:lombok")
-    annotationProcessor("org.projectlombok:lombok")
-
     // jpa
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 
@@ -16,7 +9,6 @@ dependencies {
     testImplementation("com.h2database:h2")
 
     // module dependencies
-    implementation(project(":grida-common"))
     compileOnly(project(":grida-domains:domain"))
     testImplementation(project(":grida-domains:domain"))
 }

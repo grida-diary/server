@@ -40,12 +40,47 @@ subprojects {
     apply(plugin = "org.jlleitschuh.gradle.ktlint")
 
     dependencies {
-        // configuration
-        annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
-
         // test
         testImplementation("org.springframework.boot:spring-boot-starter-test")
         testImplementation("org.junit.jupiter:junit-jupiter")
+    }
+
+    if (name != "grida-common") {
+        dependencies {
+            // spring boot
+            implementation("org.springframework.boot:spring-boot-starter")
+
+            // properties
+            annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
+
+            // core module
+            implementation(project(":grida-common"))
+        }
+    }
+
+    val kotlinMigratedModules = listOf(
+        "grida-common",
+        "grida-clients:storage-client",
+        "grida-clients:storage-client"
+    )
+
+    if (kotlinMigratedModules.contains(name)) {
+        dependencies {
+            // kotlin annotation processor
+            kapt("org.springframework.boot:spring-boot-configuration-processor")
+
+            // kotlin test
+            testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
+            testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+            testImplementation("io.kotest:kotest-runner-junit5:5.7.2")
+            testImplementation("io.kotest:kotest-assertions-core:5.7.2")
+        }
+    } else {
+        dependencies {
+            // lombok
+            compileOnly("org.projectlombok:lombok")
+            annotationProcessor("org.projectlombok:lombok")
+        }
     }
 
     tasks {
