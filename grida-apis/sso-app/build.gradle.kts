@@ -13,7 +13,7 @@ dependencies {
     implementation("com.github.wwan13:winter-security:0.0.5")
 
     // module dependencies
-    implementation(project(":grida-core"))
+    implementation(project(":grida-common"))
     implementation(project(":grida-apis:apis-core"))
     implementation(project(":grida-domains:domain"))
     runtimeOnly(project(":grida-domains:domain-rds"))

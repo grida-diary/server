@@ -10,5 +10,5 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
 
     // core module
-    implementation(project(":grida-core"))
+    implementation(project(":grida-common"))
 }

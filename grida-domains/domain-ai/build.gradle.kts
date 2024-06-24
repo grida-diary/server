@@ -17,5 +17,5 @@ dependencies {
     // module dependencies
     compileOnly(project(":grida-domains:domain-image"))
     testImplementation(project(":grida-domains:domain-image"))
-    implementation(project(":grida-core"))
+    implementation(project(":grida-common"))
 }

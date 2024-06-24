@@ -16,7 +16,7 @@ dependencies {
     testImplementation("com.h2database:h2")
 
     // module dependencies
-    implementation(project(":grida-core"))
+    implementation(project(":grida-common"))
     compileOnly(project(":grida-domains:domain"))
     testImplementation(project(":grida-domains:domain"))
 }

@@ -16,4 +16,4 @@ include 'grida-domains:domain-rds'
 include 'grida-domains:domain-image'
 include 'grida-domains:domain-ai'
 
-include 'grida-core'
+include 'grida-common'

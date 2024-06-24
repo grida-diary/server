@@ -18,7 +18,7 @@ dependencies {
     testImplementation("io.mockk:mockk:1.12.4")
 
     // core module
-    implementation(project(":grida-core"))
+    implementation(project(":grida-common"))
 }
 
-tasks.register("prepareKotlinBuildScriptModel"){}
+tasks.register("prepareKotlinBuildScriptModel") {}

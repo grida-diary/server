@@ -7,5 +7,5 @@ dependencies {
     annotationProcessor("org.projectlombok:lombok")
 
     // core module
-    implementation(project(":grida-core"))
+    implementation(project(":grida-common"))
 }
