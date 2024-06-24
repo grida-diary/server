@@ -8,6 +8,7 @@ include 'grida-apis:sso-app'
 
 include 'grida-clients'
 include 'grida-clients:storage-client'
+include 'grida-clients:ai-client'
 
 include 'grida-domains'
 include 'grida-domains:domain'
