@@ -1,3 +1,6 @@
+plugins {
+    id("org.gradle.toolchains.foojay-resolver-convention") version "0.5.0"
+}
 rootProject.name = "grida"
 
 include("grida-apis")
@@ -16,4 +19,8 @@ include("grida-domains:domain-rds")
 include("grida-domains:domain-image")
 include("grida-domains:domain-ai")
 
+include("grida-core")
+include("grida-core:core-api")
+
 include("grida-common")
+include("grida-core")

@@ -17,8 +17,13 @@ java {
 
 allprojects {
     apply(plugin = "java")
+    apply(plugin = "org.jetbrains.kotlin.jvm")
+    apply(plugin = "org.jetbrains.kotlin.kapt")
+    apply(plugin = "org.jetbrains.kotlin.plugin.spring")
+    apply(plugin = "org.jetbrains.kotlin.plugin.jpa")
     apply(plugin = "org.springframework.boot")
     apply(plugin = "io.spring.dependency-management")
+    apply(plugin = "org.jlleitschuh.gradle.ktlint")
 
     group = "org.grida"
     version = "0.0.1-SNAPSHOT"
@@ -30,15 +35,6 @@ allprojects {
 }
 
 subprojects {
-    apply(plugin = "java")
-    apply(plugin = "org.jetbrains.kotlin.jvm")
-    apply(plugin = "org.jetbrains.kotlin.kapt")
-    apply(plugin = "org.jetbrains.kotlin.plugin.spring")
-    apply(plugin = "org.jetbrains.kotlin.plugin.jpa")
-    apply(plugin = "org.springframework.boot")
-    apply(plugin = "io.spring.dependency-management")
-    apply(plugin = "org.jlleitschuh.gradle.ktlint")
-
     dependencies {
         // test
         testImplementation("org.springframework.boot:spring-boot-starter-test")
@@ -60,8 +56,9 @@ subprojects {
 
     val kotlinMigratedModules = listOf(
         "grida-common",
-        "grida-clients:storage-client",
-        "grida-clients:storage-client"
+        "storage-client",
+        "ai-client",
+        "core-api"
     )
 
     if (kotlinMigratedModules.contains(name)) {
