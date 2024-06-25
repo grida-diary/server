@@ -1,4 +1,4 @@
-package io.wwan13.aiclient.config
+package org.grida.aiclient.config
 
 import feign.RequestInterceptor
 import org.springframework.beans.factory.annotation.Value

@@ -1,4 +1,4 @@
-package io.wwan13.aiclient.chat
+package org.grida.aiclient.chat
 
 data class ChatCompletionRequest(
     val model: String? = DEFAULT_CHAT_COMPLETION_MODEL,

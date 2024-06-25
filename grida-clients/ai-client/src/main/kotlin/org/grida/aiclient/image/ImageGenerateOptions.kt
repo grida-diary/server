@@ -1,4 +1,4 @@
-package io.wwan13.aiclient.image
+package org.grida.aiclient.image
 
 const val DEFAULT_IMAGE_GENERATE_MODEL = "dall-e-3"
 const val DEFAULT_IMAGE_GENERATE_N = 1

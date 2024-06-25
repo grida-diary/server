@@ -1,4 +1,4 @@
-package io.wwan13.aiclient.image
+package org.grida.aiclient.image
 
 data class ImageGenerateRequest(
     val model: String? = DEFAULT_IMAGE_GENERATE_MODEL,

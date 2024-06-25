@@ -1,6 +1,6 @@
-package io.wwan13.aiclient.chat
+package org.grida.aiclient.chat
 
-import io.wwan13.aiclient.config.AiClientConfig
+import org.grida.aiclient.config.AiClientConfig
 import org.springframework.cloud.openfeign.FeignClient
 import org.springframework.web.bind.annotation.PostMapping
 

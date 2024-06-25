@@ -1,6 +1,6 @@
-package io.wwan13.aiclient.image
+package org.grida.aiclient.image
 
-import io.wwan13.aiclient.config.AiClientConfig
+import org.grida.aiclient.config.AiClientConfig
 import org.springframework.cloud.openfeign.FeignClient
 import org.springframework.web.bind.annotation.PostMapping
 
