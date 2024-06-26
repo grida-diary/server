@@ -58,11 +58,15 @@ subprojects {
         "grida-common",
         "storage-client",
         "ai-client",
-        "core-api"
+        "core-api",
+        "database-rds"
     )
 
     if (kotlinMigratedModules.contains(name)) {
         dependencies {
+            // kotlin reflect
+            implementation("org.jetbrains.kotlin:kotlin-reflect")
+
             // kotlin annotation processor
             kapt("org.springframework.boot:spring-boot-configuration-processor")
 

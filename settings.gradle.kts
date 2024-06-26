@@ -22,5 +22,8 @@ include("grida-domains:domain-ai")
 include("grida-core")
 include("grida-core:core-api")
 
+include("grida-database")
+include("grida-database:database-rds")
+
 include("grida-common")
 include("grida-core")
