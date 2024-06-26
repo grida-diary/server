@@ -3,28 +3,20 @@ package org.grida.api
 import org.grida.exception.GridaException
 import java.time.LocalDateTime
 
-open class ApiResponse(
+data class ApiResponse<T> private constructor(
     val status: ApiStatus,
+    val data: T? = null,
     val timestamp: LocalDateTime = LocalDateTime.now(),
 ) {
     companion object {
-        fun <T> success(data: T): ApiResponse = SuccessResponse(data)
+        fun <T> success(data: T): ApiResponse<T> = ApiResponse(ApiStatus.SUCCESS, data)
 
-        fun <T> success(
-            data: T,
-            message: String,
-        ): ApiResponse = SuccessResponse(data, message)
+        fun success(): ApiResponse<Any> = ApiResponse(ApiStatus.SUCCESS)
 
-        fun success(): ApiResponse = SuccessResponse<String>()
+        fun id(id: Long): ApiResponse<IdResponse> = ApiResponse(ApiStatus.SUCCESS, IdResponse(id))
 
-        fun id(id: Long): ApiResponse = SuccessResponse(IdResponse(id))
-
-        fun error(
-            errorCode: String,
-            message: String,
-        ): ErrorResponse = ErrorResponse(errorCode, message)
-
-        fun error(exception: GridaException): ErrorResponse = ErrorResponse(exception.errorCode, exception.message)
+        fun error(exception: GridaException): ApiResponse<ErrorResponse> =
+            ApiResponse(ApiStatus.ERROR, ErrorResponse(exception.errorCode, exception.message))
     }
 }
 
@@ -33,16 +25,11 @@ enum class ApiStatus {
     ERROR,
 }
 
-data class SuccessResponse<T>(
-    val data: T? = null,
-    val message: String? = "Api 호출에 성공하였습니다.",
-) : ApiResponse(ApiStatus.SUCCESS)
+data class IdResponse(
+    val id: Long,
+)
 
 data class ErrorResponse(
     val errorCode: String,
-    val message: String? = "Api 호출에 실패하였습니다.",
-) : ApiResponse(ApiStatus.ERROR)
-
-data class IdResponse(
-    val id: Long,
+    val message: String,
 )

@@ -11,7 +11,7 @@ class ApiControllerAdvice {
 
     fun handleGridaException(
         e: GridaException
-    ): ResponseEntity<ErrorResponse> {
+    ): ResponseEntity<ApiResponse<ErrorResponse>> {
         val response = ApiResponse.error(e)
         return ResponseEntity.status(e.httpStatusCode).body(response)
     }
