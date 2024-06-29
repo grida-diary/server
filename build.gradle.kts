@@ -59,6 +59,7 @@ subprojects {
         "storage-client",
         "ai-client",
         "core-api",
+        "core-domain",
         "database-rds"
     )
 

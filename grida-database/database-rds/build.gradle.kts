@@ -6,7 +6,7 @@ allOpen {
 
 dependencies {
     // core-module
-    compileOnly(project(":grida-core:core-api"))
+    compileOnly(project(":grida-core:core-domain"))
 
     // jpa
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
