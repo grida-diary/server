@@ -1,9 +1,9 @@
-package org.grida.databaserds.transaction
+package org.grida.transaction
 
-import org.grida.coreapi.domain.support.TransactionHandler
-import org.grida.coreapi.domain.support.TransactionIsolationLevel
-import org.grida.coreapi.domain.support.TransactionPropagationLevel
-import org.grida.coreapi.exception.TransactionException
+import org.grida.exception.TransactionException
+import org.grida.support.transaction.TransactionHandler
+import org.grida.support.transaction.TransactionIsolationLevel
+import org.grida.support.transaction.TransactionPropagationLevel
 import org.springframework.transaction.support.TransactionTemplate
 
 class TransactionTemplateHandler(

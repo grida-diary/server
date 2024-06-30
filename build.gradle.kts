@@ -68,6 +68,9 @@ subprojects {
             // kotlin reflect
             implementation("org.jetbrains.kotlin:kotlin-reflect")
 
+            // kotlin logging
+            implementation("io.github.microutils:kotlin-logging:3.0.5")
+
             // kotlin annotation processor
             kapt("org.springframework.boot:spring-boot-configuration-processor")
 

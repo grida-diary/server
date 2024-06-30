@@ -1,7 +1,7 @@
 dependencies {
     // module dependencies
     implementation(project(":grida-core:core-domain"))
-    runtimeOnly(project(":grida-database:database-rds"))
+    implementation(project(":grida-database:database-rds"))
 
     // web
     implementation("org.springframework.boot:spring-boot-starter-web")
