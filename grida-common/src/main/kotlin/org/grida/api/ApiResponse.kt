@@ -17,6 +17,9 @@ data class ApiResponse<T> private constructor(
 
         fun error(exception: GridaException): ApiResponse<ErrorResponse> =
             ApiResponse(ApiStatus.ERROR, ErrorResponse(exception.errorCode, exception.message))
+
+        fun error(errorCode: String, message: String): ApiResponse<ErrorResponse> =
+            ApiResponse(ApiStatus.ERROR, ErrorResponse(errorCode, message))
     }
 }
 
