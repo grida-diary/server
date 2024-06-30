@@ -5,6 +5,7 @@ import org.grida.domain.user.User
 data class SignInRequest(
     val username: String,
     val password: String,
+    val passwordConfirm: String,
     val nickname: String
 ) {
     fun toUser(): User {
