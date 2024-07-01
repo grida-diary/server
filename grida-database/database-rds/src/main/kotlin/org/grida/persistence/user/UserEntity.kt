@@ -1,6 +1,6 @@
 package org.grida.persistence.user
 
-import org.grida.domain.base.Occurrence
+import org.grida.domain.base.Timestamp
 import org.grida.domain.user.Role
 import org.grida.domain.user.User
 import org.grida.persistence.base.BaseEntity
@@ -36,7 +36,7 @@ class UserEntity(
             password = password,
             role = role,
             nickname = nickname,
-            occurrence = Occurrence(createdAt, lastModifiedAt)
+            timestamp = Timestamp(createdAt, lastModifiedAt)
         )
     }
 
