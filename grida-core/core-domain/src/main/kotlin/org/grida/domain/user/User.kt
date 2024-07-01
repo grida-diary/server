@@ -1,10 +1,10 @@
 package org.grida.domain.user
 
-import org.grida.domain.base.Occurrence
+import org.grida.domain.base.Timestamp
 
 data class User(
     val id: Long = 0,
-    val occurrence: Occurrence = Occurrence(),
+    val timestamp: Timestamp = Timestamp(),
     val username: String,
     val password: String,
     val role: Role = Role.USER,
