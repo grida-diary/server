@@ -13,13 +13,18 @@ class UserEntityRepository(
 
     @Transactional
     override fun save(user: User): Long {
-        val createdUser = userJpaEntityRepository.save(UserEntity.from(user))
-        return createdUser.id
+        val userEntity = userJpaEntityRepository.save(UserEntity.from(user))
+        return userEntity.id
+    }
+
+    override fun findById(id: Long): User {
+        val userEntity = userJpaEntityRepository.findByIdOrException(id)
+        return userEntity.toUser()
     }
 
     override fun findByUsername(username: String): User {
-        val user = userJpaEntityRepository.findByUsernameOrException(username)
-        return user.toUser()
+        val userEntity = userJpaEntityRepository.findByUsernameOrException(username)
+        return userEntity.toUser()
     }
 
     override fun existsByUsername(username: String): Boolean {

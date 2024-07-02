@@ -1,8 +1,8 @@
 package org.grida.image
 
 data class ImageGenerateRequest(
-    val model: String? = DEFAULT_IMAGE_GENERATE_MODEL,
     val prompt: String,
+    val model: String? = DEFAULT_IMAGE_GENERATE_MODEL,
     val n: Int? = DEFAULT_IMAGE_GENERATE_N,
     val size: String? = DEFAULT_IMAGE_GENERATE_SIZE,
 )

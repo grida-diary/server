@@ -3,11 +3,13 @@ package org.grida.config
 import feign.RequestInterceptor
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan
+import org.springframework.cloud.openfeign.EnableFeignClients
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 
 @Configuration
 @ConfigurationPropertiesScan
+@EnableFeignClients(basePackages = ["org.grida"])
 class AiClientConfig(
     @Value("\${openai.secret-key}") val secretKey: String
 ) {
