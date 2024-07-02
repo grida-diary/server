@@ -36,7 +36,7 @@ class UserEntity(
             password = password,
             role = role,
             nickname = nickname,
-            timestamp = Timestamp(createdAt, lastModifiedAt)
+            timestamp = toTimeStamp()
         )
     }
 
