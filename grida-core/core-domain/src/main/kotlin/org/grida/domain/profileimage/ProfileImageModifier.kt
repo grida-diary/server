@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component
 
 @Component
 class ProfileImageModifier(
+    private val profileImageReader: ProfileImageReader,
     private val profileImageRepository: ProfileImageRepository
 ) {
 
@@ -25,12 +26,10 @@ class ProfileImageModifier(
     }
 
     @Transactional
-    fun modifyAsDeactivate(
-        userId: Long,
-        profileImageId: Long
-    ) {
-        validateIsOwner(profileImageId, userId)
-        profileImageRepository.updateStatus(profileImageId, ImageStatus.DEACTIVATE)
+    fun modifyOriginalProfileImageAsDeactivate(userId: Long) {
+        val originalProfileImage = profileImageReader.readActivateProfileImage(userId)
+        validateIsOwner(originalProfileImage.id, userId)
+        profileImageRepository.updateStatus(originalProfileImage.id, ImageStatus.DEACTIVATE)
     }
 
     private fun validateIsOwner(profileImageId: Long, userId: Long) {

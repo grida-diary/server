@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service
 @Service
 class ProfileImageService(
     private val profileImageAppender: ProfileImageAppender,
-    private val profileImageReader: ProfileImageReader,
     private val profileImageModifier: ProfileImageModifier,
     private val profileImageGenerator: ProfileImageGenerator
 ) {
@@ -29,9 +28,7 @@ class ProfileImageService(
         userId: Long,
         profileImageId: Long
     ) {
-        val originalProfileImage = profileImageReader.readActivateProfileImage(userId)
-        profileImageModifier.modifyAsDeactivate(userId, originalProfileImage.id)
-
+        profileImageModifier.modifyOriginalProfileImageAsDeactivate(userId)
         profileImageModifier.modifyAsActivate(userId, profileImageId)
     }
 }
