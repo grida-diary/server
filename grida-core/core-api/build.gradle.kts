@@ -6,6 +6,9 @@ dependencies {
     // web
     implementation("org.springframework.boot:spring-boot-starter-web")
 
+    // kotlin object mapper
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
+
     // security
     implementation("com.github.wwan13:winter-security:0.0.8")
 }

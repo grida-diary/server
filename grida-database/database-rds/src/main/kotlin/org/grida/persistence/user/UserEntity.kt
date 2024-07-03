@@ -1,6 +1,5 @@
 package org.grida.persistence.user
 
-import org.grida.domain.base.Timestamp
 import org.grida.domain.user.Role
 import org.grida.domain.user.User
 import org.grida.persistence.base.BaseEntity

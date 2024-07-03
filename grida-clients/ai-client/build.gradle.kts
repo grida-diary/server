@@ -4,8 +4,7 @@ dependencies {
     implementation("io.github.openfeign:feign-jackson:12.1")
 
     // jackson
-    implementation("com.fasterxml.jackson.core:jackson-databind:2.13.5")
-    implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.13.5")
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 }
 
 tasks.register("prepareKotlinBuildScriptModel") {}

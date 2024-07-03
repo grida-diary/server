@@ -1,16 +1,16 @@
 package org.grida.exception
 
 import org.grida.http.BAD_REQUEST
-import org.grida.http.INTERNAL_SERVER_ERROR
+import org.grida.http.FORBIDDEN
 
-class CoreApiException :
-    GridaException(INTERNAL_SERVER_ERROR, "CORE_API_0", "에러가 발생했습니다.")
+class NoSuchDataException :
+    GridaException(BAD_REQUEST, "CORE_400_1", "찾으려는 데이터가 없습니다.")
 
-class TransactionException :
-    GridaException(INTERNAL_SERVER_ERROR, "TRANSACTION_500_1", "트랜젝션 처리에 문제가 발생 하였습니다.")
-
-class UserNotExistsException :
-    GridaException(BAD_REQUEST, "USER_400_1", "해당하는 유저를 찾을 수 없습니다.")
+class AccessFailedException :
+    GridaException(FORBIDDEN, "ACCESS_403_1", "접근 권한이 없습니다.")
 
 class UnusableUsernameException :
     GridaException(BAD_REQUEST, "USER_400_3", "사용할 수 없는 username 입니다.")
+
+class AtcivateProfileImageAlreadyExistsException :
+    GridaException(BAD_REQUEST, "PROFILE_IMAGE_400_2", "이미 활성화된 프로필 이미지가 존재합니다.")
