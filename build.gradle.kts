@@ -10,9 +10,8 @@ plugins {
     id("org.jlleitschuh.gradle.ktlint") version "10.2.0"
 }
 
-java {
-    sourceCompatibility = JavaVersion.VERSION_17
-    targetCompatibility = JavaVersion.VERSION_17
+kotlin {
+    jvmToolchain(17)
 }
 
 allprojects {
@@ -35,6 +34,11 @@ allprojects {
 }
 
 subprojects {
+    java {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
+
     dependencies {
         // test
         testImplementation("org.springframework.boot:spring-boot-starter-test")
@@ -45,9 +49,6 @@ subprojects {
         dependencies {
             // spring boot
             implementation("org.springframework.boot:spring-boot-starter")
-
-            // properties
-            annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
 
             // core module
             implementation(project(":grida-common"))
@@ -70,6 +71,8 @@ subprojects {
 
             // kotlin logging
             implementation("io.github.microutils:kotlin-logging:3.0.5")
+
+            annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
 
             // kotlin annotation processor
             kapt("org.springframework.boot:spring-boot-configuration-processor")
