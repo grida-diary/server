@@ -22,3 +22,14 @@ jwt:
   secret-key: ${JWT_SECRET_KEY}
   access-token-expired: ${ACCESS_TOKEN_EXPIRED}
   refresh-token-expired: ${REFRESH_TOKEN_EXPIRED}
+
+openai:
+  secret-key: ${OPEN_AI_SECRET_KEY}
+
+storage:
+  aws:
+    access-key: ${S3_ACCESS_KEY}
+    secret-key: ${S3_SECRET_KEY}
+    region: ${S3_REGION}
+    bucket: ${S3_BUCKET}
+    host: ${CDN_HOST}
