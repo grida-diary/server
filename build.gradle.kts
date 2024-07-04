@@ -82,12 +82,10 @@ subprojects {
             testRuntimeOnly("org.junit.platform:junit-platform-launcher")
             testImplementation("io.kotest:kotest-runner-junit5:5.7.2")
             testImplementation("io.kotest:kotest-assertions-core:5.7.2")
-        }
-    } else {
-        dependencies {
-            // lombok
-            compileOnly("org.projectlombok:lombok")
-            annotationProcessor("org.projectlombok:lombok")
+            testImplementation("io.mockk:mockk:1.12.4")
+            testImplementation("io.mockk:mockk-agent-jvm:1.12.4")
+            testImplementation("io.kotest:kotest-framework-datatest-jvm:5.7.2")
+            testImplementation("com.ninja-squad:springmockk:4.0.2")
         }
     }
 
