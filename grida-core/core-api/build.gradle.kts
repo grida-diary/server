@@ -1,5 +1,5 @@
 plugins {
-    id("com.epages.restdocs-api-spec") version "0.19.2"
+    id("com.epages.restdocs-api-spec") version "0.16.0"
 }
 
 dependencies {
@@ -18,5 +18,5 @@ dependencies {
 
     // api docs
     testImplementation("org.springframework.restdocs:spring-restdocs-mockmvc")
-    testImplementation("com.epages:restdocs-api-spec-mockmvc:0.19.2")
+    testImplementation("com.epages:restdocs-api-spec-mockmvc:0.16.0")
 }
