@@ -27,11 +27,11 @@ class AuthApiDocsTest : ApiDocsTest() {
             "access token", "refresh token"
         )
 
-        val api = api("POST", "/api/v1/auth/login") {
+        val api = api.post("/api/v1/auth/login") {
             requestBody(
                 LoginRequest(
-                    "username",
-                    "password"
+                    username = "username",
+                    password = "password"
                 )
             )
         }
