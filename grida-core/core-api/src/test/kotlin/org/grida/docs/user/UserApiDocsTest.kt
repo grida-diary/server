@@ -16,7 +16,7 @@ import org.junit.jupiter.api.Test
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 
 @WebMvcTest(controllers = [UserController::class])
-class UserApiDocsTestTest : ApiDocsTest() {
+class UserApiDocsTest : ApiDocsTest() {
 
     @MockkBean
     private lateinit var userService: UserService
