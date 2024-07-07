@@ -6,7 +6,6 @@ dependencies {
     // module dependencies
     implementation(project(":grida-core:core-domain"))
     implementation(project(":grida-database:database-rds"))
-    // testImplementation(project(":grida-support:api-docs"))
 
     // web
     implementation("org.springframework.boot:spring-boot-starter-web")
@@ -19,5 +18,5 @@ dependencies {
 
     // api docs
     testImplementation("org.springframework.restdocs:spring-restdocs-mockmvc")
-    testImplementation("com.github.wwan13.kotlin-dsl-rest-docs:impl-mockmvc:1.0.0")
+    testImplementation("com.github.wwan13.kotlin-dsl-rest-docs:impl-mockmvc:1.1.0")
 }
