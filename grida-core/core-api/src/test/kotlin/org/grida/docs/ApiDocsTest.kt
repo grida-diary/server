@@ -8,8 +8,8 @@ import io.wwan13.api.document.snippets.STRING
 import io.wwan13.api.document.snippets.isTypeOf
 import io.wwan13.api.document.snippets.whichMeans
 import io.wwan13.implmockmvc.MockMvcApiDocsTest
-import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.extension.ExtendWith
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.restdocs.RestDocumentationContextProvider
 import org.springframework.restdocs.RestDocumentationExtension
 import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation
@@ -27,24 +27,20 @@ import org.springframework.web.context.WebApplicationContext
 )
 abstract class ApiDocsTest : MockMvcApiDocsTest() {
 
-    protected lateinit var mockMvc: MockMvc
+    @Autowired
+    lateinit var webApplicationContext: WebApplicationContext
 
-    @BeforeEach
-    fun setUp(
-        webApplicationContext: WebApplicationContext,
-        restDocumentationContextProvider: RestDocumentationContextProvider
-    ) {
-        mockMvc = MockMvcBuilders
+    @Autowired
+    lateinit var restDocumentationContextProvider: RestDocumentationContextProvider
+
+    override fun mockMvc(): MockMvc {
+        return MockMvcBuilders
             .webAppContextSetup(webApplicationContext)
             .alwaysDo<DefaultMockMvcBuilder>(MockMvcResultHandlers.print())
             .apply<DefaultMockMvcBuilder>(
                 MockMvcRestDocumentation.documentationConfiguration(restDocumentationContextProvider)
             )
             .build()
-    }
-
-    override fun mockMvc(): MockMvc {
-        return mockMvc
     }
 
     override fun commonResponseField(): List<DocumentField> {
