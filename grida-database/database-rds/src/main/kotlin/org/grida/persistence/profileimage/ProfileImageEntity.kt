@@ -45,8 +45,6 @@ class ProfileImageEntity(
 
     var bodyShape: String,
 
-    var additional: String,
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     var user: UserEntity
@@ -66,8 +64,7 @@ class ProfileImageEntity(
                 age = age,
                 hairStyle = hairStyle,
                 glasses = glasses,
-                bodyShape = bodyShape,
-                additional = additional
+                bodyShape = bodyShape
             )
         )
     }
@@ -85,7 +82,6 @@ class ProfileImageEntity(
                 hairStyle = profileImage.appearance.hairStyle,
                 glasses = profileImage.appearance.glasses,
                 bodyShape = profileImage.appearance.bodyShape,
-                additional = profileImage.appearance.additional,
                 user = UserEntity.from(user)
             )
         }
