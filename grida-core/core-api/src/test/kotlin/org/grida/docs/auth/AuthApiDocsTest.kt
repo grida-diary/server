@@ -5,7 +5,6 @@ import io.mockk.every
 import io.wwan13.api.document.snippets.STRING
 import io.wwan13.api.document.snippets.isTypeOf
 import io.wwan13.api.document.snippets.whichMeans
-import io.wwan13.api.document.snippets.withTag
 import org.grida.auth.AuthTokenProvider
 import org.grida.auth.AuthTokens
 import org.grida.docs.ApiDocsTest
@@ -15,7 +14,7 @@ import org.junit.jupiter.api.Test
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 
 @WebMvcTest(controllers = [AuthController::class])
-class AuthApiDocsTest : ApiDocsTest() {
+class AuthApiDocsTest : ApiDocsTest("auth") {
 
     @MockkBean
     private lateinit var authTokenProvider: AuthTokenProvider
@@ -37,7 +36,7 @@ class AuthApiDocsTest : ApiDocsTest() {
         }
 
         documentFor(api, "login") {
-            about("로그인 API" withTag "auth")
+            summary("로그인 API")
             requestFields(
                 "username" isTypeOf STRING whichMeans "유저 아이디",
                 "password" isTypeOf STRING whichMeans "유저 비밀번호"
