@@ -1,12 +1,16 @@
 package org.grida.api
 
+import org.grida.datetime.DateTimePicker
+import org.grida.datetime.withDefaultFormat
 import org.grida.exception.GridaException
 import java.time.LocalDateTime
+import java.time.ZoneId
+import java.time.ZonedDateTime
 
 data class ApiResponse<T> private constructor(
     val status: ApiStatus,
     val data: T? = null,
-    val timestamp: LocalDateTime = LocalDateTime.now(),
+    val timestamp: String = DateTimePicker.now().withDefaultFormat(),
 ) {
     companion object {
         fun <T> success(data: T): ApiResponse<T> = ApiResponse(ApiStatus.SUCCESS, data)
