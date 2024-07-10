@@ -14,7 +14,12 @@ import org.junit.jupiter.api.Test
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 
 @WebMvcTest(controllers = [AuthController::class])
-class AuthApiDocsTest : ApiDocsTest("auth") {
+class AuthApiDocsTest(
+    private val authController: AuthController
+) : ApiDocsTest(
+    authController,
+    "auth"
+) {
 
     @MockkBean
     private lateinit var authTokenProvider: AuthTokenProvider
