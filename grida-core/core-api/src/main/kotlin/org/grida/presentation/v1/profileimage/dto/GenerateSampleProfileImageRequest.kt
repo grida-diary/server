@@ -8,10 +8,9 @@ data class GenerateSampleProfileImageRequest(
     val age: Int,
     val hairStyle: String,
     val glasses: String,
-    val bodyShape: String,
-    val additional: String
+    val bodyShape: String
 ) {
     fun toAppearance(): Appearance {
-        return Appearance(gender, age, hairStyle, glasses, bodyShape, additional)
+        return Appearance(gender, age, hairStyle, glasses, bodyShape)
     }
 }

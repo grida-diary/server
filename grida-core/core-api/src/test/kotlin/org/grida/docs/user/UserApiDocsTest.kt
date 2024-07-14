@@ -6,7 +6,6 @@ import io.wwan13.api.document.snippets.NUMBER
 import io.wwan13.api.document.snippets.STRING
 import io.wwan13.api.document.snippets.isTypeOf
 import io.wwan13.api.document.snippets.whichMeans
-import io.wwan13.api.document.snippets.withTag
 import io.wwan13.wintersecurity.passwordencoder.PasswordEncoder
 import org.grida.docs.ApiDocsTest
 import org.grida.domain.user.UserService
@@ -16,7 +15,12 @@ import org.junit.jupiter.api.Test
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 
 @WebMvcTest(controllers = [UserController::class])
-class UserApiDocsTest : ApiDocsTest() {
+class UserApiDocsTest(
+    private val userController: UserController
+) : ApiDocsTest(
+    userController,
+    "user"
+) {
 
     @MockkBean
     private lateinit var userService: UserService
@@ -42,7 +46,7 @@ class UserApiDocsTest : ApiDocsTest() {
         }
 
         documentFor(api, "sign-in") {
-            about("회원가입 API" withTag "user")
+            summary("회원가입 API")
             requestFields(
                 "username" isTypeOf STRING whichMeans "유저 아이디",
                 "password" isTypeOf STRING whichMeans "유저 비밀번호",

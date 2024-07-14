@@ -5,8 +5,7 @@ data class Appearance(
     val age: Int,
     val hairStyle: String,
     val glasses: String,
-    val bodyShape: String,
-    val additional: String
+    val bodyShape: String
 )
 
 enum class Gender {

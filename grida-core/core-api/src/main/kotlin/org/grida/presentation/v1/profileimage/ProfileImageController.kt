@@ -26,7 +26,7 @@ class ProfileImageController(
         return ApiResponse.id(profileImageId)
     }
 
-    @PostMapping("/set/{profileImageId}")
+    @PostMapping("/apply/{profileImageId}")
     fun applyProfileImage(
         @RequestUserId userId: Long,
         @PathVariable profileImageId: Long
