@@ -18,5 +18,5 @@ dependencies {
 
     // api docs
     testImplementation("org.springframework.restdocs:spring-restdocs-mockmvc")
-    testImplementation("com.github.wwan13.kotlin-dsl-rest-docs:impl-mockmvc:1.2.1")
+    testImplementation("com.github.wwan13.kotlin-dsl-rest-docs:impl-mockmvc:1.2.5")
 }

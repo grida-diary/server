@@ -2,6 +2,8 @@ package org.grida.docs.profileiamge
 
 import com.ninjasquad.springmockk.MockkBean
 import io.mockk.every
+import io.mockk.just
+import io.mockk.runs
 import io.wwan13.api.document.snippets.ENUM
 import io.wwan13.api.document.snippets.NUMBER
 import io.wwan13.api.document.snippets.STRING
@@ -31,7 +33,7 @@ class ProfileImageApiDocsTest(
         every { profileImageService.generateSampleProfileImage(any(), any()) } returns 1L
 
         val api = api.post("/api/v1/user/image") {
-            requestHeader("Authorization", "Bearer ")
+            withBearerToken()
             requestBody(
                 GenerateSampleProfileImageRequest(
                     gender = Gender.MAN,
@@ -63,9 +65,45 @@ class ProfileImageApiDocsTest(
 
     @Test
     fun `프로필 이미지 적용 API`() {
+        every { profileImageService.applyProfileImage(any(), any()) } just runs
+
+        val api = api.post("/api/v1/user/image/apply/{profileImageId}", 1L) {
+            withBearerToken()
+        }
+
+        documentFor(api, "apply-profile-image") {
+            summary("프로필 이미지 적용 API")
+            requestHeaders(
+                "Authorization" whichMeans "인증 토큰"
+            )
+            pathParameters(
+                "profileImageId" whichMeans "적용하려는 프로필 이미지 id"
+            )
+            responseFields(
+                "data.id" isTypeOf NUMBER whichMeans "적용된 유저의 id"
+            )
+        }
     }
 
     @Test
     fun `프로필 이미지 교체 API`() {
+        every { profileImageService.changeProfileImage(any(), any()) } returns Unit
+
+        val api = api.post("/api/v1/user/image/change/{profileImageId}", 1) {
+            withBearerToken()
+        }
+
+        documentFor(api, "change-profile-image") {
+            summary("프로필 이미지 교체 API")
+            requestHeaders(
+                "Authorization" whichMeans "인증 토큰"
+            )
+            pathParameters(
+                "profileImageId" whichMeans "교체하려는 프로필 이미지 id"
+            )
+            responseFields(
+                "data.id" isTypeOf NUMBER whichMeans "적용된 유저의 id"
+            )
+        }
     }
 }
