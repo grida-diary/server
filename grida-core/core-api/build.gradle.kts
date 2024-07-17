@@ -14,9 +14,19 @@ dependencies {
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 
     // security
-    implementation("com.github.wwan13:winter-security:0.0.8")
+    implementation("com.github.wwan13:winter-security:0.0.10")
 
     // api docs
     testImplementation("org.springframework.restdocs:spring-restdocs-mockmvc")
     testImplementation("com.github.wwan13.kotlin-dsl-rest-docs:impl-mockmvc:1.2.5")
+}
+
+tasks {
+    bootJar {
+        enabled = true
+    }
+
+    jar {
+        enabled = false
+    }
 }
