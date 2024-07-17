@@ -1,1 +1,0 @@
-operation::auth/role[snippets="http-request,http-response,request-headers,response-fields"]
