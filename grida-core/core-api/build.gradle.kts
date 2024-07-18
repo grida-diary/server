@@ -19,6 +19,10 @@ dependencies {
     // api docs
     testImplementation("org.springframework.restdocs:spring-restdocs-mockmvc")
     testImplementation("com.github.wwan13.kotlin-dsl-rest-docs:impl-mockmvc:1.2.5")
+
+    // monitoring
+    implementation("org.springframework.boot:spring-boot-starter-actuator")
+    implementation("io.micrometer:micrometer-registry-prometheus")
 }
 
 tasks {
