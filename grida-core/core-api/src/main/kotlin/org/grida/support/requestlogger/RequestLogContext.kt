@@ -1,6 +1,5 @@
 package org.grida.support.requestlogger
 
-import com.fasterxml.jackson.databind.ObjectMapper
 import org.springframework.http.HttpStatus
 import org.springframework.web.util.ContentCachingRequestWrapper
 import org.springframework.web.util.ContentCachingResponseWrapper
@@ -17,6 +16,10 @@ fun ContentCachingRequestWrapper.getRequestParams(): String {
     return "[$joinedHeaders]"
 }
 
+fun String.trimSpaceAndNewLine(): String {
+    return this.replace("\\n".toRegex(), "").replace(" ", "")
+}
+
 data class RequestLogContext(
     val method: String,
     val uri: String,
@@ -31,20 +34,17 @@ data class RequestLogContext(
     fun toLogMessage(): String {
         return """
             |
-            |
             |$method $uri - $status ($elapsed s)
             |>> REQUEST HEADERS : $requestHeaders
             |>> REQUEST PARAMS : $requestParams
             |>> REQUEST BODY : $requestBody
             |>> RESPONSE BODY : $responseBody
-            |
         """.trimMargin()
     }
 
     companion object {
 
         fun of(
-            objectMapper: ObjectMapper,
             request: ContentCachingRequestWrapper,
             response: ContentCachingResponseWrapper,
             elapsed: Double
@@ -56,8 +56,8 @@ data class RequestLogContext(
                 elapsed = elapsed,
                 requestHeaders = request.getRequestHeaders(),
                 requestParams = request.getRequestParams(),
-                requestBody = objectMapper.readTree(request.contentAsByteArray).toString(),
-                responseBody = objectMapper.readTree(response.contentAsByteArray).toString(),
+                requestBody = String(request.contentAsByteArray).trimSpaceAndNewLine(),
+                responseBody = String(response.contentAsByteArray).trimSpaceAndNewLine(),
             )
         }
     }
