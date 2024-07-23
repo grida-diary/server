@@ -25,7 +25,7 @@ class ApiControllerAdvice {
         e: GridaException
     ): ResponseEntity<ApiResponse<ErrorResponse>> {
         when (e.httpStatusCode) {
-            INTERNAL_SERVER_ERROR -> log.error(e.message)
+            INTERNAL_SERVER_ERROR -> log.error(e.stackTraceToString())
             else -> log.info(e.message)
         }
 
@@ -89,7 +89,7 @@ class ApiControllerAdvice {
     fun handleException(
         e: Exception
     ): ResponseEntity<ApiResponse<ErrorResponse>> {
-        log.error(e.message)
+        log.error(e.stackTraceToString())
         val response = ApiResponse.error("HTTP_500", "서버에서 알 수 없는 에러가 발생하였습니다.")
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response)
     }

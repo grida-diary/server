@@ -43,8 +43,7 @@ jobs:
         with:
           host: ${{ secrets.REMOTE_HOST }}
           username: ${{ secrets.REMOTE_USERNAME }}
-          password: ${{ secrets.REMOTE_PASSWORD }}
+          key: ${{ secrets.REMOTE_PRIVATE_KEY }}
+          port: 22
           script: |
-            sudo killall containerd-shim-runc-v2
-            sudo docker-compose -f ${{ secrets.REMOTE_DOCKER_COMPOSE_PATH }} down --rmi all
-            sudo docker-compose -f ${{ secrets.REMOTE_DOCKER_COMPOSE_PATH }} up -d
+            sudo ./remote/scripts/deploy.sh
