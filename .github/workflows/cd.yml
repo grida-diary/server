@@ -46,5 +46,4 @@ jobs:
           key: ${{ secrets.REMOTE_PRIVATE_KEY }}
           port: 22
           script: |
-            sudo docker-compose -f ${{ secrets.REMOTE_DOCKER_COMPOSE_PATH }} down --rmi all
-            sudo docker-compose -f ${{ secrets.REMOTE_DOCKER_COMPOSE_PATH }} up -d
+            sudo ./remote/scripts/deploy.sh
