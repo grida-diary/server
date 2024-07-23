@@ -12,5 +12,8 @@ class AccessFailedException :
 class UnusableUsernameException :
     GridaException(BAD_REQUEST, "USER_400_3", "사용할 수 없는 username 입니다.")
 
-class AtcivateProfileImageAlreadyExistsException :
+class ActivateProfileImageAlreadyExistsException :
     GridaException(BAD_REQUEST, "PROFILE_IMAGE_400_2", "이미 활성화된 프로필 이미지가 존재합니다.")
+
+class PasswordConfirmNotMatchedException :
+    GridaException(BAD_REQUEST, "USER_400_2", "비밀번호와 비밀번호 확인이 일치하지 않습니다.")

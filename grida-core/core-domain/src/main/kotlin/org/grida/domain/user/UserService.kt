@@ -1,23 +1,23 @@
 package org.grida.domain.user
 
-import org.grida.exception.UnusableUsernameException
 import org.springframework.stereotype.Service
 
 @Service
 class UserService(
-    private val userRepository: UserRepository,
+    private val userAppender: UserAppender,
+    private val userReader: UserReader,
+    private val userValidator: UserValidator
 ) {
 
     fun appendNormalUser(
         user: User,
         passwordConfirm: String
     ): Long {
-        if (userRepository.existsByUsername(user.username)) throw UnusableUsernameException()
-
-        return userRepository.save(user)
+        userValidator.validatePasswordConfirmMatches(user.password, passwordConfirm)
+        return userAppender.append(user)
     }
 
     fun findUser(username: String): User {
-        return userRepository.findByUsername(username)
+        return userReader.read(username)
     }
 }
