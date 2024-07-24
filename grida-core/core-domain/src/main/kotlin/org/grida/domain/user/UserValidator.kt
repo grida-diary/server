@@ -1,7 +1,8 @@
 package org.grida.domain.user
 
-import org.grida.exception.PasswordConfirmNotMatchedException
-import org.grida.exception.UnusableUsernameException
+import org.grida.error.GridaException
+import org.grida.error.PasswordConfirmNotMatched
+import org.grida.error.UnusableUsername
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 
@@ -15,14 +16,14 @@ class UserValidator(
         passwordConfirm: String
     ) {
         if (password != passwordConfirm) {
-            throw PasswordConfirmNotMatchedException()
+            throw GridaException(PasswordConfirmNotMatched)
         }
     }
 
     @Transactional
     fun validateUsernameAlreadyInUse(username: String) {
         if (userRepository.existsByUsername(username)) {
-            throw UnusableUsernameException()
+            throw GridaException(UnusableUsername)
         }
     }
 }

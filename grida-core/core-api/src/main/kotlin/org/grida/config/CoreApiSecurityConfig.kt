@@ -30,7 +30,11 @@ class CoreApiSecurityConfig(
 
     override fun registerAuthPatterns(registry: AuthPatternsRegistry) {
         registry.apply {
-            elseRequestPermit()
+            uriPatterns("/api/v1/auth/user", "/api/v1/user")
+                .httpMethodPost()
+                .permitAll()
+
+            elseRequestAuthenticated()
         }
     }
 }
