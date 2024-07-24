@@ -1,17 +1,18 @@
 package org.grida.persistence.user
 
-import org.grida.exception.NoSuchDataException
+import org.grida.error.GridaException
+import org.grida.error.NoSuchData
 import org.springframework.data.jpa.repository.JpaRepository
 import java.util.Optional
 
 fun UserJpaEntityRepository.findByIdOrException(id: Long): UserEntity {
     return this.findById(id)
-        .orElseThrow { throw NoSuchDataException() }
+        .orElseThrow { throw GridaException(NoSuchData) }
 }
 
 fun UserJpaEntityRepository.findByUsernameOrException(username: String): UserEntity {
     return this.findByUsername(username)
-        .orElseThrow { throw NoSuchDataException() }
+        .orElseThrow { throw GridaException(NoSuchData) }
 }
 
 interface UserJpaEntityRepository : JpaRepository<UserEntity, Long> {
