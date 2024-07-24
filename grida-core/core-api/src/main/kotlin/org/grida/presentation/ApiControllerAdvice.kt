@@ -4,7 +4,7 @@ import io.wwan13.wintersecurity.exception.forbidden.ForbiddenException
 import io.wwan13.wintersecurity.exception.unauthirized.UnauthorizedException
 import mu.KotlinLogging
 import org.grida.api.ApiResponse
-import org.grida.api.ErrorResponse
+import org.grida.api.dto.ErrorResponse
 import org.grida.exception.GridaException
 import org.grida.http.INTERNAL_SERVER_ERROR
 import org.springframework.http.HttpStatus

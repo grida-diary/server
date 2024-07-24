@@ -2,11 +2,10 @@ package org.grida.presentation.v1.user
 
 import io.wwan13.wintersecurity.passwordencoder.PasswordEncoder
 import org.grida.api.ApiResponse
-import org.grida.api.IdResponse
+import org.grida.api.dto.IdResponse
 import org.grida.domain.user.Role
 import org.grida.domain.user.User
 import org.grida.domain.user.UserService
-import org.grida.exception.PasswordConfirmNotMatchedException
 import org.grida.presentation.v1.user.dto.SignInRequest
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -30,7 +29,8 @@ class UserController(
             nickname = request.username,
             role = Role.USER
         )
-        val id = userService.appendNormalUser(user, request.passwordConfirm)
-        return ApiResponse.id(id)
+        val userId = userService.appendNormalUser(user, request.passwordConfirm)
+        val response = IdResponse(userId)
+        return ApiResponse.success(response)
     }
 }
