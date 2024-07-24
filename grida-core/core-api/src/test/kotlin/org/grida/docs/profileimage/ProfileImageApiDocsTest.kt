@@ -1,9 +1,10 @@
-package org.grida.docs.profileiamge
+package org.grida.docs.profileimage
 
 import com.ninjasquad.springmockk.MockkBean
 import io.mockk.every
 import io.mockk.just
 import io.mockk.runs
+import io.wwan13.api.document.snippets.BOOLEAN
 import io.wwan13.api.document.snippets.ENUM
 import io.wwan13.api.document.snippets.NUMBER
 import io.wwan13.api.document.snippets.STRING
@@ -103,6 +104,25 @@ class ProfileImageApiDocsTest(
             )
             responseFields(
                 "data.id" isTypeOf NUMBER whichMeans "적용된 유저의 id"
+            )
+        }
+    }
+
+    @Test
+    fun `활성화된 프로필 이미지가 존재하는지 확인하는 API`() {
+        every { profileImageService.hasActivateProfileImage(any()) } returns true
+
+        val api = api.get("/api/v1/user/image/exists") {
+            withBearerToken()
+        }
+
+        documentFor(api, "profile-image-exists") {
+            summary("활성화된 프로필 이미지가 존재하는지 확인하는 API")
+            requestHeaders(
+                "Authorization" whichMeans "인증 토큰"
+            )
+            responseFields(
+                "data.result" isTypeOf BOOLEAN whichMeans "확인 결과"
             )
         }
     }

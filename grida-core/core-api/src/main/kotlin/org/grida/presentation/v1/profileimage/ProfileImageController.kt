@@ -2,9 +2,11 @@ package org.grida.presentation.v1.profileimage
 
 import io.wwan13.wintersecurity.resolve.RequestUserId
 import org.grida.api.ApiResponse
-import org.grida.api.IdResponse
+import org.grida.api.dto.BooleanResultResponse
+import org.grida.api.dto.IdResponse
 import org.grida.domain.profileimage.ProfileImageService
 import org.grida.presentation.v1.profileimage.dto.GenerateSampleProfileImageRequest
+import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -23,7 +25,8 @@ class ProfileImageController(
         @RequestBody request: GenerateSampleProfileImageRequest,
     ): ApiResponse<IdResponse> {
         val profileImageId = profileImageService.generateSampleProfileImage(userId, request.toAppearance())
-        return ApiResponse.id(profileImageId)
+        val response = IdResponse(profileImageId)
+        return ApiResponse.success(response)
     }
 
     @PostMapping("/apply/{profileImageId}")
@@ -32,7 +35,8 @@ class ProfileImageController(
         @PathVariable profileImageId: Long
     ): ApiResponse<IdResponse> {
         profileImageService.applyProfileImage(userId, profileImageId)
-        return ApiResponse.id(userId)
+        val response = IdResponse(userId)
+        return ApiResponse.success(response)
     }
 
     @PostMapping("/change/{profileImageId}")
@@ -41,6 +45,15 @@ class ProfileImageController(
         @PathVariable profileImageId: Long
     ): ApiResponse<IdResponse> {
         profileImageService.changeProfileImage(userId, profileImageId)
-        return ApiResponse.id(userId)
+        return ApiResponse.success(IdResponse(userId))
+    }
+
+    @GetMapping("/exists")
+    fun hasActivateProfileImage(
+        @RequestUserId userId: Long
+    ): ApiResponse<BooleanResultResponse> {
+        val result = profileImageService.hasActivateProfileImage(userId)
+        val response = BooleanResultResponse(result)
+        return ApiResponse.success(response)
     }
 }

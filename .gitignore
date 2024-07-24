@@ -44,3 +44,5 @@ generated/
 .env.dev
 .env.*
 .env
+
+*.log
