@@ -7,7 +7,12 @@ data class ProfileImageResponse(
     val imageId: Long,
     val imageUrl: String,
     val status: String,
-    val createdAt: String
+    val createdAt: String,
+    val gender: String,
+    val age: Int,
+    val hairStyle: String,
+    val glasses: String,
+    val bodyShape: String
 ) {
 
     companion object {
@@ -16,7 +21,12 @@ data class ProfileImageResponse(
                 imageId = profileImage.id,
                 imageUrl = profileImage.image.url,
                 status = profileImage.image.status.name,
-                createdAt = profileImage.image.timestamp.createdAt.withDefaultFormat()
+                createdAt = profileImage.image.timestamp.createdAt.withDefaultFormat(),
+                gender = profileImage.appearance.gender.name,
+                age = profileImage.appearance.age,
+                hairStyle = profileImage.appearance.hairStyle,
+                glasses = profileImage.appearance.glasses,
+                bodyShape = profileImage.appearance.bodyShape
             )
         }
     }
