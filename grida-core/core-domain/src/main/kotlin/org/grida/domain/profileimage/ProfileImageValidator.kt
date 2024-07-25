@@ -3,7 +3,6 @@ package org.grida.domain.profileimage
 import org.grida.domain.image.ImageStatus
 import org.grida.error.AccessFailed
 import org.grida.error.ActivateProfileImageAlreadyExists
-import org.grida.error.AlreadyActivateProfileImage
 import org.grida.error.GridaException
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
@@ -28,14 +27,6 @@ class ProfileImageValidator(
     fun validateAlreadyHasActivateProfileImage(userId: Long) {
         if (profileImageRepository.existsByUserIdAndStatus(userId, ImageStatus.ACTIVATE)) {
             throw GridaException(ActivateProfileImageAlreadyExists)
-        }
-    }
-
-    @Transactional(readOnly = true)
-    fun validateIsAlreadyActivate(profileImageId: Long) {
-        val profileImage = profileImageRepository.findById(profileImageId)
-        if (profileImage.isActivate) {
-            throw GridaException(AlreadyActivateProfileImage)
         }
     }
 }
