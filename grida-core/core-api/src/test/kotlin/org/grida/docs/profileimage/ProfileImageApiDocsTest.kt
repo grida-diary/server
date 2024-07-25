@@ -165,7 +165,6 @@ class ProfileImageApiDocsTest(
         }
     }
 
-
     @Test
     fun `이전 프로필 이미지들을 모두 불러오는 API`() {
         val profileImages = listOf(
