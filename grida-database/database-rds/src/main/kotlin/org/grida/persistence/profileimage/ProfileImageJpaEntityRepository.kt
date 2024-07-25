@@ -23,5 +23,7 @@ interface ProfileImageJpaEntityRepository : JpaRepository<ProfileImageEntity, Lo
 
     fun findByUserIdAndStatus(userId: Long, status: ImageStatus): Optional<ProfileImageEntity>
 
+    fun findAllByUserId(userId: Long): List<ProfileImageEntity>
+
     fun existsByUserIdAndStatus(userId: Long, status: ImageStatus): Boolean
 }

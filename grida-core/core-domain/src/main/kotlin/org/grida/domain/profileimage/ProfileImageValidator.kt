@@ -12,7 +12,7 @@ class ProfileImageValidator(
     private val profileImageRepository: ProfileImageRepository
 ) {
 
-    @Transactional
+    @Transactional(readOnly = true)
     fun validateIsOwner(
         profileImageId: Long,
         userId: Long
@@ -23,7 +23,7 @@ class ProfileImageValidator(
         }
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     fun validateAlreadyHasActivateProfileImage(userId: Long) {
         if (profileImageRepository.existsByUserIdAndStatus(userId, ImageStatus.ACTIVATE)) {
             throw GridaException(ActivateProfileImageAlreadyExists)

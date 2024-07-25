@@ -7,6 +7,6 @@ data class User(
     val timestamp: Timestamp = Timestamp(),
     val username: String,
     val password: String,
-    val role: Role = Role.USER,
+    val role: Role = Role.ROLE_USER,
     val nickname: String,
 )

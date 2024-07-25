@@ -8,12 +8,12 @@ class UserReader(
     private val userRepository: UserRepository
 ) {
 
-    @Transactional
+    @Transactional(readOnly = true)
     fun read(id: Long): User {
         return userRepository.findById(id)
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     fun read(username: String): User {
         return userRepository.findByUsername(username)
     }

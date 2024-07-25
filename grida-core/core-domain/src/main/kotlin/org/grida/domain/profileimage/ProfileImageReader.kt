@@ -18,5 +18,9 @@ class ProfileImageReader(
     fun hasActivateProfileImage(userId: Long): Boolean {
         return profileImageRepository.existsByUserIdAndStatus(userId, ImageStatus.ACTIVATE)
     }
-}
 
+    @Transactional(readOnly = true)
+    fun readAllProfileImages(userId: Long): List<ProfileImage> {
+        return profileImageRepository.findAllByUserId(userId)
+    }
+}

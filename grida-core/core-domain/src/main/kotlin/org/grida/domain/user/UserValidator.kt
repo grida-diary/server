@@ -20,7 +20,7 @@ class UserValidator(
         }
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     fun validateUsernameAlreadyInUse(username: String) {
         if (userRepository.existsByUsername(username)) {
             throw GridaException(UnusableUsername)
