@@ -1,5 +1,5 @@
 package org.grida.domain.user
 
 enum class Role {
-    USER, ADMIN
+    ROLE_USER, ROLE_ADMIN
 }

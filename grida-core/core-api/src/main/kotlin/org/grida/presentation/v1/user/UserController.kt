@@ -2,10 +2,10 @@ package org.grida.presentation.v1.user
 
 import io.wwan13.wintersecurity.passwordencoder.PasswordEncoder
 import org.grida.api.ApiResponse
-import org.grida.api.IdResponse
+import org.grida.api.dto.IdResponse
+import org.grida.domain.user.Role
 import org.grida.domain.user.User
 import org.grida.domain.user.UserService
-import org.grida.exception.PasswordConfirmNotMatchedException
 import org.grida.presentation.v1.user.dto.SignInRequest
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -23,14 +23,14 @@ class UserController(
     fun signIn(
         @RequestBody request: SignInRequest
     ): ApiResponse<IdResponse> {
-        if (request.password != request.passwordConfirm) throw PasswordConfirmNotMatchedException()
-
-        val user = User(
+        val ROLEUser = User(
             username = request.username,
             password = passwordEncoder.encode(request.password),
-            nickname = request.username
+            nickname = request.username,
+            role = Role.ROLE_USER
         )
-        val id = userService.appendNormalUser(user, request.passwordConfirm)
-        return ApiResponse.id(id)
+        val userId = userService.appendNormalUser(ROLEUser, request.passwordConfirm)
+        val response = IdResponse(userId)
+        return ApiResponse.success(response)
     }
 }

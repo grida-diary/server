@@ -45,5 +45,4 @@ generated/
 .env.*
 .env
 
-log/*
 *.log

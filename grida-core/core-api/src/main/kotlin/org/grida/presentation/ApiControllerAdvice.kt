@@ -1,12 +1,18 @@
 package org.grida.presentation
 
 import io.wwan13.wintersecurity.exception.forbidden.ForbiddenException
+import io.wwan13.wintersecurity.exception.unauthirized.ExpiredJwtTokenException
+import io.wwan13.wintersecurity.exception.unauthirized.InvalidJwtTokenException
 import io.wwan13.wintersecurity.exception.unauthirized.UnauthorizedException
 import mu.KotlinLogging
 import org.grida.api.ApiResponse
-import org.grida.api.ErrorResponse
-import org.grida.exception.GridaException
-import org.grida.http.INTERNAL_SERVER_ERROR
+import org.grida.api.dto.ErrorResponse
+import org.grida.error.DEBUG
+import org.grida.error.ERROR
+import org.grida.error.GridaException
+import org.grida.error.INFO
+import org.grida.error.TRACE
+import org.grida.error.WARN
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.http.converter.HttpMessageNotReadableException
@@ -24,13 +30,18 @@ class ApiControllerAdvice {
     fun handleGridaException(
         e: GridaException
     ): ResponseEntity<ApiResponse<ErrorResponse>> {
-        when (e.httpStatusCode) {
-            INTERNAL_SERVER_ERROR -> log.error(e.stackTraceToString())
-            else -> log.info(e.message)
+        val errorType = e.errorType
+
+        when (errorType.logLevel) {
+            TRACE -> log.trace(e.message)
+            DEBUG -> log.debug(e.message)
+            INFO -> log.info(e.message)
+            WARN -> log.warn(e.message)
+            ERROR -> log.error(e.stackTraceToString())
         }
 
-        val response = ApiResponse.error(e)
-        return ResponseEntity.status(e.httpStatusCode).body(response)
+        val response = ApiResponse.error(errorType)
+        return ResponseEntity.status(errorType.httpStatusCode).body(response)
     }
 
     @ExceptionHandler(ForbiddenException::class)
@@ -38,7 +49,7 @@ class ApiControllerAdvice {
         e: ForbiddenException
     ): ResponseEntity<ApiResponse<ErrorResponse>> {
         log.info(e.message)
-        val response = ApiResponse.error("HTTP_403", "접근할 수 없습니다.")
+        val response = ApiResponse.error("HTTP_403", "접근 권한이 없는 요청입니다.")
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body(response)
     }
 
@@ -48,6 +59,24 @@ class ApiControllerAdvice {
     ): ResponseEntity<ApiResponse<ErrorResponse>> {
         log.info(e.message)
         val response = ApiResponse.error("HTTP_401", "유효한 인증정보가 없습니다.")
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response)
+    }
+
+    @ExceptionHandler(ExpiredJwtTokenException::class)
+    fun handleExpiredJwtTokenException(
+        e: ExpiredJwtTokenException
+    ): ResponseEntity<ApiResponse<ErrorResponse>> {
+        log.info(e.message)
+        val response = ApiResponse.error("HTTP_401_1", "만료된 인증 토큰 입니다.")
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response)
+    }
+
+    @ExceptionHandler(InvalidJwtTokenException::class)
+    fun handleInvalidJwtTokenException(
+        e: InvalidJwtTokenException
+    ): ResponseEntity<ApiResponse<ErrorResponse>> {
+        log.info(e.message)
+        val response = ApiResponse.error("HTTP_401_2", "만료된 인증 토큰 입니다.")
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response)
     }
 
@@ -76,7 +105,7 @@ class ApiControllerAdvice {
         if (e.rootCause is GridaException) {
             val exception = e.rootCause as GridaException
             log.info(exception.message)
-            val response = ApiResponse.error(exception)
+            val response = ApiResponse.error(exception.errorType)
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response)
         }
 
