@@ -164,4 +164,47 @@ class ProfileImageApiDocsTest(
             )
         }
     }
+
+
+    @Test
+    fun `이전 프로필 이미지들을 모두 불러오는 API`() {
+        val profileImages = listOf(
+            ProfileImage(
+                id = 1L,
+                userId = 1L,
+                image = Image("https://imageUrl1.com"),
+                appearance = Appearance(Gender.MAN, 21, "hair style1", "glasses1", "body shape1")
+            ),
+            ProfileImage(
+                id = 2L,
+                userId = 1L,
+                image = Image("https://imageUrl2.com"),
+                appearance = Appearance(Gender.MAN, 21, "hair style2", "glasses2", "body shape2")
+            )
+        )
+        every { profileImageService.readProfileImageHistory(any()) } returns profileImages
+
+        val api = api.get("/api/v1/user/image/history") {
+            withBearerToken()
+        }
+
+        documentFor(api, "profile-image-exists") {
+            summary("활성화된 프로필 이미지를 불러오는 API")
+            requestHeaders(
+                "Authorization" whichMeans "인증 토큰"
+            )
+            responseFields(
+                "data.count" isTypeOf NUMBER whichMeans "프로필 이미지 개수",
+                "data.profileImages[].imageId" isTypeOf NUMBER whichMeans "이미지 ID",
+                "data.profileImages[].imageUrl" isTypeOf STRING whichMeans "이미지 URL",
+                "data.profileImages[].status" isTypeOf ENUM(ImageStatus::class) whichMeans "이미지 활성화 상태",
+                "data.profileImages[].createdAt" isTypeOf DATETIME whichMeans "이미지 생성 시간",
+                "data.profileImages[].gender" isTypeOf ENUM(Gender::class) whichMeans "성별",
+                "data.profileImages[].age" isTypeOf NUMBER whichMeans "나이",
+                "data.profileImages[].hairStyle" isTypeOf STRING whichMeans "머리 스타일",
+                "data.profileImages[].glasses" isTypeOf STRING whichMeans "안경 유무 / 모양",
+                "data.profileImages[].bodyShape" isTypeOf STRING whichMeans "체형",
+            )
+        }
+    }
 }
