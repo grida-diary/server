@@ -3,7 +3,7 @@ package org.grida.api
 import org.grida.api.dto.ErrorResponse
 import org.grida.datetime.DateTimePicker
 import org.grida.datetime.withDefaultFormat
-import org.grida.exception.GridaException
+import org.grida.error.ErrorType
 
 data class ApiResponse<T> private constructor(
     val status: ApiStatus,
@@ -15,8 +15,8 @@ data class ApiResponse<T> private constructor(
 
         fun success(): ApiResponse<Any> = ApiResponse(ApiStatus.SUCCESS)
 
-        fun error(exception: GridaException): ApiResponse<ErrorResponse> =
-            ApiResponse(ApiStatus.ERROR, ErrorResponse(exception.errorCode, exception.message))
+        fun error(errorType: ErrorType): ApiResponse<ErrorResponse> =
+            ApiResponse(ApiStatus.ERROR, ErrorResponse(errorType.errorCode, errorType.message))
 
         fun error(errorCode: String, message: String): ApiResponse<ErrorResponse> =
             ApiResponse(ApiStatus.ERROR, ErrorResponse(errorCode, message))

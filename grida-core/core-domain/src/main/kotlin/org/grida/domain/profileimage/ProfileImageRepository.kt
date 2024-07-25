@@ -11,6 +11,8 @@ interface ProfileImageRepository {
 
     fun findByUserIdAndStatus(userId: Long, status: ImageStatus): ProfileImage
 
+    fun findAllByUserId(userId: Long): List<ProfileImage>
+
     fun existsByUserIdAndStatus(userId: Long, status: ImageStatus): Boolean
 
     fun updateStatus(id: Long, state: ImageStatus)

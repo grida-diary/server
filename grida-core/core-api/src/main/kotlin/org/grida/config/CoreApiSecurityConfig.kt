@@ -7,6 +7,7 @@ import io.wwan13.wintersecurity.config.JwtProviderConfigurer
 import io.wwan13.wintersecurity.config.SecureRequestConfigurer
 import io.wwan13.wintersecurity.jwt.support.JwtPropertiesRegistry
 import io.wwan13.wintersecurity.secretkey.support.SecretKeyRegistry
+import org.grida.domain.user.Role
 import org.springframework.context.annotation.Configuration
 
 @Configuration
@@ -30,7 +31,15 @@ class CoreApiSecurityConfig(
 
     override fun registerAuthPatterns(registry: AuthPatternsRegistry) {
         registry.apply {
-            elseRequestPermit()
+            uriPatterns("/api/v1/auth/login", "/api/v1/user")
+                .httpMethodPost()
+                .permitAll()
+
+            uriPatterns("/api/v1/user/image/**")
+                .allHttpMethods()
+                .hasRoles(Role.ROLE_USER)
+
+            elseRequestAuthenticated()
         }
     }
 }

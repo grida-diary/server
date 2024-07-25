@@ -34,6 +34,11 @@ class ProfileImageEntityRepository(
         return profileImageEntity.toProfileImage()
     }
 
+    override fun findAllByUserId(userId: Long): List<ProfileImage> {
+        val profileImageEntities = profileImageJpaEntityRepository.findAllByUserId(userId)
+        return profileImageEntities.map { it.toProfileImage() }
+    }
+
     override fun existsByUserIdAndStatus(userId: Long, status: ImageStatus): Boolean {
         return profileImageJpaEntityRepository.existsByUserIdAndStatus(userId, status)
     }

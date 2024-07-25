@@ -1,7 +1,7 @@
 package org.grida.api
 
-import org.grida.exception.GridaException
-import org.grida.http.BAD_REQUEST
+import org.grida.error.GridaException
+import org.grida.error.InvalidRequestField
 
 object RequestValidator {
 
@@ -9,7 +9,8 @@ object RequestValidator {
         field: T,
         condition: (T) -> Boolean
     ) {
-        if (!condition.invoke(field))
-            throw GridaException(BAD_REQUEST, "HTTP_400", "$field 를 확인해 주세요.")
+        if (!condition.invoke(field)) {
+            throw GridaException(InvalidRequestField(field.toString()))
+        }
     }
 }

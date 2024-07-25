@@ -23,13 +23,13 @@ class UserController(
     fun signIn(
         @RequestBody request: SignInRequest
     ): ApiResponse<IdResponse> {
-        val user = User(
+        val ROLEUser = User(
             username = request.username,
             password = passwordEncoder.encode(request.password),
             nickname = request.username,
-            role = Role.USER
+            role = Role.ROLE_USER
         )
-        val userId = userService.appendNormalUser(user, request.passwordConfirm)
+        val userId = userService.appendNormalUser(ROLEUser, request.passwordConfirm)
         val response = IdResponse(userId)
         return ApiResponse.success(response)
     }
