@@ -146,7 +146,7 @@ class ProfileImageApiDocsTest(
             withBearerToken()
         }
 
-        documentFor(api, "profile-image-exists") {
+        documentFor(api, "activate-profile-image") {
             summary("활성화된 프로필 이미지를 불러오는 API")
             requestHeaders(
                 "Authorization" whichMeans "인증 토큰"
@@ -187,7 +187,7 @@ class ProfileImageApiDocsTest(
             withBearerToken()
         }
 
-        documentFor(api, "profile-image-exists") {
+        documentFor(api, "profile-image-history") {
             summary("활성화된 프로필 이미지를 불러오는 API")
             requestHeaders(
                 "Authorization" whichMeans "인증 토큰"
