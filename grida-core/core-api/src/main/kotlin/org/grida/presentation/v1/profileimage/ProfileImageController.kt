@@ -6,6 +6,7 @@ import org.grida.api.dto.BooleanResultResponse
 import org.grida.api.dto.IdResponse
 import org.grida.domain.profileimage.ProfileImageService
 import org.grida.presentation.v1.profileimage.dto.GenerateSampleProfileImageRequest
+import org.grida.presentation.v1.profileimage.dto.ProfileImageHistoryResponse
 import org.grida.presentation.v1.profileimage.dto.ProfileImageResponse
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -64,6 +65,15 @@ class ProfileImageController(
     ): ApiResponse<ProfileImageResponse> {
         val profileImage = profileImageService.readActivateProfileImage(userId)
         val response = ProfileImageResponse.from(profileImage)
+        return ApiResponse.success(response)
+    }
+
+    @GetMapping("/history")
+    fun readProfileImageHistory(
+        @RequestUserId userId: Long
+    ): ApiResponse<ProfileImageHistoryResponse> {
+        val profileImages = profileImageService.readProfileImageHistory(userId)
+        val response = ProfileImageHistoryResponse.from(profileImages)
         return ApiResponse.success(response)
     }
 }

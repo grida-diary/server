@@ -22,6 +22,10 @@ class ProfileImageService(
         return profileImageReader.readActivateProfileImage(userId)
     }
 
+    fun readProfileImageHistory(userId: Long): List<ProfileImage> {
+        return profileImageReader.readAllProfileImages(userId)
+    }
+
     fun applyProfileImage(
         userId: Long,
         profileImageId: Long
