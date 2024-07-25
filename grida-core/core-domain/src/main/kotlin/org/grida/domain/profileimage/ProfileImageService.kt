@@ -18,6 +18,10 @@ class ProfileImageService(
         return profileImageAppender.appendAsDeactivate(userId, imageUrl, appearance)
     }
 
+    fun readActivateProfileImage(userId: Long): ProfileImage {
+        return profileImageReader.readActivateProfileImage(userId)
+    }
+
     fun applyProfileImage(
         userId: Long,
         profileImageId: Long
