@@ -19,4 +19,3 @@ class ProfileImageReader(
         return profileImageRepository.existsByUserIdAndStatus(userId, ImageStatus.ACTIVATE)
     }
 }
-
