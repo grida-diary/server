@@ -5,6 +5,7 @@ import java.time.LocalDate
 
 data class Diary(
     val id: Long,
+    val userId: Long,
     val timestamp: Timestamp,
     val targetDate: LocalDate,
     val content: String,
