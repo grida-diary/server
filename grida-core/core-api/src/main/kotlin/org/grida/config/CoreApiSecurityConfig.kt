@@ -35,7 +35,7 @@ class CoreApiSecurityConfig(
                 .httpMethodPost()
                 .permitAll()
 
-            uriPatterns("/api/v1/user/image/**")
+            uriPatterns("/api/v1/user/image/**", "/api/v1/diary/**")
                 .allHttpMethods()
                 .hasRoles(Role.ROLE_USER)
 
