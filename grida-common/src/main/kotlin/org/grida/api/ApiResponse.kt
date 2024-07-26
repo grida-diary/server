@@ -2,13 +2,13 @@ package org.grida.api
 
 import org.grida.api.dto.ErrorResponse
 import org.grida.datetime.DateTimePicker
-import org.grida.datetime.withDefaultFormat
+import org.grida.datetime.DateTimeUtil
 import org.grida.error.ErrorType
 
 data class ApiResponse<T> private constructor(
     val status: ApiStatus,
     val data: T? = null,
-    val timestamp: String = DateTimePicker.now().withDefaultFormat(),
+    val timestamp: String = DateTimeUtil.toDefaultDateTimeFormat(DateTimePicker.now()),
 ) {
     companion object {
         fun <T> success(data: T): ApiResponse<T> = ApiResponse(ApiStatus.SUCCESS, data)
