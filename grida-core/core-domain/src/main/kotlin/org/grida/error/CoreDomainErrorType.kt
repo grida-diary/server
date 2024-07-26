@@ -39,3 +39,17 @@ data object PasswordConfirmNotMatched : CoreDomainErrorType {
     override val message: String = "비밀번호와 비밀번호 확인이 일치하지 않습니다."
     override val logLevel: LogLevel = INFO
 }
+
+data object CannotAppendDiaryAtDate : CoreDomainErrorType {
+    override val httpStatusCode: Int = BAD_REQUEST
+    override val errorCode: String = "DIARY_400_1"
+    override val message: String = "해당 날짜에 존재하는 일기가 있습니다."
+    override val logLevel: LogLevel = INFO
+}
+
+data object CannotAppendDiaryAtFuture : CoreDomainErrorType {
+    override val httpStatusCode: Int = BAD_REQUEST
+    override val errorCode: String = "DIARY_400_2"
+    override val message: String = "미래의 일기를 작성할 수 없습니다."
+    override val logLevel: LogLevel = INFO
+}
