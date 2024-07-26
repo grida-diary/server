@@ -3,14 +3,6 @@ package org.grida.datetime
 import java.time.LocalDateTime
 import java.time.ZoneId
 import java.time.ZonedDateTime
-import java.time.format.DateTimeFormatter
-
-const val TIME_ZONE_SEOUL = "Asia/Seoul"
-const val DEFAULT_FORMAT = "yyyy-MM-dd HH:mm:ss"
-
-fun LocalDateTime.withDefaultFormat(): String {
-    return this.format(DateTimeFormatter.ofPattern(DEFAULT_FORMAT))
-}
 
 class DateTimePicker {
 

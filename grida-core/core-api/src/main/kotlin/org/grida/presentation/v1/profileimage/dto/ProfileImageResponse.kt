@@ -1,6 +1,6 @@
 package org.grida.presentation.v1.profileimage.dto
 
-import org.grida.datetime.withDefaultFormat
+import org.grida.datetime.DateTimeUtil
 import org.grida.domain.profileimage.ProfileImage
 
 data class ProfileImageResponse(
@@ -21,7 +21,7 @@ data class ProfileImageResponse(
                 imageId = profileImage.id,
                 imageUrl = profileImage.image.url,
                 status = profileImage.image.status.name,
-                createdAt = profileImage.image.timestamp.createdAt.withDefaultFormat(),
+                createdAt = DateTimeUtil.toDefaultDateTimeFormat(profileImage.image.timestamp.createdAt),
                 gender = profileImage.appearance.gender.name,
                 age = profileImage.appearance.age,
                 hairStyle = profileImage.appearance.hairStyle,
