@@ -2,13 +2,18 @@ package org.grida.persistence.diary
 
 import org.grida.domain.diary.Diary
 import org.grida.domain.diary.DiaryScope
+import org.grida.domain.user.User
 import org.grida.persistence.base.BaseEntity
+import org.grida.persistence.user.UserEntity
 import java.time.LocalDate
 import javax.persistence.Column
 import javax.persistence.Entity
+import javax.persistence.FetchType
 import javax.persistence.GeneratedValue
 import javax.persistence.GenerationType
 import javax.persistence.Id
+import javax.persistence.JoinColumn
+import javax.persistence.ManyToOne
 import javax.persistence.Table
 
 @Entity
@@ -24,7 +29,11 @@ class DiaryEntity(
     var content: String,
 
     @Column(length = 4095)
-    var scope: DiaryScope
+    var scope: DiaryScope,
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    var user: UserEntity
 ) : BaseEntity() {
 
     fun toDiary(): Diary {
@@ -33,17 +42,22 @@ class DiaryEntity(
             timestamp = this.toTimeStamp(),
             targetDate = targetDate,
             content = content,
-            scope = scope
+            scope = scope,
+            userId = user.id
         )
     }
 
     companion object {
-        fun from(diary: Diary): DiaryEntity {
+        fun from(
+            diary: Diary,
+            user: User
+        ): DiaryEntity {
             return DiaryEntity(
                 id = diary.id,
                 targetDate = diary.targetDate,
                 content = diary.content,
                 scope = diary.scope,
+                user = UserEntity.from(user)
             )
         }
     }
