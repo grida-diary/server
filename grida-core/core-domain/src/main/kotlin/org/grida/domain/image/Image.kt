@@ -6,4 +6,12 @@ data class Image(
     val url: String,
     val status: ImageStatus = ImageStatus.ACTIVATE,
     val timestamp: Timestamp = Timestamp()
-)
+) {
+    fun activate(): Image {
+        return Image(this.url, ImageStatus.ACTIVATE)
+    }
+
+    fun deactivate(): Image {
+        return Image(this.url, ImageStatus.DEACTIVATE)
+    }
+}

@@ -16,7 +16,7 @@ class ProfileImageValidator(
         profileImage: ProfileImage,
         userId: Long
     ) {
-        if (profileImage.isOwner(userId)) {
+        if (!profileImage.isOwner(userId)) {
             throw GridaException(AccessFailed)
         }
     }
