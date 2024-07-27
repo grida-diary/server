@@ -15,11 +15,9 @@ import org.grida.domain.diary.DiaryScope
 import org.grida.domain.diary.DiaryService
 import org.grida.presentation.v1.diary.DiaryController
 import org.grida.presentation.v1.diary.dto.DiaryRequest
-import org.grida.presentation.v1.diary.dto.DiaryResponse
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import java.time.LocalDate
-import java.time.LocalDateTime
 
 @WebMvcTest(controllers = [DiaryController::class])
 class DiaryApiDocsTest(
