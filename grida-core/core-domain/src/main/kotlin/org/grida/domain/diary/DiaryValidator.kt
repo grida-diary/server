@@ -1,6 +1,7 @@
 package org.grida.domain.diary
 
 import org.grida.datetime.DateTimePicker
+import org.grida.error.AccessFailed
 import org.grida.error.CannotAppendDiaryAtDate
 import org.grida.error.CannotAppendDiaryAtFuture
 import org.grida.error.GridaException
@@ -26,6 +27,25 @@ class DiaryValidator(
     fun validateIsPastThanToday(targetDate: LocalDate) {
         if (targetDate.isAfter(DateTimePicker.now().toLocalDate())) {
             throw GridaException(CannotAppendDiaryAtFuture)
+        }
+    }
+
+    fun validateCanAccess(diary: Diary, userId: Long) {
+        when (diary.scope) {
+            DiaryScope.PUBLIC -> {}
+            DiaryScope.FRIENDS_ONLY -> validateIsFriend(diary.userId, userId)
+            DiaryScope.PRIVATE -> validateIsOwner(diary.userId, userId)
+        }
+    }
+
+    private fun validateIsFriend(ownerId: Long, accessorId: Long) {
+        // TODO
+        throw GridaException(AccessFailed)
+    }
+
+    private fun validateIsOwner(ownerId: Long, accessorId: Long) {
+        if (ownerId != accessorId) {
+            throw GridaException(AccessFailed)
         }
     }
 }
