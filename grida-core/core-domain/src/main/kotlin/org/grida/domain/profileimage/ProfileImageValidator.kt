@@ -12,12 +12,10 @@ class ProfileImageValidator(
     private val profileImageRepository: ProfileImageRepository
 ) {
 
-    @Transactional(readOnly = true)
     fun validateIsOwner(
-        profileImageId: Long,
+        profileImage: ProfileImage,
         userId: Long
     ) {
-        val profileImage = profileImageRepository.findById(profileImageId)
         if (profileImage.userId != userId) {
             throw GridaException(AccessFailed)
         }

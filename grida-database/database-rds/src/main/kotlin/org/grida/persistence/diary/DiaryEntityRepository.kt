@@ -22,6 +22,11 @@ class DiaryEntityRepository(
         return diaryEntity.id
     }
 
+    override fun findById(id: Long): Diary {
+        val diaryEntity = diaryJpaEntityRepository.findByIdOrException(id)
+        return diaryEntity.toDiary()
+    }
+
     override fun existsByUserIdAndTargetDate(
         userId: Long,
         targetDate: LocalDate

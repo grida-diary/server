@@ -10,6 +10,11 @@ class ProfileImageReader(
 ) {
 
     @Transactional(readOnly = true)
+    fun read(profileImageId: Long): ProfileImage {
+        return profileImageRepository.findById(profileImageId)
+    }
+
+    @Transactional(readOnly = true)
     fun readActivateProfileImage(userId: Long): ProfileImage {
         return profileImageRepository.findByUserIdAndStatus(userId, ImageStatus.ACTIVATE)
     }
