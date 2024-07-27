@@ -11,4 +11,12 @@ data class ProfileImage(
     fun isOwner(accessorId: Long): Boolean {
         return userId == accessorId
     }
+
+    fun activate(): ProfileImage {
+        return ProfileImage(id, userId, image.activate(), appearance)
+    }
+
+    fun deactivate(): ProfileImage {
+        return ProfileImage(id, userId, image.deactivate(), appearance)
+    }
 }
