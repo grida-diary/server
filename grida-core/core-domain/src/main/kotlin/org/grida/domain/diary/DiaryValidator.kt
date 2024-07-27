@@ -34,7 +34,7 @@ class DiaryValidator(
         when (diary.scope) {
             DiaryScope.PUBLIC -> {}
             DiaryScope.FRIENDS_ONLY -> validateIsFriend(diary.userId, userId)
-            DiaryScope.PRIVATE -> validateIsOwner(diary.userId, userId)
+            DiaryScope.PRIVATE -> validateIsOwner(diary, userId)
         }
     }
 
@@ -43,8 +43,8 @@ class DiaryValidator(
         throw GridaException(AccessFailed)
     }
 
-    private fun validateIsOwner(ownerId: Long, accessorId: Long) {
-        if (ownerId != accessorId) {
+    private fun validateIsOwner(diary: Diary, userId: Long) {
+        if (diary.isOwner(userId)) {
             throw GridaException(AccessFailed)
         }
     }
