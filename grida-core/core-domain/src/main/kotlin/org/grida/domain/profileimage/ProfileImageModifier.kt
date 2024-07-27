@@ -16,7 +16,6 @@ class ProfileImageModifier(
         userId: Long,
         profileImageId: Long
     ) {
-        profileImageValidator.validateAlreadyHasActivateProfileImage(userId)
         val profileImage = profileImageReader.read(profileImageId)
         profileImageValidator.validateIsOwner(profileImage, userId)
 

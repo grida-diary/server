@@ -7,4 +7,8 @@ data class ProfileImage(
     val userId: Long,
     val image: Image,
     val appearance: Appearance
-)
+) {
+    fun isOwner(accessorId: Long): Boolean {
+        return userId == accessorId
+    }
+}
