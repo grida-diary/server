@@ -1,4 +1,7 @@
 spring:
+  web:
+    resources:
+      add-mappings: false
   datasource:
     url: ${DATASOURCE_URL}
     username: ${DATABASE_USERNAME}
