@@ -17,6 +17,9 @@ class DiaryService(
     }
 
     fun readDiary(diaryId: Long, userId: Long): Diary {
-        return diaryReader.read(diaryId, userId)
+        val diary = diaryReader.read(diaryId, userId)
+        diaryValidator.validateCanAccess(diary, userId)
+
+        return diary
     }
 }

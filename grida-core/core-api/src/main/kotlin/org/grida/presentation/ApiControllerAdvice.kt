@@ -76,7 +76,7 @@ class ApiControllerAdvice {
         e: InvalidJwtTokenException
     ): ResponseEntity<ApiResponse<ErrorResponse>> {
         log.info(e.message)
-        val response = ApiResponse.error("HTTP_401_2", "만료된 인증 토큰 입니다.")
+        val response = ApiResponse.error("HTTP_401_2", "유효하지 않은 인증 토큰 입니다.")
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response)
     }
 

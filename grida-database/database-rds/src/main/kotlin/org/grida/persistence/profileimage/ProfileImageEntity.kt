@@ -69,6 +69,16 @@ class ProfileImageEntity(
         )
     }
 
+    fun update(profileImage: ProfileImage) {
+        this.imageUrl = profileImage.image.url
+        this.status = profileImage.image.status
+        this.gender = profileImage.appearance.gender
+        this.age = profileImage.appearance.age
+        this.hairStyle = profileImage.appearance.hairStyle
+        this.glasses = profileImage.appearance.glasses
+        this.bodyShape = profileImage.appearance.bodyShape
+    }
+
     companion object {
         fun from(
             profileImage: ProfileImage,

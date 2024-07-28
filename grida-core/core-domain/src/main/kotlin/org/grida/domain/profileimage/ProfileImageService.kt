@@ -7,6 +7,7 @@ class ProfileImageService(
     private val profileImageAppender: ProfileImageAppender,
     private val profileImageReader: ProfileImageReader,
     private val profileImageModifier: ProfileImageModifier,
+    private val profileImageValidator: ProfileImageValidator,
     private val profileImageGenerator: ProfileImageGenerator
 ) {
 
@@ -30,6 +31,7 @@ class ProfileImageService(
         userId: Long,
         profileImageId: Long
     ) {
+        profileImageValidator.validateAlreadyHasActivateProfileImage(userId)
         profileImageModifier.modifyAsActivate(userId, profileImageId)
     }
 
