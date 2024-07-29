@@ -2,6 +2,7 @@ package org.grida.persistence.diary
 
 import org.grida.domain.diary.Diary
 import org.grida.domain.diary.DiaryRepository
+import org.grida.domain.diary.DiaryScope
 import org.grida.domain.user.User
 import org.springframework.stereotype.Repository
 import org.springframework.transaction.annotation.Transactional
@@ -32,5 +33,19 @@ class DiaryEntityRepository(
         targetDate: LocalDate
     ): Boolean {
         return diaryJpaEntityRepository.existsByUserIdAndTargetDate(userId, targetDate)
+    }
+
+    @Transactional
+    override fun updateContent(diaryId: Long, content: String): Long {
+        val diaryEntity = diaryJpaEntityRepository.findByIdOrException(diaryId)
+        diaryEntity.updateContent(content)
+        return diaryEntity.id
+    }
+
+    @Transactional
+    override fun updateScope(diaryId: Long, scope: DiaryScope): Long {
+        val diaryEntity = diaryJpaEntityRepository.findByIdOrException(diaryId)
+        diaryEntity.updateScope(scope)
+        return diaryEntity.id
     }
 }

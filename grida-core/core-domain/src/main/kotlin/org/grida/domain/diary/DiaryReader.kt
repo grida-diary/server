@@ -9,7 +9,7 @@ class DiaryReader(
 ) {
 
     @Transactional(readOnly = true)
-    fun read(diaryId: Long, userId: Long): Diary {
+    fun read(diaryId: Long): Diary {
         return diaryRepository.findById(diaryId)
     }
 }
