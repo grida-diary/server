@@ -43,7 +43,7 @@ class DiaryValidator(
         throw GridaException(AccessFailed)
     }
 
-    private fun validateIsOwner(diary: Diary, userId: Long) {
+    fun validateIsOwner(diary: Diary, userId: Long) {
         if (!diary.isOwner(userId)) {
             throw GridaException(AccessFailed)
         }

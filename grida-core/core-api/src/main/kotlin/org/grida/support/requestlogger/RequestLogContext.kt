@@ -1,49 +1,34 @@
 package org.grida.support.requestlogger
 
+import com.fasterxml.jackson.databind.ObjectMapper
 import org.springframework.http.HttpStatus
 import org.springframework.web.util.ContentCachingRequestWrapper
 import org.springframework.web.util.ContentCachingResponseWrapper
-
-fun ContentCachingRequestWrapper.getRequestHeaders(): String {
-    val headers = this.headerNames.toList().map { "\"$it\":\"${this.getHeader(it)}\"" }
-    val joinedHeaders = headers.joinToString(", ")
-    return "[$joinedHeaders]"
-}
-
-fun ContentCachingRequestWrapper.getRequestParams(): String {
-    val params = this.parameterNames.toList().map { "\"$it\":\"${this.getParameter(it)}\"" }
-    val joinedHeaders = params.joinToString(", ")
-    return "[$joinedHeaders]"
-}
-
-fun String.trimSpaceAndNewLine(): String {
-    return this.replace("\\n".toRegex(), "").replace(" ", "")
-}
+import java.util.Enumeration
 
 data class RequestLogContext(
     val method: String,
     val uri: String,
     val status: HttpStatus,
     val elapsed: Double,
-    val requestHeaders: String,
-    val requestParams: String,
+    val requestHeaders: Map<String, String>,
+    val requestParams: Map<String, String>,
     val requestBody: String,
     val responseBody: String
 ) {
 
-    fun toLogMessage(): String {
+    fun toLogMessage(objectMapper: ObjectMapper): String {
         return """
             |
             |$method $uri - $status ($elapsed s)
             |>> REQUEST HEADERS : $requestHeaders
             |>> REQUEST PARAMS : $requestParams
-            |>> REQUEST BODY : $requestBody
-            |>> RESPONSE BODY : $responseBody
+            |>> REQUEST BODY : ${objectMapper.readTree(requestBody.ifBlank { "{}" })}
+            |>> RESPONSE BODY : ${objectMapper.readTree(responseBody)}
         """.trimMargin()
     }
 
     companion object {
-
         fun of(
             request: ContentCachingRequestWrapper,
             response: ContentCachingResponseWrapper,
@@ -54,11 +39,22 @@ data class RequestLogContext(
                 uri = request.requestURI,
                 status = HttpStatus.valueOf(response.status),
                 elapsed = elapsed,
-                requestHeaders = request.getRequestHeaders(),
-                requestParams = request.getRequestParams(),
-                requestBody = String(request.contentAsByteArray).trimSpaceAndNewLine(),
-                responseBody = String(response.contentAsByteArray).trimSpaceAndNewLine(),
+                requestHeaders = extractAsMap(request, request.headerNames),
+                requestParams = extractAsMap(request, request.parameterNames),
+                requestBody = String(request.contentAsByteArray),
+                responseBody = String(response.contentAsByteArray),
             )
+        }
+
+        private fun extractAsMap(
+            request: ContentCachingRequestWrapper,
+            names: Enumeration<String>
+        ): Map<String, String> {
+            val result = mutableMapOf<String, String>()
+            names.asIterator().forEach {
+                result.put(it, request.getHeader(it))
+            }
+            return result
         }
     }
 }
