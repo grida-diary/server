@@ -135,7 +135,7 @@ class DiaryApiDocsTest(
             )
         }
 
-        documentFor(api, "modify-diary") {
+        documentFor(api, "modify-diary-scope") {
             summary("일기 생성 API")
             requestHeaders(
                 "Authorization" whichMeans "인증 토큰"
