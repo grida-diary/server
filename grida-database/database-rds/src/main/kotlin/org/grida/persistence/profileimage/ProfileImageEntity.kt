@@ -69,6 +69,10 @@ class ProfileImageEntity(
         )
     }
 
+    fun updateStatue(status: ImageStatus) {
+        this.status = status
+    }
+
     companion object {
         fun from(
             profileImage: ProfileImage,

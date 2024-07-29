@@ -1,5 +1,6 @@
 package org.grida.support.requestlogger
 
+import com.fasterxml.jackson.databind.ObjectMapper
 import mu.KotlinLogging
 import org.springframework.web.filter.OncePerRequestFilter
 import org.springframework.web.util.ContentCachingRequestWrapper
@@ -10,7 +11,9 @@ import javax.servlet.http.HttpServletResponse
 
 private val log = KotlinLogging.logger {}
 
-class LogFilter : OncePerRequestFilter() {
+class LogFilter(
+    private val objectMapper: ObjectMapper
+) : OncePerRequestFilter() {
 
     override fun doFilterInternal(
         request: HttpServletRequest,
@@ -26,7 +29,7 @@ class LogFilter : OncePerRequestFilter() {
         val requestElapsed = (requestCompleted - requestOccurred) / 1000.0
 
         val logContext = RequestLogContext.of(requestWrapper, responseWrapper, requestElapsed)
-        log.info(logContext.toLogMessage())
+        log.info(logContext.toLogMessage(objectMapper))
         responseWrapper.copyBodyToResponse()
     }
 

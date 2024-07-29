@@ -10,4 +10,8 @@ data class Diary(
     val targetDate: LocalDate,
     val content: String,
     val scope: DiaryScope
-)
+) {
+    fun isOwner(assessorId: Long): Boolean {
+        return userId == assessorId
+    }
+}

@@ -16,17 +16,16 @@ class ProfileImageModifier(
         userId: Long,
         profileImageId: Long
     ) {
-        profileImageValidator.validateAlreadyHasActivateProfileImage(userId)
         val profileImage = profileImageReader.read(profileImageId)
         profileImageValidator.validateIsOwner(profileImage, userId)
 
-        profileImageRepository.updateStatus(profileImageId, ImageStatus.ACTIVATE)
+        profileImageRepository.updateStatue(profileImageId, ImageStatus.ACTIVATE)
     }
 
     @Transactional
     fun modifyOriginalProfileImageAsDeactivate(userId: Long) {
         val originalProfileImage = profileImageReader.readActivateProfileImage(userId)
 
-        profileImageRepository.updateStatus(originalProfileImage.id, ImageStatus.DEACTIVATE)
+        profileImageRepository.updateStatue(originalProfileImage.id, ImageStatus.DEACTIVATE)
     }
 }

@@ -44,8 +44,12 @@ class ProfileImageEntityRepository(
     }
 
     @Transactional
-    override fun updateStatus(id: Long, state: ImageStatus) {
-        val profileImageEntity = profileImageJpaEntityRepository.findByIdOrException(id)
-        profileImageEntity.status = state
+    override fun updateStatue(
+        profileImageId: Long,
+        status: ImageStatus
+    ): Long {
+        val profileImageEntity = profileImageJpaEntityRepository.findByIdOrException(profileImageId)
+        profileImageEntity.updateStatue(status)
+        return profileImageEntity.id
     }
 }

@@ -15,5 +15,5 @@ interface ProfileImageRepository {
 
     fun existsByUserIdAndStatus(userId: Long, status: ImageStatus): Boolean
 
-    fun updateStatus(id: Long, state: ImageStatus)
+    fun updateStatue(profileImageId: Long, status: ImageStatus): Long
 }
