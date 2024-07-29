@@ -8,6 +8,8 @@ import org.grida.persistence.user.UserEntity
 import java.time.LocalDate
 import javax.persistence.Column
 import javax.persistence.Entity
+import javax.persistence.EnumType
+import javax.persistence.Enumerated
 import javax.persistence.FetchType
 import javax.persistence.GeneratedValue
 import javax.persistence.GenerationType
@@ -26,9 +28,10 @@ class DiaryEntity(
 
     var targetDate: LocalDate,
 
+    @Column(length = 4095)
     var content: String,
 
-    @Column(length = 4095)
+    @Enumerated(EnumType.STRING)
     var scope: DiaryScope,
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -45,6 +48,14 @@ class DiaryEntity(
             scope = scope,
             userId = user.id
         )
+    }
+
+    fun updateContent(content: String) {
+        this.content = content
+    }
+
+    fun updateScope(scope: DiaryScope) {
+        this.scope = scope
     }
 
     companion object {

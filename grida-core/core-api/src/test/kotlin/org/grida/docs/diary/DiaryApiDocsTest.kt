@@ -14,7 +14,9 @@ import org.grida.domain.diary.Diary
 import org.grida.domain.diary.DiaryScope
 import org.grida.domain.diary.DiaryService
 import org.grida.presentation.v1.diary.DiaryController
+import org.grida.presentation.v1.diary.dto.DiaryModifyRequest
 import org.grida.presentation.v1.diary.dto.DiaryRequest
+import org.grida.presentation.v1.diary.dto.DiaryScopeRequest
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import java.time.LocalDate
@@ -87,6 +89,62 @@ class DiaryApiDocsTest(
                 "data.targetDate" isTypeOf DATE whichMeans "대상 날짜",
                 "data.scope" isTypeOf ENUM(DiaryScope::class) whichMeans "일기 공개 범위",
                 "data.createdAt" isTypeOf DATETIME whichMeans "생성 시간",
+            )
+        }
+    }
+
+    @Test
+    fun `일기 수정 API`() {
+        every { diaryService.modify(any(), any(), any(), any()) } returns 1L
+
+        val api = api.patch("/api/v1/diary/{diaryId}", 1L) {
+            withBearerToken()
+            requestBody(
+                DiaryModifyRequest(
+                    content = "수정할 일기 콘텐츠",
+                    scope = "PUBLIC"
+                )
+            )
+        }
+
+        documentFor(api, "modify-diary") {
+            summary("일기 생성 API")
+            requestHeaders(
+                "Authorization" whichMeans "인증 토큰"
+            )
+            requestFields(
+                "content" isTypeOf STRING whichMeans "수정할 일기 콘텐츠",
+                "scope" isTypeOf ENUM(DiaryScope::class) whichMeans "일기 공개 범위"
+            )
+            responseFields(
+                "data.id" isTypeOf NUMBER whichMeans "수정돤 일기 ID"
+            )
+        }
+    }
+
+    @Test
+    fun `일기 공개 범위 수정 API`() {
+        every { diaryService.modifyScope(any(), any(), any()) } returns 1L
+
+        val api = api.patch("/api/v1/diary/{diaryId}/scope", 1L) {
+            withBearerToken()
+            requestBody(
+                DiaryScopeRequest(
+                    scope = "PUBLIC"
+                )
+            )
+        }
+
+        documentFor(api, "modify-diary") {
+            summary("일기 생성 API")
+            requestHeaders(
+                "Authorization" whichMeans "인증 토큰"
+            )
+            requestFields(
+                "scope" isTypeOf ENUM(DiaryScope::class) whichMeans "일기 공개 범위"
+            )
+            responseFields(
+                "data.id" isTypeOf NUMBER whichMeans "수정돤 일기 ID"
             )
         }
     }

@@ -10,4 +10,8 @@ interface DiaryRepository {
     fun findById(id: Long): Diary
 
     fun existsByUserIdAndTargetDate(userId: Long, targetDate: LocalDate): Boolean
+
+    fun updateContent(diaryId: Long, content: String): Long
+
+    fun updateScope(diaryId: Long, scope: DiaryScope): Long
 }
