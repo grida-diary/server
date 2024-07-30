@@ -1,8 +1,6 @@
 package org.grida.persistence.diary
 
-import org.grida.domain.diary.Diary
 import org.grida.domain.diary.DiaryScope
-import org.grida.domain.user.User
 import org.grida.persistence.base.BaseEntity
 import org.grida.persistence.user.UserEntity
 import java.time.LocalDate
@@ -39,37 +37,11 @@ class DiaryEntity(
     var user: UserEntity
 ) : BaseEntity() {
 
-    fun toDiary(): Diary {
-        return Diary(
-            id = id,
-            timestamp = this.toTimeStamp(),
-            targetDate = targetDate,
-            content = content,
-            scope = scope,
-            userId = user.id
-        )
-    }
-
     fun updateContent(content: String) {
         this.content = content
     }
 
     fun updateScope(scope: DiaryScope) {
         this.scope = scope
-    }
-
-    companion object {
-        fun from(
-            diary: Diary,
-            user: User
-        ): DiaryEntity {
-            return DiaryEntity(
-                id = diary.id,
-                targetDate = diary.targetDate,
-                content = diary.content,
-                scope = diary.scope,
-                user = UserEntity.from(user)
-            )
-        }
     }
 }

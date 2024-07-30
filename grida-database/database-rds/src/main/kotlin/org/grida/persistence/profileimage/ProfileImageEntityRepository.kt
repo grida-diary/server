@@ -18,25 +18,25 @@ class ProfileImageEntityRepository(
         profileImage: ProfileImage,
         user: User
     ): Long {
-        val profileImageEntity =
-            profileImageJpaEntityRepository.save(ProfileImageEntity.from(profileImage, user))
+        val profileImageEntity = profileImage.toEntity(user)
+        profileImageJpaEntityRepository.save(profileImageEntity)
         return profileImageEntity.id
     }
 
     override fun findById(id: Long): ProfileImage {
         val profileImageEntity = profileImageJpaEntityRepository.findByIdOrException(id)
-        return profileImageEntity.toProfileImage()
+        return profileImageEntity.toDomain()
     }
 
     override fun findByUserIdAndStatus(userId: Long, status: ImageStatus): ProfileImage {
         val profileImageEntity =
             profileImageJpaEntityRepository.findByUserIdAndStatusOrException(userId, status)
-        return profileImageEntity.toProfileImage()
+        return profileImageEntity.toDomain()
     }
 
     override fun findAllByUserId(userId: Long): List<ProfileImage> {
         val profileImageEntities = profileImageJpaEntityRepository.findAllByUserId(userId)
-        return profileImageEntities.map { it.toProfileImage() }
+        return profileImageEntities.map { it.toDomain() }
     }
 
     override fun existsByUserIdAndStatus(userId: Long, status: ImageStatus): Boolean {
