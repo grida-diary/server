@@ -29,28 +29,4 @@ class UserEntity(
     var role: Role,
 
     var nickname: String
-) : BaseEntity() {
-
-    fun toUser(): User {
-        return User(
-            id = id,
-            username = username,
-            password = password,
-            role = role,
-            nickname = nickname,
-            timestamp = toTimeStamp()
-        )
-    }
-
-    companion object {
-        fun from(user: User): UserEntity {
-            return UserEntity(
-                id = user.id,
-                username = user.username,
-                password = user.password,
-                role = user.role,
-                nickname = user.nickname
-            )
-        }
-    }
-}
+) : BaseEntity()

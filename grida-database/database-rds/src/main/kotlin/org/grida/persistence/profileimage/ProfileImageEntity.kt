@@ -1,11 +1,7 @@
 package org.grida.persistence.profileimage
 
-import org.grida.domain.image.Image
 import org.grida.domain.image.ImageStatus
-import org.grida.domain.profileimage.Appearance
 import org.grida.domain.profileimage.Gender
-import org.grida.domain.profileimage.ProfileImage
-import org.grida.domain.user.User
 import org.grida.persistence.base.BaseEntity
 import org.grida.persistence.user.UserEntity
 import javax.persistence.Column
@@ -50,44 +46,7 @@ class ProfileImageEntity(
     var user: UserEntity
 ) : BaseEntity() {
 
-    fun toProfileImage(): ProfileImage {
-        return ProfileImage(
-            id = id,
-            userId = user.id,
-            image = Image(
-                url = imageUrl,
-                status = status,
-                timestamp = toTimeStamp()
-            ),
-            appearance = Appearance(
-                gender = gender,
-                age = age,
-                hairStyle = hairStyle,
-                glasses = glasses,
-                bodyShape = bodyShape
-            )
-        )
-    }
-
     fun updateStatue(status: ImageStatus) {
         this.status = status
-    }
-
-    companion object {
-        fun from(
-            profileImage: ProfileImage,
-            user: User
-        ): ProfileImageEntity {
-            return ProfileImageEntity(
-                imageUrl = profileImage.image.url,
-                status = profileImage.image.status,
-                gender = profileImage.appearance.gender,
-                age = profileImage.appearance.age,
-                hairStyle = profileImage.appearance.hairStyle,
-                glasses = profileImage.appearance.glasses,
-                bodyShape = profileImage.appearance.bodyShape,
-                user = UserEntity.from(user)
-            )
-        }
     }
 }

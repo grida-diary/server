@@ -19,13 +19,14 @@ class DiaryEntityRepository(
         diary: Diary,
         user: User
     ): Long {
-        val diaryEntity = diaryJpaEntityRepository.save(DiaryEntity.from(diary, user))
+        val diaryEntity = diary.toEntity(user)
+        diaryJpaEntityRepository.save(diaryEntity)
         return diaryEntity.id
     }
 
     override fun findById(id: Long): Diary {
         val diaryEntity = diaryJpaEntityRepository.findByIdOrException(id)
-        return diaryEntity.toDiary()
+        return diaryEntity.toDomain()
     }
 
     override fun existsByUserIdAndTargetDate(
