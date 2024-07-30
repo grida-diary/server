@@ -21,10 +21,7 @@ class DiaryImageEntityRepository(
         diary: Diary,
         user: User
     ): Long {
-        val diaryEntity = diaryImage.toEntity(
-            UserEntity.from(user),
-            DiaryEntity.from(diary, user)
-        )
+        val diaryEntity = diaryImage.toEntity(user, diary)
         diaryImageJpaEntityRepository.save(diaryEntity)
         return diaryEntity.id
     }
