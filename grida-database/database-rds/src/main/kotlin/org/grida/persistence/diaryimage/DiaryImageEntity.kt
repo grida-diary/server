@@ -1,8 +1,9 @@
-package org.grida.persistence.profileimage
+package org.grida.persistence.diaryimage
 
+import org.grida.domain.diaryimage.DiaryImage
 import org.grida.domain.image.ImageStatus
-import org.grida.domain.profileimage.Gender
 import org.grida.persistence.base.BaseEntity
+import org.grida.persistence.diary.DiaryEntity
 import org.grida.persistence.user.UserEntity
 import javax.persistence.Column
 import javax.persistence.Entity
@@ -17,11 +18,11 @@ import javax.persistence.ManyToOne
 import javax.persistence.Table
 
 @Entity
-@Table(name = "profile_image")
-class ProfileImageEntity(
+@Table(name = "diary_image")
+class DiaryImageEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "profile_image_id")
+    @Column(name = "diary_image_id")
     var id: Long = 0,
 
     @Column(length = 511)
@@ -31,22 +32,11 @@ class ProfileImageEntity(
     @Column(length = 127)
     var status: ImageStatus,
 
-    var gender: Gender,
-
-    var age: Int,
-
-    var hairStyle: String,
-
-    var glasses: String,
-
-    var bodyShape: String,
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    var user: UserEntity
-) : BaseEntity() {
+    var user: UserEntity,
 
-    fun updateStatue(status: ImageStatus) {
-        this.status = status
-    }
-}
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "diary_id")
+    var diary: DiaryEntity,
+) : BaseEntity()
