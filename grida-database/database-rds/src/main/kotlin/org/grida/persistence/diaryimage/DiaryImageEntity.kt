@@ -18,12 +18,12 @@ import javax.persistence.ManyToOne
 import javax.persistence.Table
 
 @Entity
-@Table(name = "diary-image")
+@Table(name = "diary_image")
 class DiaryImageEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "diary_id")
-    val id: Long,
+    @Column(name = "diary_image_id")
+    var id: Long = 0,
 
     @Column(length = 511)
     var imageUrl: String,
