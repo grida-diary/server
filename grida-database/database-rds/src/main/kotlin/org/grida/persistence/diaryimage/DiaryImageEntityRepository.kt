@@ -12,9 +12,10 @@ import org.springframework.transaction.annotation.Transactional
 @Repository
 @Transactional(readOnly = true)
 class DiaryImageEntityRepository(
-    private val diaryImageJpaEntityRepository: DiaryJpaEntityRepository
+    private val diaryImageJpaEntityRepository: DiaryImageJpaEntityRepository
 ) : DiaryImageRepository {
 
+    @Transactional
     override fun save(
         diaryImage: DiaryImage,
         diary: Diary,
