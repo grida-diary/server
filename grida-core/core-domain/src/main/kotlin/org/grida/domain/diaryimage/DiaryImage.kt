@@ -13,4 +13,8 @@ data class DiaryImage(
     override fun isOwner(accessorId: Long): Boolean {
         return userId == accessorId
     }
+
+    companion object {
+        const val IMAGE_GENERATE_MAX_ATTEMPT_COUNT = 3
+    }
 }

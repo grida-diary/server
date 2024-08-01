@@ -9,6 +9,8 @@ interface DiaryImageRepository {
 
     fun findById(id: Long): DiaryImage
 
+    fun countByDiaryId(diaryId: Long): Long
+
     fun existsByDiaryIdAndStatus(diaryId: Long, status: ImageStatus): Boolean
 
     fun updateStatus(diaryImageId: Long, status: ImageStatus): Long

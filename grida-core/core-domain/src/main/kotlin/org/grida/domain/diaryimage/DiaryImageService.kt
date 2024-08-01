@@ -20,15 +20,18 @@ class DiaryImageService(
         diaryId: Long,
         userId: Long
     ): Long {
+        diaryImageValidator.validateRemainingAttemptCount(diaryId)
+
         val diary = diaryReader.read(diaryId)
         accessManager.ownerOnly(diary, userId)
-        val generatedImageUrl = diaryImageGenerator.generate(diary.content)
 
+        val generatedImageUrl = diaryImageGenerator.generate(diary.content)
         val diaryImage = DiaryImage(
             userId = userId,
             diaryId = diaryId,
             image = Image(generatedImageUrl, ImageStatus.DEACTIVATE)
         )
+
         return diaryImageAppender.append(diaryImage, diaryId, userId)
     }
 
