@@ -1,7 +1,6 @@
 package org.grida.domain.profileimage
 
 import org.grida.domain.image.ImageStatus
-import org.grida.error.AccessFailed
 import org.grida.error.ActivateProfileImageAlreadyExists
 import org.grida.error.GridaException
 import org.springframework.stereotype.Component
@@ -11,15 +10,6 @@ import org.springframework.transaction.annotation.Transactional
 class ProfileImageValidator(
     private val profileImageRepository: ProfileImageRepository
 ) {
-
-    fun validateIsOwner(
-        profileImage: ProfileImage,
-        userId: Long
-    ) {
-        if (!profileImage.isOwner(userId)) {
-            throw GridaException(AccessFailed)
-        }
-    }
 
     @Transactional(readOnly = true)
     fun validateAlreadyHasActivateProfileImage(userId: Long) {
