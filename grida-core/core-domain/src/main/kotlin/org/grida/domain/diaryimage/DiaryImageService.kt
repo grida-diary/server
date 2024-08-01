@@ -9,9 +9,10 @@ import org.springframework.stereotype.Service
 @Service
 class DiaryImageService(
     private val diaryImageAppender: DiaryImageAppender,
-    private val diaryImageGenerator: DiaryImageGenerator,
+    private val diaryImageReader: DiaryImageReader,
     private val diaryImageModifier: DiaryImageModifier,
     private val diaryImageValidator: DiaryImageValidator,
+    private val diaryImageGenerator: DiaryImageGenerator,
     private val diaryReader: DiaryReader,
     private val accessManager: AccessManager
 ) {
@@ -33,6 +34,11 @@ class DiaryImageService(
         )
 
         return diaryImageAppender.append(diaryImage, diaryId, userId)
+    }
+
+    fun countRemainImageGenerateAttempt(diaryId: Long): Long {
+        val generatedImagesCount = diaryImageReader.countGeneratedImages(diaryId)
+        return DiaryImage.IMAGE_GENERATE_MAX_ATTEMPT_COUNT - generatedImagesCount
     }
 
     fun applyDiaryImage(

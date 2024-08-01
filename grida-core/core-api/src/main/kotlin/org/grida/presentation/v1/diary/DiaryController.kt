@@ -5,6 +5,7 @@ import org.grida.api.ApiResponse
 import org.grida.api.dto.IdResponse
 import org.grida.domain.diary.DiaryScope
 import org.grida.domain.diary.DiaryService
+import org.grida.domain.diaryimage.DiaryImageService
 import org.grida.presentation.v1.diary.dto.DiaryModifyRequest
 import org.grida.presentation.v1.diary.dto.DiaryRequest
 import org.grida.presentation.v1.diary.dto.DiaryResponse
@@ -20,7 +21,8 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping("/api/v1/diary")
 class DiaryController(
-    private val diaryService: DiaryService
+    private val diaryService: DiaryService,
+    private val diaryImageService: DiaryImageService
 ) {
 
     @PostMapping
@@ -39,7 +41,8 @@ class DiaryController(
         @PathVariable diaryId: Long
     ): ApiResponse<DiaryResponse> {
         val diary = diaryService.readDiary(diaryId, userId)
-        val response = DiaryResponse.from(diary)
+        val remainCount = diaryImageService.countRemainImageGenerateAttempt(diaryId)
+        val response = DiaryResponse.from(diary, remainCount)
         return ApiResponse.success(response)
     }
 

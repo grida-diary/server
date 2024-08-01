@@ -15,6 +15,6 @@ data class DiaryImage(
     }
 
     companion object {
-        const val IMAGE_GENERATE_MAX_ATTEMPT_COUNT = 3
+        const val IMAGE_GENERATE_MAX_ATTEMPT_COUNT = 3L
     }
 }
