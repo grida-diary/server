@@ -11,7 +11,7 @@ class AccessManager {
         target: Ownable,
         accessorId: Long
     ) {
-        if (target.isOwner(accessorId)) {
+        if (!target.isOwner(accessorId)) {
             throw GridaException(AccessFailed)
         }
     }
