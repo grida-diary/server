@@ -1,5 +1,6 @@
 package org.grida.domain.diaryimage
 
+import org.grida.domain.base.Ownable
 import org.grida.domain.image.Image
 
 data class DiaryImage(
@@ -7,4 +8,9 @@ data class DiaryImage(
     val userId: Long,
     val diaryId: Long,
     val image: Image
-)
+) : Ownable {
+
+    override fun isOwner(accessorId: Long): Boolean {
+        return userId == accessorId
+    }
+}
