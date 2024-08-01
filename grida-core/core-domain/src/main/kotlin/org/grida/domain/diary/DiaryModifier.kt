@@ -1,5 +1,6 @@
 package org.grida.domain.diary
 
+import org.grida.domain.base.AccessManager
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 
@@ -7,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional
 class DiaryModifier(
     private val diaryRepository: DiaryRepository,
     private val diaryReader: DiaryReader,
-    private val diaryValidator: DiaryValidator
+    private val accessManager: AccessManager
 ) {
 
     @Transactional
@@ -18,7 +19,7 @@ class DiaryModifier(
         scope: DiaryScope
     ) {
         val diary = diaryReader.read(diaryId)
-        diaryValidator.validateIsOwner(diary, userId)
+        accessManager.ownerOnly(diary, userId)
 
         diaryRepository.updateContent(diaryId, content)
         diaryRepository.updateScope(diaryId, scope)
@@ -31,7 +32,7 @@ class DiaryModifier(
         scope: DiaryScope
     ) {
         val diary = diaryReader.read(diaryId)
-        diaryValidator.validateIsOwner(diary, userId)
+        accessManager.ownerOnly(diary, userId)
 
         diaryRepository.updateScope(diaryId, scope)
     }

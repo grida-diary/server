@@ -1,5 +1,6 @@
 package org.grida.domain.profileimage
 
+import org.grida.domain.base.AccessManager
 import org.grida.domain.image.ImageStatus
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
@@ -8,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional
 class ProfileImageModifier(
     private val profileImageRepository: ProfileImageRepository,
     private val profileImageReader: ProfileImageReader,
-    private val profileImageValidator: ProfileImageValidator
+    private val accessManager: AccessManager
 ) {
 
     @Transactional
@@ -17,7 +18,7 @@ class ProfileImageModifier(
         profileImageId: Long
     ) {
         val profileImage = profileImageReader.read(profileImageId)
-        profileImageValidator.validateIsOwner(profileImage, userId)
+        accessManager.ownerOnly(profileImage, userId)
 
         profileImageRepository.updateStatue(profileImageId, ImageStatus.ACTIVATE)
     }

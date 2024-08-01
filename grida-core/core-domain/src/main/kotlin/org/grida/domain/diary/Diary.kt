@@ -1,5 +1,6 @@
 package org.grida.domain.diary
 
+import org.grida.domain.base.Ownable
 import org.grida.domain.base.Timestamp
 import java.time.LocalDate
 
@@ -10,8 +11,9 @@ data class Diary(
     val targetDate: LocalDate,
     val content: String,
     val scope: DiaryScope
-) {
-    fun isOwner(assessorId: Long): Boolean {
-        return userId == assessorId
+) : Ownable {
+
+    override fun isOwner(accessorId: Long): Boolean {
+        return userId == accessorId
     }
 }
