@@ -1,5 +1,6 @@
 package org.grida.domain.profileimage
 
+import org.grida.domain.base.Ownable
 import org.grida.domain.image.Image
 
 data class ProfileImage(
@@ -7,8 +8,9 @@ data class ProfileImage(
     val userId: Long,
     val image: Image,
     val appearance: Appearance
-) {
-    fun isOwner(accessorId: Long): Boolean {
+) : Ownable {
+
+    override fun isOwner(accessorId: Long): Boolean {
         return userId == accessorId
     }
 }

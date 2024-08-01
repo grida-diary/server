@@ -1,7 +1,7 @@
 package org.grida.domain.diaryimage
 
+import org.grida.domain.base.AccessManager
 import org.grida.domain.diary.DiaryReader
-import org.grida.domain.diary.DiaryValidator
 import org.grida.domain.image.Image
 import org.grida.domain.image.ImageStatus
 import org.springframework.stereotype.Service
@@ -10,8 +10,10 @@ import org.springframework.stereotype.Service
 class DiaryImageService(
     private val diaryImageAppender: DiaryImageAppender,
     private val diaryImageGenerator: DiaryImageGenerator,
+    private val diaryImageModifier: DiaryImageModifier,
+    private val diaryImageValidator: DiaryImageValidator,
     private val diaryReader: DiaryReader,
-    private val diaryValidator: DiaryValidator
+    private val accessManager: AccessManager
 ) {
 
     fun generateDiaryImage(
@@ -19,7 +21,7 @@ class DiaryImageService(
         userId: Long
     ): Long {
         val diary = diaryReader.read(diaryId)
-        diaryValidator.validateIsOwner(diary, userId)
+        accessManager.ownerOnly(diary, userId)
         val generatedImageUrl = diaryImageGenerator.generate(diary.content)
 
         val diaryImage = DiaryImage(
@@ -28,5 +30,14 @@ class DiaryImageService(
             image = Image(generatedImageUrl, ImageStatus.DEACTIVATE)
         )
         return diaryImageAppender.append(diaryImage, diaryId, userId)
+    }
+
+    fun applyDiaryImage(
+        diaryImageId: Long,
+        diaryId: Long,
+        userId: Long
+    ) {
+        diaryImageValidator.validateAlreadyHasActivateDiaryImage(diaryId)
+        diaryImageModifier.modifyAsActivate(diaryImageId, userId)
     }
 }

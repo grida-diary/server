@@ -39,4 +39,9 @@ class DiaryImageEntity(
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "diary_id")
     var diary: DiaryEntity,
-) : BaseEntity()
+) : BaseEntity() {
+
+    fun updateStatue(status: ImageStatus) {
+        this.status = status
+    }
+}

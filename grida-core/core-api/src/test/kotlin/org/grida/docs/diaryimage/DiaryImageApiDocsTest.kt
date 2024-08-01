@@ -2,6 +2,8 @@ package org.grida.docs.diaryimage
 
 import com.ninjasquad.springmockk.MockkBean
 import io.mockk.every
+import io.mockk.just
+import io.mockk.runs
 import io.wwan13.api.document.snippets.NUMBER
 import io.wwan13.api.document.snippets.isTypeOf
 import io.wwan13.api.document.snippets.whichMeans
@@ -40,6 +42,29 @@ class DiaryImageApiDocsTest(
             )
             responseFields(
                 "data.id" isTypeOf NUMBER whichMeans "생성된 일기 이미지 ID"
+            )
+        }
+    }
+
+    @Test
+    fun `일기 이미지 적용 API`() {
+        every { diaryImageService.applyDiaryImage(any(), any(), any()) } just runs
+
+        val api = api.post("/api/v1/diary/{diaryId}/image/{diaryImageId}", 1L, 1L) {
+            withBearerToken()
+        }
+
+        documentFor(api, "apply-diary-image") {
+            summary("일기 이미지 적용 API")
+            requestHeaders(
+                "Authorization" whichMeans "인증 토큰"
+            )
+            pathParameters(
+                "diaryId" whichMeans "적용하려는 일기의 ID",
+                "diaryImageId" whichMeans "적용하려는 일기 이미지의 ID",
+            )
+            responseFields(
+                "data.id" isTypeOf NUMBER whichMeans "적용된 일기 ID"
             )
         }
     }
