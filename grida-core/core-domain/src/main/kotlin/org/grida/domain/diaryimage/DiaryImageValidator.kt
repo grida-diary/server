@@ -1,4 +1,4 @@
-package org.grida.domain.profileimage
+package org.grida.domain.diaryimage
 
 import org.grida.domain.image.ImageStatus
 import org.grida.error.ActivateImageAlreadyExists
@@ -7,13 +7,13 @@ import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 
 @Component
-class ProfileImageValidator(
-    private val profileImageRepository: ProfileImageRepository
+class DiaryImageValidator(
+    private val diaryImageRepository: DiaryImageRepository
 ) {
 
     @Transactional(readOnly = true)
-    fun validateAlreadyHasActivateProfileImage(userId: Long) {
-        if (profileImageRepository.existsByUserIdAndStatus(userId, ImageStatus.ACTIVATE)) {
+    fun validateAlreadyHasActivateDiaryImage(diaryId: Long) {
+        if (diaryImageRepository.existsByDiaryIdAndStatus(diaryId, ImageStatus.ACTIVATE)) {
             throw GridaException(ActivateImageAlreadyExists)
         }
     }

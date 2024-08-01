@@ -3,9 +3,8 @@ package org.grida.persistence.diaryimage
 import org.grida.domain.diary.Diary
 import org.grida.domain.diaryimage.DiaryImage
 import org.grida.domain.diaryimage.DiaryImageRepository
+import org.grida.domain.image.ImageStatus
 import org.grida.domain.user.User
-import org.grida.persistence.diary.DiaryEntity
-import org.grida.persistence.user.UserEntity
 import org.springframework.stereotype.Repository
 import org.springframework.transaction.annotation.Transactional
 
@@ -24,5 +23,24 @@ class DiaryImageEntityRepository(
         val diaryEntity = diaryImage.toEntity(user, diary)
         diaryImageJpaEntityRepository.save(diaryEntity)
         return diaryEntity.id
+    }
+
+    override fun findById(id: Long): DiaryImage {
+        val diaryImageEntity = diaryImageJpaEntityRepository.findByIdOrException(id)
+        return diaryImageEntity.toDomain()
+    }
+
+    override fun existsByDiaryIdAndStatus(diaryId: Long, status: ImageStatus): Boolean {
+        return diaryImageJpaEntityRepository.existsByDiaryIdAndStatus(diaryId, status)
+    }
+
+    @Transactional
+    override fun updateStatus(
+        diaryImageId: Long,
+        status: ImageStatus
+    ): Long {
+        val diaryImageEntity = diaryImageJpaEntityRepository.findByIdOrException(diaryImageId)
+        diaryImageEntity.updateStatue(status)
+        return diaryImageEntity.id
     }
 }

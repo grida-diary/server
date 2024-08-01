@@ -26,10 +26,10 @@ data object UnusableUsername : CoreDomainErrorType {
     override val logLevel: LogLevel = INFO
 }
 
-data object ActivateProfileImageAlreadyExists : CoreDomainErrorType {
+data object ActivateImageAlreadyExists : CoreDomainErrorType {
     override val httpStatusCode: Int = BAD_REQUEST
-    override val errorCode: String = "PROFILE_IMAGE_400_1"
-    override val message: String = "이미 활성화된 프로필 이미지가 존재합니다."
+    override val errorCode: String = "IMAGE_400_1"
+    override val message: String = "이미 활성화된 이미지가 존재합니다."
     override val logLevel: LogLevel = INFO
 }
 
