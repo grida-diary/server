@@ -30,6 +30,10 @@ class DiaryImageEntityRepository(
         return diaryImageEntity.toDomain()
     }
 
+    override fun countByDiaryId(diaryId: Long): Long {
+        return diaryImageJpaEntityRepository.countByDiaryId(diaryId)
+    }
+
     override fun existsByDiaryIdAndStatus(diaryId: Long, status: ImageStatus): Boolean {
         return diaryImageJpaEntityRepository.existsByDiaryIdAndStatus(diaryId, status)
     }

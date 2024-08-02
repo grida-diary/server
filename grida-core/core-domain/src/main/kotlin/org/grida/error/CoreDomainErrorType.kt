@@ -33,6 +33,13 @@ data object ActivateImageAlreadyExists : CoreDomainErrorType {
     override val logLevel: LogLevel = INFO
 }
 
+data object ImageGenerateAttemptOver : CoreDomainErrorType {
+    override val httpStatusCode: Int = BAD_REQUEST
+    override val errorCode: String = "IMAGE_400_2"
+    override val message: String = "이미지 생성 시도 횟수를 초과하였습니다."
+    override val logLevel: LogLevel = INFO
+}
+
 data object PasswordConfirmNotMatched : CoreDomainErrorType {
     override val httpStatusCode: Int = BAD_REQUEST
     override val errorCode: String = "AUTH_400_1"
