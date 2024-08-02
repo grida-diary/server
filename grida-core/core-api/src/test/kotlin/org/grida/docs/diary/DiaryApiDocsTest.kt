@@ -13,6 +13,7 @@ import org.grida.docs.ApiDocsTest
 import org.grida.domain.diary.Diary
 import org.grida.domain.diary.DiaryScope
 import org.grida.domain.diary.DiaryService
+import org.grida.domain.diaryimage.DiaryImageService
 import org.grida.presentation.v1.diary.DiaryController
 import org.grida.presentation.v1.diary.dto.DiaryModifyRequest
 import org.grida.presentation.v1.diary.dto.DiaryRequest
@@ -31,6 +32,9 @@ class DiaryApiDocsTest(
 
     @MockkBean
     private lateinit var diaryService: DiaryService
+
+    @MockkBean
+    private lateinit var diaryImageService: DiaryImageService
 
     @Test
     fun `일기 생성 API`() {
@@ -74,6 +78,7 @@ class DiaryApiDocsTest(
         )
 
         every { diaryService.readDiary(any(), any()) } returns diary
+        every { diaryImageService.countRemainImageGenerateAttempt(any()) } returns 2L
 
         val api = api.get("/api/v1/diary/{diaryId}", 1L) {
             withBearerToken()
@@ -89,6 +94,7 @@ class DiaryApiDocsTest(
                 "data.targetDate" isTypeOf DATE whichMeans "대상 날짜",
                 "data.scope" isTypeOf ENUM(DiaryScope::class) whichMeans "일기 공개 범위",
                 "data.createdAt" isTypeOf DATETIME whichMeans "생성 시간",
+                "data.remainAttempt" isTypeOf NUMBER whichMeans "일기 이미지 재생성 가능 횟수",
             )
         }
     }

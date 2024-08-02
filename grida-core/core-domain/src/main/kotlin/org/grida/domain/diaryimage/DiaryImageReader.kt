@@ -9,7 +9,12 @@ class DiaryImageReader(
 ) {
 
     @Transactional(readOnly = true)
-    fun read(diaryId: Long): DiaryImage {
-        return diaryImageRepository.findById(diaryId)
+    fun read(diaryImageId: Long): DiaryImage {
+        return diaryImageRepository.findById(diaryImageId)
+    }
+
+    @Transactional(readOnly = true)
+    fun countGeneratedImages(diaryId: Long): Long {
+        return diaryImageRepository.countByDiaryId(diaryId)
     }
 }

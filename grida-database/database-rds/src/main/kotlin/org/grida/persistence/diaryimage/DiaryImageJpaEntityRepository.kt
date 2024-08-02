@@ -13,5 +13,7 @@ fun DiaryImageJpaEntityRepository.findByIdOrException(
 
 interface DiaryImageJpaEntityRepository : JpaRepository<DiaryImageEntity, Long> {
 
+    fun countByDiaryId(diaryId: Long): Long
+
     fun existsByDiaryIdAndStatus(diaryId: Long, status: ImageStatus): Boolean
 }

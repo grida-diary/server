@@ -7,16 +7,21 @@ data class DiaryResponse(
     val content: String,
     val targetDate: String,
     val scope: String,
-    val createdAt: String
+    val createdAt: String,
+    val remainAttempt: Long
 ) {
 
     companion object {
-        fun from(diary: Diary): DiaryResponse {
+        fun from(
+            diary: Diary,
+            remainAttempt: Long
+        ): DiaryResponse {
             return DiaryResponse(
                 content = diary.content,
                 targetDate = DateTimeUtil.toDefaultDateFormat(diary.targetDate),
                 scope = diary.scope.name,
-                createdAt = DateTimeUtil.toDefaultDateTimeFormat(diary.timestamp.createdAt)
+                createdAt = DateTimeUtil.toDefaultDateTimeFormat(diary.timestamp.createdAt),
+                remainAttempt = remainAttempt
             )
         }
     }
