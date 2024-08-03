@@ -68,4 +68,27 @@ class DiaryImageApiDocsTest(
             )
         }
     }
+
+    @Test
+    fun `대표 일기 이미지 수정 API`() {
+        every { diaryImageService.changeDiaryImage(any(), any(), any()) } just runs
+
+        val api = api.post("/api/v1/diary/{diaryId}/image/{diaryImageId}/change", 1L, 1L) {
+            withBearerToken()
+        }
+
+        documentFor(api, "change-diary-image") {
+            summary("대표 일기 이미지 수정 API")
+            requestHeaders(
+                "Authorization" whichMeans "인증 토큰"
+            )
+            pathParameters(
+                "diaryId" whichMeans "적용하려는 일기의 ID",
+                "diaryImageId" whichMeans "수정하려는 일기 이미지의 ID",
+            )
+            responseFields(
+                "data.id" isTypeOf NUMBER whichMeans "적용된 일기 ID"
+            )
+        }
+    }
 }
