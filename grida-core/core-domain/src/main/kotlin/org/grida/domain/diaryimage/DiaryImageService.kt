@@ -49,4 +49,13 @@ class DiaryImageService(
         diaryImageValidator.validateAlreadyHasActivateDiaryImage(diaryId)
         diaryImageModifier.modifyAsActivate(diaryImageId, userId)
     }
+
+    fun changeDiaryImage(
+        diaryImageId: Long,
+        diaryId: Long,
+        userId: Long
+    ) {
+        diaryImageModifier.modifyOriginalDiaryImageAsDeactivate(diaryId, userId)
+        diaryImageModifier.modifyAsActivate(diaryImageId, userId)
+    }
 }

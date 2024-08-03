@@ -13,10 +13,24 @@ class DiaryImageModifier(
 ) {
 
     @Transactional
-    fun modifyAsActivate(diaryImageId: Long, userId: Long) {
+    fun modifyAsActivate(
+        diaryImageId: Long,
+        userId: Long
+    ) {
         val diaryImage = diaryImageReader.read(diaryImageId)
         accessManager.ownerOnly(diaryImage, userId)
 
         diaryImageRepository.updateStatus(diaryImageId, ImageStatus.ACTIVATE)
+    }
+
+    @Transactional
+    fun modifyOriginalDiaryImageAsDeactivate(
+        diaryId: Long,
+        userId: Long
+    ) {
+        val originalDiaryImage =
+            diaryImageRepository.findByDiaryIdAndStatus(diaryId, ImageStatus.ACTIVATE)
+
+        diaryImageRepository.updateStatus(originalDiaryImage.id, ImageStatus.DEACTIVATE)
     }
 }
