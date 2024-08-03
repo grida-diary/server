@@ -35,4 +35,15 @@ class DiaryImageController(
         val response = IdResponse(diaryId)
         return ApiResponse.success(response)
     }
+
+    @PostMapping("/{diaryId}/image/{diaryImageId}/change")
+    fun changeDiaryImage(
+        @RequestUserId userId: Long,
+        @PathVariable diaryId: Long,
+        @PathVariable diaryImageId: Long
+    ): ApiResponse<IdResponse> {
+        diaryImageService.changeDiaryImage(diaryImageId, diaryId, userId)
+        val response = IdResponse(diaryId)
+        return ApiResponse.success(response)
+    }
 }

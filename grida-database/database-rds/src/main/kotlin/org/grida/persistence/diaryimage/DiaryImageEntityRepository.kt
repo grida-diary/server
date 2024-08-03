@@ -30,6 +30,12 @@ class DiaryImageEntityRepository(
         return diaryImageEntity.toDomain()
     }
 
+    override fun findByDiaryIdAndStatus(diaryId: Long, status: ImageStatus): DiaryImage {
+        val diaryImageEntity =
+            diaryImageJpaEntityRepository.findByDiaryIdAndStatusOrException(diaryId, status)
+        return diaryImageEntity.toDomain()
+    }
+
     override fun countByDiaryId(diaryId: Long): Long {
         return diaryImageJpaEntityRepository.countByDiaryId(diaryId)
     }
