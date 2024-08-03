@@ -4,6 +4,7 @@ import org.grida.domain.image.ImageStatus
 import org.grida.error.GridaException
 import org.grida.error.NoSuchData
 import org.springframework.data.jpa.repository.JpaRepository
+import java.util.Optional
 
 fun DiaryImageJpaEntityRepository.findByIdOrException(
     id: Long
@@ -11,7 +12,17 @@ fun DiaryImageJpaEntityRepository.findByIdOrException(
     return this.findById(id).orElseThrow { GridaException(NoSuchData) }
 }
 
+fun DiaryImageJpaEntityRepository.findByDiaryIdAndStatusOrException(
+    diaryId: Long,
+    status: ImageStatus
+): DiaryImageEntity {
+    return this.findByDiaryIdAndStatus(diaryId, status)
+        .orElseThrow { GridaException(NoSuchData) }
+}
+
 interface DiaryImageJpaEntityRepository : JpaRepository<DiaryImageEntity, Long> {
+
+    fun findByDiaryIdAndStatus(diaryId: Long, status: ImageStatus): Optional<DiaryImageEntity>
 
     fun countByDiaryId(diaryId: Long): Long
 
