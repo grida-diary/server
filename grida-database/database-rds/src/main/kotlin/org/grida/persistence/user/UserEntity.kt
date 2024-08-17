@@ -1,7 +1,6 @@
 package org.grida.persistence.user
 
 import org.grida.domain.user.Role
-import org.grida.domain.user.User
 import org.grida.persistence.base.BaseEntity
 import javax.persistence.Column
 import javax.persistence.Entity

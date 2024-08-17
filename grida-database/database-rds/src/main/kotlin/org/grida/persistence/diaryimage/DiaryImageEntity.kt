@@ -1,6 +1,5 @@
 package org.grida.persistence.diaryimage
 
-import org.grida.domain.diaryimage.DiaryImage
 import org.grida.domain.image.ImageStatus
 import org.grida.persistence.base.BaseEntity
 import org.grida.persistence.diary.DiaryEntity
