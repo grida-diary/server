@@ -1,4 +1,4 @@
-package org.grida.auth
+package org.grida.config
 
 import io.wwan13.wintersecurity.jwt.payload.annotation.Payload
 import io.wwan13.wintersecurity.jwt.payload.annotation.Roles
