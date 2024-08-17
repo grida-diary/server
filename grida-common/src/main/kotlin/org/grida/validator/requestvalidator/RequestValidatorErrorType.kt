@@ -20,4 +20,3 @@ data object DefaultInvalidInputValue : RequestValidatorErrorType {
     override val message: String = "올바르지 않은 입력값 입니다."
     override val logLevel: LogLevel = INFO
 }
-
