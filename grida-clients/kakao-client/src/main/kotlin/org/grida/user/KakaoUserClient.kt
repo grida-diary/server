@@ -8,10 +8,8 @@ class KakaoUserClient(
 ) {
 
     fun readUserProfile(accessToken: String): KakaoUserProfile {
-        val bearerToken = "Bearer $accessToken"
-        println(bearerToken)
         val response = kakaoUserApi.readUserProfile(
-            bearerToken = bearerToken,
+            bearerToken = "Bearer $accessToken",
             propertyKeys = QUERY_PROPERTY_KEYS,
             secureResource = true
         )
