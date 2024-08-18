@@ -8,7 +8,7 @@ import java.util.Optional
 
 fun ProfileImageJpaEntityRepository.findByIdOrException(id: Long): ProfileImageEntity {
     return this.findById(id)
-        .orElseThrow { GridaException(NoSuchData) }
+        .orElseThrow { GridaException(NoSuchData(ProfileImageEntity::class, id)) }
 }
 
 fun ProfileImageJpaEntityRepository.findByUserIdAndStatusOrException(
@@ -16,7 +16,7 @@ fun ProfileImageJpaEntityRepository.findByUserIdAndStatusOrException(
     status: ImageStatus
 ): ProfileImageEntity {
     return this.findByUserIdAndStatus(userId, status)
-        .orElseThrow { GridaException(NoSuchData) }
+        .orElseThrow { GridaException(NoSuchData(ProfileImageEntity::class, userId)) }
 }
 
 interface ProfileImageJpaEntityRepository : JpaRepository<ProfileImageEntity, Long> {

@@ -2,13 +2,26 @@ package org.grida.error
 
 import org.grida.http.BAD_REQUEST
 import org.grida.http.FORBIDDEN
+import kotlin.reflect.KClass
 
 sealed interface CoreDomainErrorType : ErrorType
 
-data object NoSuchData : CoreDomainErrorType {
+data class NoSuchData<T : Any, R>(
+    val from: KClass<T>,
+    val id: R
+) : CoreDomainErrorType {
     override val httpStatusCode: Int = BAD_REQUEST
     override val errorCode: String = "CORE_DOMAIN_400_1"
-    override val message: String = "찾으려는 데이터가 없습니다."
+    override val message: String = "찾으려는 데이터가 없습니다. ($from-$id)"
+    override val logLevel: LogLevel = INFO
+}
+
+class InvalidEnumValue<T>(
+    enumValues: Array<T>
+) : CoreDomainErrorType {
+    override val httpStatusCode: Int = BAD_REQUEST
+    override val errorCode: String = "CORE_DOMAIN_400_2"
+    override val message: String = "유효하지 않은 enum value 입니다.(${enumValues.joinToString(",")}})"
     override val logLevel: LogLevel = INFO
 }
 
@@ -19,10 +32,10 @@ data object AccessFailed : CoreDomainErrorType {
     override val logLevel: LogLevel = INFO
 }
 
-data object UnusableUsername : CoreDomainErrorType {
+data object AlreadyRegisteredUser : CoreDomainErrorType {
     override val httpStatusCode: Int = BAD_REQUEST
     override val errorCode: String = "USER_400_1"
-    override val message: String = "사용할 수 없는 username 입니다."
+    override val message: String = "이미 등록된 유저입니다."
     override val logLevel: LogLevel = INFO
 }
 

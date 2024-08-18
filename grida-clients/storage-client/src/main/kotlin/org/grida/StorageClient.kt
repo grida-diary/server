@@ -5,7 +5,6 @@ import com.amazonaws.services.s3.AmazonS3
 import org.grida.config.StorageClientProperties
 import org.grida.error.FileUploadFail
 import org.grida.error.GridaException
-import org.grida.error.StorageClientErrorType
 import org.springframework.stereotype.Component
 import java.io.File
 

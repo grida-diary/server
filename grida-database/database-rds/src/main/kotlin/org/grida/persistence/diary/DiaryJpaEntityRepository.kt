@@ -7,7 +7,7 @@ import java.time.LocalDate
 
 fun DiaryJpaEntityRepository.findByIdOrException(id: Long): DiaryEntity {
     return this.findById(id)
-        .orElseThrow { GridaException(NoSuchData) }
+        .orElseThrow { GridaException(NoSuchData(DiaryEntity::class, id)) }
 }
 
 interface DiaryJpaEntityRepository : JpaRepository<DiaryEntity, Long> {
