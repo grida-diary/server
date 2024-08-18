@@ -6,5 +6,10 @@ import org.springframework.context.annotation.Configuration
 
 @Configuration
 @ConfigurationPropertiesScan
-@EnableFeignClients(basePackages = ["org.grida"])
+@EnableFeignClients(
+    basePackages = [
+        "org.grida.auth",
+        "org.grida.user"
+    ]
+)
 class KakaoClientConfig

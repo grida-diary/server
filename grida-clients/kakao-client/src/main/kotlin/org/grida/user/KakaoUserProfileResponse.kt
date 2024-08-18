@@ -3,7 +3,7 @@ package org.grida.user
 import com.fasterxml.jackson.annotation.JsonProperty
 
 data class KakaoUserProfileResponse(
-    val id: Long,
+    val id: String,
     @JsonProperty("kakao_account")
     val properties: KakaoAccount
 ) {
@@ -11,7 +11,6 @@ data class KakaoUserProfileResponse(
         return KakaoUserProfile(
             id = id,
             name = properties.profile.nickname,
-            profileImage = properties.profile.profileImage
         )
     }
 }
@@ -22,6 +21,4 @@ data class KakaoAccount(
 
 data class KakaoAccountProfile(
     val nickname: String,
-    @JsonProperty("profile_image_url")
-    val profileImage: String
 )

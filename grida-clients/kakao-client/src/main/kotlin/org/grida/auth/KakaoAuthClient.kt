@@ -10,12 +10,8 @@ class KakaoAuthClient(
     private val kakaoProperties: KakaoProperties
 ) {
 
-    fun provideAuthToken(code: String, local: Boolean): KakaoAuthToken {
+    fun provideAuthToken(code: String): KakaoAuthToken {
         try {
-            val localPath = when (local) {
-                true -> "/local"
-                false -> ""
-            }
             val response = kakaoAuthApi.provideToken(
                 grantType = "authorization_code",
                 clientId = kakaoProperties.appKey,
@@ -24,7 +20,7 @@ class KakaoAuthClient(
             )
             return response.toKakaoAuthToken()
         } catch (e: FeignException) {
-            throw IllegalArgumentException(e.stackTraceToString()) // TODO
+            throw IllegalArgumentException(e.stackTraceToString())
         }
     }
 

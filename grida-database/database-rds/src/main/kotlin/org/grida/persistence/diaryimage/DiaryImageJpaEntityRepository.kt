@@ -9,7 +9,8 @@ import java.util.Optional
 fun DiaryImageJpaEntityRepository.findByIdOrException(
     id: Long
 ): DiaryImageEntity {
-    return this.findById(id).orElseThrow { GridaException(NoSuchData) }
+    return this.findById(id)
+        .orElseThrow { GridaException(NoSuchData(DiaryImageEntity::class, id)) }
 }
 
 fun DiaryImageJpaEntityRepository.findByDiaryIdAndStatusOrException(
@@ -17,7 +18,7 @@ fun DiaryImageJpaEntityRepository.findByDiaryIdAndStatusOrException(
     status: ImageStatus
 ): DiaryImageEntity {
     return this.findByDiaryIdAndStatus(diaryId, status)
-        .orElseThrow { GridaException(NoSuchData) }
+        .orElseThrow { GridaException(NoSuchData(DiaryImageEntity::class, diaryId)) }
 }
 
 interface DiaryImageJpaEntityRepository : JpaRepository<DiaryImageEntity, Long> {
