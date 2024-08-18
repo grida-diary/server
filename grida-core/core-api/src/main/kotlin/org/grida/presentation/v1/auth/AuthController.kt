@@ -1,35 +1,38 @@
 package org.grida.presentation.v1.auth
 
 import io.wwan13.wintersecurity.jwt.TokenGenerator
-import io.wwan13.wintersecurity.passwordencoder.PasswordEncoder
 import org.grida.api.ApiResponse
+import org.grida.auth.KakaoAuthClient
 import org.grida.config.TokenPayload
+import org.grida.domain.user.LoginOption
+import org.grida.domain.user.LoginPlatform
 import org.grida.domain.user.UserService
-import org.grida.error.LoginFailed
-import org.grida.presentation.v1.auth.dto.LoginRequest
 import org.grida.presentation.v1.auth.dto.LoginResponse
-import org.grida.validator.requestvalidator.RequestValidator
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
+import org.grida.user.KakaoUserClient
+import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping("/api/v1/auth")
 class AuthController(
-    private val tokenGenerator: TokenGenerator,
     private val userService: UserService,
-    private val passwordEncoder: PasswordEncoder
+    private val tokenGenerator: TokenGenerator,
+    private val kakaoAuthClient: KakaoAuthClient,
+    private val kakaoUserClient: KakaoUserClient
 ) {
 
-    @PostMapping("/login")
-    fun login(
-        @RequestBody request: LoginRequest
+    @GetMapping("/kakao")
+    fun kakaoLogin(
+        @RequestParam("code") kakaoAuthCode: String
     ): ApiResponse<LoginResponse> {
-        val user = userService.findUser(request.username)
-        RequestValidator.validate(LoginFailed) {
-            passwordEncoder.matches(request.password, user.password)
-        }
+        val kakaoToken = kakaoAuthClient.provideAuthToken(kakaoAuthCode)
+        val kakaoProfile = kakaoUserClient.readUserProfile(kakaoToken.accessToken)
+
+        val loginOption = LoginOption(LoginPlatform.KAKAO, kakaoProfile.id)
+        val user = userService.readUserByLoginOption(loginOption)
+            ?: userService.appendAndReturnNormalUser(kakaoProfile.name, loginOption)
 
         val tokenPayload = TokenPayload(user.id, user.role)
         val response = LoginResponse(

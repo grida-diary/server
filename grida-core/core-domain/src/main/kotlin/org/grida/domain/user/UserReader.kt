@@ -14,7 +14,7 @@ class UserReader(
     }
 
     @Transactional(readOnly = true)
-    fun read(username: String): User {
-        return userRepository.findByUsername(username)
+    fun readByLoginOptionOrNull(loginOption: LoginOption): User? {
+        return userRepository.findByLoginOption(loginOption)
     }
 }

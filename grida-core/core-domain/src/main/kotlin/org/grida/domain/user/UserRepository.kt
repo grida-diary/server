@@ -6,7 +6,7 @@ interface UserRepository {
 
     fun findById(id: Long): User
 
-    fun findByUsername(username: String): User
+    fun findByLoginOption(loginOption: LoginOption): User?
 
-    fun existsByUsername(username: String): Boolean
+    fun existsByLoginOption(loginOption: LoginOption): Boolean
 }
