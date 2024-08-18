@@ -31,8 +31,8 @@ class CoreApiSecurityConfig(
 
     override fun registerAuthPatterns(registry: AuthPatternsRegistry) {
         registry.apply {
-            uriPatterns("/api/v1/auth/login", "/api/v1/user")
-                .httpMethodPost()
+            uriPatterns("/api/v1/auth/**")
+                .allHttpMethods()
                 .permitAll()
 
             uriPatterns("/api/v1/user/image/**", "/api/v1/diary/**")

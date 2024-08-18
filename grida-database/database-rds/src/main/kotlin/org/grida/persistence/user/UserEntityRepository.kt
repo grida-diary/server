@@ -1,5 +1,6 @@
 package org.grida.persistence.user
 
+import org.grida.domain.user.LoginOption
 import org.grida.domain.user.User
 import org.grida.domain.user.UserRepository
 import org.springframework.stereotype.Repository
@@ -23,12 +24,15 @@ class UserEntityRepository(
         return userEntity.toDomain()
     }
 
-    override fun findByUsername(username: String): User {
-        val userEntity = userJpaEntityRepository.findByUsernameOrException(username)
-        return userEntity.toDomain()
+    override fun findByLoginOption(loginOption: LoginOption): User? {
+        val userEntity = userJpaEntityRepository
+            .findByPlatformAndPlatformIdentifierOrNull(loginOption.platform, loginOption.identifier)
+
+        return userEntity?.toDomain()
     }
 
-    override fun existsByUsername(username: String): Boolean {
-        return userJpaEntityRepository.existsByUsername(username)
+    override fun existsByLoginOption(loginOption: LoginOption): Boolean {
+        return userJpaEntityRepository
+            .existsByPlatformAndPlatformIdentifier(loginOption.platform, loginOption.identifier)
     }
 }

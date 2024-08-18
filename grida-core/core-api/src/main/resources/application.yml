@@ -39,6 +39,10 @@ storage:
     bucket: ${S3_BUCKET}
     host: ${CDN_HOST}
 
+kakao:
+  appKey: ${KAKAO_APP_KEY}
+  redirectUri: ${KAKAO_REDIRECT_URL}
+
 management:
   endpoints:
     web:

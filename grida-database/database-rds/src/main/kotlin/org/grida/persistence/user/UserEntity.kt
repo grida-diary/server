@@ -1,7 +1,7 @@
 package org.grida.persistence.user
 
+import org.grida.domain.user.LoginPlatform
 import org.grida.domain.user.Role
-import org.grida.domain.user.User
 import org.grida.persistence.base.BaseEntity
 import javax.persistence.Column
 import javax.persistence.Entity
@@ -20,13 +20,13 @@ class UserEntity(
     @Column(name = "user_id")
     var id: Long = 0,
 
-    var username: String,
-
-    @Column(name = "encrypted_password")
-    var password: String,
+    var name: String,
 
     @Enumerated(EnumType.STRING)
     var role: Role,
 
-    var nickname: String
+    @Enumerated(EnumType.STRING)
+    val platform: LoginPlatform,
+
+    val platformIdentifier: String
 ) : BaseEntity()

@@ -5,8 +5,7 @@ import org.grida.domain.base.Timestamp
 data class User(
     val id: Long = 0,
     val timestamp: Timestamp = Timestamp(),
-    val username: String,
-    val password: String,
+    val name: String,
     val role: Role = Role.ROLE_USER,
-    val nickname: String,
+    val loginOption: LoginOption
 )
