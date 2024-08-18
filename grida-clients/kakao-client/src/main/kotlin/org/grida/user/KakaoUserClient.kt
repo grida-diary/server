@@ -4,12 +4,14 @@ import org.springframework.stereotype.Component
 
 @Component
 class KakaoUserClient(
-    private val kakapUserApi: KakaoUserApi
+    private val kakaoUserApi: KakaoUserApi
 ) {
 
     fun readUserProfile(accessToken: String): KakaoUserProfile {
-        val response = kakapUserApi.readUserProfile(
-            bearerToken = "Bearer $accessToken",
+        val bearerToken = "Bearer $accessToken"
+        println(bearerToken)
+        val response = kakaoUserApi.readUserProfile(
+            bearerToken = bearerToken,
             propertyKeys = QUERY_PROPERTY_KEYS,
             secureResource = true
         )
