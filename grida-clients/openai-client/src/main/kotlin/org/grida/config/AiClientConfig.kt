@@ -9,7 +9,12 @@ import org.springframework.context.annotation.Configuration
 
 @Configuration
 @ConfigurationPropertiesScan
-@EnableFeignClients(basePackages = ["org.grida"])
+@EnableFeignClients(
+    basePackages = [
+        "org.grida.chat",
+        "org.grida.image"
+    ]
+)
 class AiClientConfig(
     @Value("\${openai.secret-key}") val secretKey: String
 ) {
