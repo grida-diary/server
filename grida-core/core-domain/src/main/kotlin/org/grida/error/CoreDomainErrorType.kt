@@ -16,12 +16,13 @@ data class NoSuchData<T : Any, R>(
     override val logLevel: LogLevel = INFO
 }
 
-class InvalidEnumValue<T>(
-    enumValues: Array<T>
+class InvalidEnumValue(
+    enumValues: List<String>
 ) : CoreDomainErrorType {
     override val httpStatusCode: Int = BAD_REQUEST
     override val errorCode: String = "CORE_DOMAIN_400_2"
-    override val message: String = "유효하지 않은 enum value 입니다.(${enumValues.joinToString(",")}})"
+    override val message: String =
+        "유효하지 않은 enum value 입니다.[${enumValues.joinToString("|")}]"
     override val logLevel: LogLevel = INFO
 }
 
