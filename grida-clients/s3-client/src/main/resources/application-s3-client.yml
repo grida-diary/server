@@ -5,3 +5,14 @@ storage:
     region: ${S3_REGION}
     bucket: ${S3_BUCKET}
     host: ${CDN_HOST}
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+
+---
+spring:
+  config:
+    activate:
+      on-profile: prod

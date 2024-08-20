@@ -1,0 +1,19 @@
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+kakao:
+  appKey: ${KAKAO_APP_KEY}
+  base-uri: http://localhost:8080
+  api-path: ${KAKAO_REDIRECT_URL}
+
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+kakao:
+  appKey: ${KAKAO_APP_KEY}
+  base-uri: https://grida.today
+  api-path: ${KAKAO_REDIRECT_URL}

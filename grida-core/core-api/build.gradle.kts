@@ -18,7 +18,7 @@ dependencies {
     implementation("com.github.wwan13:winter-security:0.0.10")
 
     // logging-request
-    implementation("com.github.wwan13:spring-request-logger:0.0.4")
+    implementation("com.github.wwan13:spring-request-logger:0.0.6")
 
     // api docs
     testImplementation("org.springframework.restdocs:spring-restdocs-mockmvc")
