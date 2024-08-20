@@ -5,7 +5,7 @@ import org.springframework.boot.context.properties.ConstructorBinding
 
 @ConstructorBinding
 @ConfigurationProperties("storage.aws")
-data class StorageClientProperties(
+data class S3ClientProperties(
     val accessKey: String,
     val secretKey: String,
     val region: String,
