@@ -5,7 +5,7 @@ plugins {
 dependencies {
     // module dependencies
     implementation(project(":grida-core:core-domain"))
-    implementation(project(":grida-database:database-rds"))
+    implementation(project(":grida-storage:rds-storage"))
     implementation(project(":grida-clients:kakao-client"))
 
     // web

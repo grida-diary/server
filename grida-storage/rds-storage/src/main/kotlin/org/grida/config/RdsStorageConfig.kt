@@ -11,4 +11,4 @@ import org.springframework.transaction.annotation.EnableTransactionManagement
 @EnableJpaAuditing
 @EntityScan(basePackages = ["org.grida"])
 @EnableJpaRepositories(basePackages = ["org.grida"])
-class DatabaseRdsConfig
+class RdsStorageConfig

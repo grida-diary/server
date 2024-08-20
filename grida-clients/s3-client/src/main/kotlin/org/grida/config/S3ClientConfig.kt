@@ -10,11 +10,11 @@ import org.springframework.context.annotation.Configuration
 
 @Configuration
 @ConfigurationPropertiesScan
-class StorageClientConfig(
-    private val properties: StorageClientProperties,
+class S3ClientConfig(
+    private val properties: S3ClientProperties,
 ) {
     @Bean
-    fun amazonS3Client(properties: StorageClientProperties): AmazonS3 {
+    fun amazonS3Client(properties: S3ClientProperties): AmazonS3 {
         val credential = BasicAWSCredentials(properties.accessKey, properties.secretKey)
 
         return AmazonS3ClientBuilder
