@@ -1,11 +1,13 @@
 spring:
   profiles:
-    active: ${SPRING_PROFILE_ACTIVATE}
+    active: dev
     include:
       - rds-storage
       - kakao-client
       - openai-client
       - s3-client
+      - logging
+      - monitoring
   mvc:
     throw-exception-if-no-handler-found: true
   web:
@@ -20,19 +22,3 @@ jwt:
   secret-key: ${JWT_SECRET_KEY}
   access-token-expired: ${ACCESS_TOKEN_EXPIRED}
   refresh-token-expired: ${REFRESH_TOKEN_EXPIRED}
-
-management:
-  endpoints:
-    web:
-      base-path: /api/actuator
-      exposure:
-        include: "prometheus"
-
-server:
-  tomcat:
-    mbeanregistry:
-      enabled: true
-
-logging:
-  level:
-    root: INFO
