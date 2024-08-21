@@ -12,4 +12,8 @@ include("grida-core:core-domain")
 include("grida-database")
 include("grida-storage:rds-storage")
 
+include("grida-support")
+include("grida-support:monitoring")
+include("grida-support:logging")
+
 include("grida-common")
