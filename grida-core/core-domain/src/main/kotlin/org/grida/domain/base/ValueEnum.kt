@@ -9,8 +9,8 @@ interface ValueEnum<T : Enum<T>> {
     companion object {
         inline fun <reified T : Enum<T>> resolve(value: String): T {
             val entries = enumValues<T>()
-            return entries
-                .firstOrNull { (it as ValueEnum<*>).value == value }
+            return enumValues<T>()
+                .singleOrNull { (it as ValueEnum<*>).value == value }
                 ?: throw GridaException(InvalidEnumValue(entries.map { (it as ValueEnum<*>).value }))
         }
     }
