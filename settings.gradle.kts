@@ -9,7 +9,7 @@ include("grida-core")
 include("grida-core:core-api")
 include("grida-core:core-domain")
 
-include("grida-database")
+include("grida-storage")
 include("grida-storage:rds-storage")
 
 include("grida-support")
