@@ -70,6 +70,9 @@ class AuthApiDocsTest(
                     ** live : https://kauth.kakao.com/oauth/authorize?client_id=e32f0cc35368a69966b54698b193a794&
                     redirect_uri=https://grida.today/api/v1/auth/login/kakao&response_type=code<br/>
                 """.trimIndent()
+                    .lineSequence()
+                    .map { it.trimEnd() }
+                    .joinToString("")
             )
             queryParameters("code" whichMeans "카카오 인증 토큰")
             responseFields(
