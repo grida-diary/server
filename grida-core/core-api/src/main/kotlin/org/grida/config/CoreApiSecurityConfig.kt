@@ -31,6 +31,10 @@ class CoreApiSecurityConfig(
 
     override fun registerAuthPatterns(registry: AuthPatternsRegistry) {
         registry.apply {
+            uriPatterns("/api/health")
+                .httpMethodGet()
+                .permitAll()
+
             uriPatterns("/api/v1/auth/**")
                 .allHttpMethods()
                 .permitAll()
