@@ -17,6 +17,7 @@ import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.http.converter.HttpMessageNotReadableException
 import org.springframework.web.HttpRequestMethodNotSupportedException
+import org.springframework.web.bind.MissingServletRequestParameterException
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.RestControllerAdvice
 import org.springframework.web.servlet.NoHandlerFoundException
@@ -96,6 +97,15 @@ class ApiControllerAdvice {
         log.info(e.message)
         val response = ApiResponse.error("HTTP_404", "존재하지 않는 API 요청 입니다.")
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response)
+    }
+
+    @ExceptionHandler(MissingServletRequestParameterException::class)
+    fun handleMissingServletRequestParameterException(
+        e: MissingServletRequestParameterException
+    ): ResponseEntity<ApiResponse<ErrorResponse>> {
+        log.info(e.message)
+        val response = ApiResponse.error("HTTP_400", "요청에 필요한 쿼리 파라미터 ${e.parameterName}가 없습니다.")
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response)
     }
 
     @ExceptionHandler(HttpMessageNotReadableException::class)

@@ -7,5 +7,8 @@ import org.springframework.boot.context.properties.ConstructorBinding
 @ConfigurationProperties("kakao")
 data class KakaoProperties(
     val appKey: String,
-    val redirectUri: String
-)
+    val baseUri: String,
+    val apiPath: String
+) {
+    val redirectUri: String = baseUri + apiPath
+}

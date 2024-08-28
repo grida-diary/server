@@ -1,2 +1,0 @@
-openai:
-  secret-ket: ${OPEN_AI_SECRET_KEY}

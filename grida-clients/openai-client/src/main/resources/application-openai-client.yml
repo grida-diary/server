@@ -1,0 +1,14 @@
+openai:
+  secret-key: ${OPEN_AI_SECRET_KEY}
+
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
