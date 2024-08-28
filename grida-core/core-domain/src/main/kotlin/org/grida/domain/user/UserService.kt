@@ -30,6 +30,10 @@ class UserService(
         return userAppender.appendAndReturnUser(user)
     }
 
+    fun read(id: Long): User {
+        return userReader.read(id)
+    }
+
     fun readUserByLoginOption(
         loginOption: LoginOption
     ): User? {
