@@ -10,12 +10,15 @@ class KakaoAuthClient(
     private val kakaoProperties: KakaoProperties
 ) {
 
-    fun provideAuthToken(code: String): KakaoAuthToken {
+    fun provideAuthToken(
+        code: String,
+        redirectUri: String
+    ): KakaoAuthToken {
         try {
             val response = kakaoAuthApi.provideToken(
                 grantType = "authorization_code",
                 clientId = kakaoProperties.appKey,
-                redirectUri = kakaoProperties.redirectUri,
+                redirectUri = redirectUri,
                 code = code
             )
             return response.toKakaoAuthToken()
