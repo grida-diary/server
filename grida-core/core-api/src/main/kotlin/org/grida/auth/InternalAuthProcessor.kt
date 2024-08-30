@@ -16,7 +16,10 @@ class InternalAuthProcessor(
     private val authTokenProvider: AuthTokenProvider
 ) : AuthProcessor {
 
-    override fun process(code: String): AuthToken {
+    override fun process(
+        code: String,
+        state: String
+    ): AuthToken {
         validateActiveProfile()
         val loginOption = LoginOption(LoginPlatform.ADMIN, code)
         val user = userService.read(loginOption.identifier.toLong())

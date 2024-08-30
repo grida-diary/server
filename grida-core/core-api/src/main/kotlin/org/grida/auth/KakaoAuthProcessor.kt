@@ -14,8 +14,11 @@ class KakaoAuthProcessor(
     private val authTokenProvider: AuthTokenProvider
 ) : AuthProcessor {
 
-    override fun process(code: String): AuthToken {
-        val kakaoToken = kakaoAuthClient.provideAuthToken(code)
+    override fun process(
+        code: String,
+        state: String
+    ): AuthToken {
+        val kakaoToken = kakaoAuthClient.provideAuthToken(code, state)
         val kakaoProfile = kakaoUserClient.readUserProfile(kakaoToken.accessToken)
         val loginOption = LoginOption(LoginPlatform.KAKAO, kakaoProfile.id)
 
