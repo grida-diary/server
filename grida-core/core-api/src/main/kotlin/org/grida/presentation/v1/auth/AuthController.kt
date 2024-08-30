@@ -4,7 +4,6 @@ import org.grida.api.ApiResponse
 import org.grida.auth.AuthProcessorSelector
 import org.grida.presentation.v1.auth.dto.LoginRequest
 import org.grida.presentation.v1.auth.dto.LoginResponse
-import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
