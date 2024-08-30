@@ -4,7 +4,7 @@ import org.grida.auth.AuthProcessor
 import org.grida.auth.AuthToken
 
 class StubAuthProcessor : AuthProcessor {
-    override fun process(code: String): AuthToken {
+    override fun process(code: String, state: String): AuthToken {
         return AuthToken("access token", "refresh token")
     }
 }
