@@ -10,6 +10,7 @@ import org.grida.auth.AuthProcessorSelector
 import org.grida.docs.ApiDocsTest
 import org.grida.docs.auth.stub.StubAuthProcessor
 import org.grida.presentation.v1.auth.AuthController
+import org.grida.presentation.v1.auth.dto.LoginRequest
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 
@@ -29,9 +30,9 @@ class AuthApiDocsTest(
 
         every { authProcessorSelector.select(any()) } returns StubAuthProcessor()
 
-        val api = api.get("/api/v1/auth") {
+        val api = api.post("/api/v1/auth") {
             queryParam("platform", "oauth2 platform")
-            queryParam("code", "kakao authorization code")
+            requestBody(LoginRequest("code", "state"))
         }
 
         documentFor(api, "provide-auth-token") {
@@ -49,7 +50,10 @@ class AuthApiDocsTest(
             )
             queryParameters(
                 "platform" whichMeans "oauth2 플랫폼 [kakao/**]",
-                "code" whichMeans "인증 토큰"
+            )
+            requestFields(
+                "code" isTypeOf STRING whichMeans "oauth2 플랫폼 인증 토큰",
+                "state" isTypeOf STRING whichMeans "상태값 (kakao : redirect uri)",
             )
             responseFields(
                 "data.accessToken" isTypeOf STRING whichMeans "인증 토큰",
