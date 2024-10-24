@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestHeader
 
 @FeignClient(
-    name = "OpenAiChatCompletion",
+    name = "OpenAiChatApi",
     url = "https://api.openai.com/v1/chat/completions",
 )
 interface OpenAiChatApi {

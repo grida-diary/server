@@ -1,6 +1,7 @@
 rootProject.name = "grida"
 
 include("grida-clients")
+include("grida-clients:feign-config")
 include("grida-clients:s3-client")
 include("grida-clients:openai-client")
 include("grida-clients:kakao-client")

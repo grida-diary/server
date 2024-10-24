@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestHeader
 import org.springframework.web.bind.annotation.RequestParam
 
 @FeignClient(
-    name = "KakaoUser",
+    name = "KakaoUserApi",
     url = "https://kapi.kakao.com/v2/user",
 )
 interface KakaoUserApi {
