@@ -17,7 +17,6 @@ kotlin {
 allprojects {
     apply(plugin = "java")
     apply(plugin = "org.jetbrains.kotlin.jvm")
-    apply(plugin = "org.jetbrains.kotlin.kapt")
     apply(plugin = "org.jetbrains.kotlin.plugin.spring")
     apply(plugin = "org.jetbrains.kotlin.plugin.jpa")
     apply(plugin = "org.springframework.boot")
@@ -47,9 +46,6 @@ subprojects {
         implementation("io.github.microutils:kotlin-logging:3.0.5")
 
         annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
-
-        // kotlin annotation processor
-        kapt("org.springframework.boot:spring-boot-configuration-processor")
 
         // kotlin test
         testImplementation("org.springframework.boot:spring-boot-starter-test")

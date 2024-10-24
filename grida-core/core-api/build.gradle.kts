@@ -9,6 +9,8 @@ dependencies {
     implementation(project(":grida-clients:kakao-client"))
     implementation(project(":grida-support:logging"))
     implementation(project(":grida-support:monitoring"))
+    implementation(project(":grida-clients:openai-client"))
+    implementation(project(":grida-clients:s3-client"))
 
     // web
     implementation("org.springframework.boot:spring-boot-starter-web")
