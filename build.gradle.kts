@@ -1,5 +1,5 @@
 plugins {
-    id("org.springframework.boot") version "2.7.13"
+    id("org.springframework.boot") version "3.3.4"
     id("io.spring.dependency-management") version "1.1.5"
     id("java")
     kotlin("jvm") version "1.9.24"
@@ -54,8 +54,8 @@ subprojects {
         testRuntimeOnly("org.junit.platform:junit-platform-launcher")
         testImplementation("io.kotest:kotest-runner-junit5:5.7.2")
         testImplementation("io.kotest:kotest-assertions-core:5.7.2")
-        testImplementation("io.mockk:mockk:1.12.4")
-        testImplementation("io.mockk:mockk-agent-jvm:1.12.4")
+        testImplementation("io.mockk:mockk:1.13.4")
+        testImplementation("io.mockk:mockk-agent-jvm:1.13.4")
         testImplementation("io.kotest:kotest-framework-datatest-jvm:5.7.2")
         testImplementation("com.ninja-squad:springmockk:4.0.2")
     }
