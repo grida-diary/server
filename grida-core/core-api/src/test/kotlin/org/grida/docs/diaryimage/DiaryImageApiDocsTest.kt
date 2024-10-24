@@ -26,7 +26,7 @@ class DiaryImageApiDocsTest(
 
     @Test
     fun `일기 이미지 생성 API`() {
-        every { diaryImageService.generateDiaryImage(any(), any()) } returns 1L
+        every { diaryImageService.generateDiaryImage(any(), any(), any()) } returns 1L
 
         val api = api.post("/api/v1/diary/{diaryId}/image", 1L) {
             withBearerToken()

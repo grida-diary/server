@@ -8,15 +8,19 @@ class ProfileImageService(
     private val profileImageReader: ProfileImageReader,
     private val profileImageModifier: ProfileImageModifier,
     private val profileImageValidator: ProfileImageValidator,
-    private val profileImageGenerator: ProfileImageGenerator
+    private val profileImagePromptGenerator: ProfileImagePromptGenerator
 ) {
 
-    fun generateSampleProfileImage(
+    fun append(
         userId: Long,
+        imageUrl: String,
         appearance: Appearance
     ): Long {
-        val imageUrl = profileImageGenerator.generate(appearance)
         return profileImageAppender.appendAsDeactivate(userId, imageUrl, appearance)
+    }
+
+    fun generateProfileImagePrompt(appearance: Appearance): String {
+        return profileImagePromptGenerator.generate(appearance)
     }
 
     fun readActivateProfileImage(userId: Long): ProfileImage {

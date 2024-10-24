@@ -18,6 +18,7 @@ import org.grida.domain.profileimage.Appearance
 import org.grida.domain.profileimage.Gender
 import org.grida.domain.profileimage.ProfileImage
 import org.grida.domain.profileimage.ProfileImageService
+import org.grida.image.OpenAiImageClient
 import org.grida.presentation.v1.profileimage.ProfileImageController
 import org.grida.presentation.v1.profileimage.dto.GenerateSampleProfileImageRequest
 import org.junit.jupiter.api.Test
@@ -34,9 +35,14 @@ class ProfileImageApiDocsTest(
     @MockkBean
     private lateinit var profileImageService: ProfileImageService
 
+    @MockkBean
+    private lateinit var openAiImageClient: OpenAiImageClient
+
     @Test
     fun `프로필 이미지 생성 API`() {
-        every { profileImageService.generateSampleProfileImage(any(), any()) } returns 1L
+        every { profileImageService.append(any(), any(), any()) } returns 1L
+        every { profileImageService.generateProfileImagePrompt(any()) } returns "prompt"
+        every { openAiImageClient.generate(any()) } returns "imageUrl"
 
         val api = api.post("/api/v1/user/image") {
             withBearerToken()

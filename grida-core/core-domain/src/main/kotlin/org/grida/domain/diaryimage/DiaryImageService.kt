@@ -12,25 +12,24 @@ class DiaryImageService(
     private val diaryImageReader: DiaryImageReader,
     private val diaryImageModifier: DiaryImageModifier,
     private val diaryImageValidator: DiaryImageValidator,
-    private val diaryImageGenerator: DiaryImageGenerator,
     private val diaryReader: DiaryReader,
     private val accessManager: AccessManager
 ) {
 
     fun generateDiaryImage(
         diaryId: Long,
-        userId: Long
+        userId: Long,
+        imageUrl: String
     ): Long {
         diaryImageValidator.validateRemainingAttemptCount(diaryId)
 
         val diary = diaryReader.read(diaryId)
         accessManager.ownerOnly(diary, userId)
 
-        val generatedImageUrl = diaryImageGenerator.generate(diary.content)
         val diaryImage = DiaryImage(
             userId = userId,
             diaryId = diaryId,
-            image = Image(generatedImageUrl, ImageStatus.DEACTIVATE)
+            image = Image(imageUrl, ImageStatus.DEACTIVATE)
         )
 
         return diaryImageAppender.append(diaryImage, diaryId, userId)
