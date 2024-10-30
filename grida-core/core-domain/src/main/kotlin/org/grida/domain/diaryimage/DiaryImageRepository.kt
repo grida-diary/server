@@ -7,9 +7,9 @@ import org.grida.domain.user.User
 interface DiaryImageRepository {
     fun save(diaryImage: DiaryImage, diary: Diary, user: User): Long
 
-    fun findById(id: Long): DiaryImage
+    fun findById(id: Long): DiaryImage?
 
-    fun findByDiaryIdAndStatus(diaryId: Long, status: ImageStatus): DiaryImage
+    fun findByDiaryIdAndStatus(diaryId: Long, status: ImageStatus): DiaryImage?
 
     fun countByDiaryId(diaryId: Long): Long
 

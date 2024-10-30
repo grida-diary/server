@@ -1,6 +1,7 @@
 package org.grida.domain.diary
 
 import org.grida.datetime.DateTimePicker
+import org.grida.domain.diary.DiaryScope.PRIVATE
 import org.grida.error.AccessFailed
 import org.grida.error.CannotAppendDiaryAtDate
 import org.grida.error.CannotAppendDiaryAtFuture
@@ -11,13 +12,13 @@ import java.time.LocalDate
 
 @Component
 class DiaryValidator(
-    private val diaryRepository: DiaryRepository
+    private val diaryRepository: DiaryRepository,
 ) {
 
     @Transactional(readOnly = true)
     fun validateAlreadyExistsAtDate(
         userId: Long,
-        targetDate: LocalDate
+        targetDate: LocalDate,
     ) {
         if (diaryRepository.existsByUserIdAndTargetDate(userId, targetDate)) {
             throw GridaException(CannotAppendDiaryAtDate)
@@ -31,16 +32,9 @@ class DiaryValidator(
     }
 
     fun validateCanAccess(diary: Diary, userId: Long) {
-        when (diary.scope) {
-            DiaryScope.PUBLIC -> {}
-            DiaryScope.FRIENDS_ONLY -> validateIsFriend(diary.userId, userId)
-            DiaryScope.PRIVATE -> validateIsOwner(diary, userId)
+        if (diary.scope == PRIVATE) {
+            validateIsOwner(diary, userId)
         }
-    }
-
-    private fun validateIsFriend(ownerId: Long, accessorId: Long) {
-        // TODO
-        throw GridaException(AccessFailed)
     }
 
     fun validateIsOwner(diary: Diary, userId: Long) {

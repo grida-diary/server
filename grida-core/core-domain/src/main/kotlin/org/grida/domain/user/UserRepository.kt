@@ -4,7 +4,7 @@ interface UserRepository {
 
     fun save(user: User): Long
 
-    fun findById(id: Long): User
+    fun findById(id: Long): User?
 
     fun findByLoginOption(loginOption: LoginOption): User?
 

@@ -1,5 +1,7 @@
 package org.grida.domain.user
 
+import org.grida.error.GridaException
+import org.grida.error.NoSuchData
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 
@@ -11,6 +13,7 @@ class UserReader(
     @Transactional(readOnly = true)
     fun read(id: Long): User {
         return userRepository.findById(id)
+            ?: throw GridaException(NoSuchData(User::class, id))
     }
 
     @Transactional(readOnly = true)

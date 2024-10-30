@@ -12,6 +12,7 @@ import jakarta.persistence.JoinColumn
 import jakarta.persistence.ManyToOne
 import jakarta.persistence.Table
 import org.grida.domain.image.ImageStatus
+import org.grida.domain.profileimage.Appearance
 import org.grida.domain.profileimage.Gender
 import org.grida.persistence.base.BaseEntity
 import org.grida.persistence.user.UserEntity
@@ -31,7 +32,7 @@ class ProfileImageEntity(
     @Column(length = 127)
     var status: ImageStatus,
 
-    var gender: Gender,
+    var gender: Appearance.Gender,
 
     var age: Int,
 
