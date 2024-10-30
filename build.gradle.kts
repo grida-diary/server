@@ -29,6 +29,8 @@ allprojects {
     repositories {
         mavenCentral()
         maven { setUrl("https://jitpack.io") }
+        maven { setUrl("https://repo.spring.io/milestone") }
+        maven { setUrl("https://repo.spring.io/snapshot") }
     }
 }
 

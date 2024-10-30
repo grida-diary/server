@@ -9,6 +9,7 @@ include("grida-clients:kakao-client")
 include("grida-core")
 include("grida-core:core-api")
 include("grida-core:core-domain")
+include("grida-core:core-llm")
 
 include("grida-storage")
 include("grida-storage:rds-storage")
