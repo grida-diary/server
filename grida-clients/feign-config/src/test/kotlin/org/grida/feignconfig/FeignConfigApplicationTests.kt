@@ -1,4 +1,4 @@
-package org.deskmood.feignconfig
+package org.grida.feignconfig
 
 import org.springframework.boot.test.context.SpringBootTest
 

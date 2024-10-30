@@ -1,4 +1,4 @@
-package org.deskmood
+package org.grida
 
 import org.springframework.boot.autoconfigure.ImportAutoConfiguration
 import org.springframework.cloud.openfeign.EnableFeignClients
