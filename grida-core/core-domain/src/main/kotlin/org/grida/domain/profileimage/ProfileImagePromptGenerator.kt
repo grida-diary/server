@@ -1,10 +1,11 @@
 package org.grida.domain.profileimage
 
-data class ProfileImagePrompt(
-    val appearance: Appearance
-) {
+import org.springframework.stereotype.Component
 
-    fun apply(): String {
+@Component
+class ProfileImagePromptGenerator {
+
+    fun generate(appearance: Appearance): String {
         return """
             Please generate a cozy style profile illustration
             for a ${appearance.age}-year-old Korean ${appearance.gender} according to the following description.

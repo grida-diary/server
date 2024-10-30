@@ -20,7 +20,8 @@ class DiaryImageController(
         @RequestUserId userId: Long,
         @PathVariable diaryId: Long
     ): ApiResponse<IdResponse> {
-        val generatedDiaryImageId = diaryImageService.generateDiaryImage(diaryId, userId)
+        val tmpDiaryImage = "diaryImage"
+        val generatedDiaryImageId = diaryImageService.generateDiaryImage(diaryId, userId, tmpDiaryImage)
         val response = IdResponse(generatedDiaryImageId)
         return ApiResponse.success(response)
     }

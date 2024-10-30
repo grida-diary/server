@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestParam
 
 @FeignClient(
-    name = "KakaoAuth",
+    name = "KakaoAuthApi",
     url = "https://kauth.kakao.com/oauth",
 )
 interface KakaoAuthApi {

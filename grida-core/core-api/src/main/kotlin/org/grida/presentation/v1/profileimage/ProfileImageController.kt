@@ -5,6 +5,7 @@ import org.grida.api.ApiResponse
 import org.grida.api.dto.BooleanResultResponse
 import org.grida.api.dto.IdResponse
 import org.grida.domain.profileimage.ProfileImageService
+import org.grida.image.OpenAiImageClient
 import org.grida.presentation.v1.profileimage.dto.GenerateSampleProfileImageRequest
 import org.grida.presentation.v1.profileimage.dto.ProfileImageHistoryResponse
 import org.grida.presentation.v1.profileimage.dto.ProfileImageResponse
@@ -18,7 +19,8 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping("/api/v1/user/image")
 class ProfileImageController(
-    private val profileImageService: ProfileImageService
+    private val profileImageService: ProfileImageService,
+    private val openAiImageClient: OpenAiImageClient
 ) {
 
     @PostMapping
@@ -26,7 +28,9 @@ class ProfileImageController(
         @RequestUserId userId: Long,
         @RequestBody request: GenerateSampleProfileImageRequest,
     ): ApiResponse<IdResponse> {
-        val profileImageId = profileImageService.generateSampleProfileImage(userId, request.toAppearance())
+        val prompt = profileImageService.generateProfileImagePrompt(request.toAppearance())
+        val profileImage = openAiImageClient.generate(prompt)
+        val profileImageId = profileImageService.append(userId, profileImage, request.toAppearance())
         val response = IdResponse(profileImageId)
         return ApiResponse.success(response)
     }
