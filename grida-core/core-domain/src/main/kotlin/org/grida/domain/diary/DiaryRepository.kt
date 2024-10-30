@@ -7,7 +7,7 @@ interface DiaryRepository {
 
     fun save(diary: Diary, user: User): Long
 
-    fun findById(id: Long): Diary
+    fun findById(id: Long): Diary?
 
     fun existsByUserIdAndTargetDate(userId: Long, targetDate: LocalDate): Boolean
 

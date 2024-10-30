@@ -1,5 +1,7 @@
 package org.grida.domain.diaryimage
 
+import org.grida.error.GridaException
+import org.grida.error.NoSuchData
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 
@@ -11,6 +13,7 @@ class DiaryImageReader(
     @Transactional(readOnly = true)
     fun read(diaryImageId: Long): DiaryImage {
         return diaryImageRepository.findById(diaryImageId)
+            ?: throw GridaException(NoSuchData(DiaryImage::class, diaryImageId))
     }
 
     @Transactional(readOnly = true)
