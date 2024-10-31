@@ -1,11 +1,12 @@
 package org.grida.domain.user
 
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 
 @Service
+@Transactional(readOnly = true)
 class UserService(
-    private val userAppender: UserAppender,
-    private val userReader: UserReader
+    private val userRepository: UserRepository
 ) {
 
     fun appendNormalUser(
@@ -16,7 +17,7 @@ class UserService(
             name = name,
             loginOption = loginOption
         )
-        return userAppender.append(user)
+        return userRepository.save(user)
     }
 
     fun appendAndReturnNormalUser(
@@ -27,16 +28,17 @@ class UserService(
             name = name,
             loginOption = loginOption
         )
-        return userAppender.appendAndReturnUser(user)
+        val userid = userRepository.save(user)
+        return userRepository.findById(userid)
     }
 
     fun read(id: Long): User {
-        return userReader.read(id)
+        return userRepository.findById(id)
     }
 
     fun readUserByLoginOption(
         loginOption: LoginOption
     ): User? {
-        return userReader.readByLoginOptionOrNull(loginOption)
+        return userRepository.findByLoginOption(loginOption)
     }
 }

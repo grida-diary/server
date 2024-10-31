@@ -10,10 +10,14 @@ data class Diary(
     val timestamp: Timestamp = Timestamp(),
     val targetDate: LocalDate,
     val content: String,
-    val scope: DiaryScope
+    val scope: DiaryScope,
 ) : Ownable {
 
     override fun isOwner(accessorId: Long): Boolean {
         return userId == accessorId
+    }
+
+    fun isDateAfter(date: LocalDate): Boolean {
+        return targetDate.isAfter(date)
     }
 }

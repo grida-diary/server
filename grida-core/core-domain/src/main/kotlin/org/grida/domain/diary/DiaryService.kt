@@ -1,48 +1,52 @@
 package org.grida.domain.diary
 
+import org.grida.datetime.DateTimePicker
+import org.grida.domain.base.AccessManager
+import org.grida.domain.user.UserRepository
+import org.grida.error.CannotAppendDiaryAtDate
+import org.grida.error.CannotAppendDiaryAtFuture
+import org.grida.error.GridaException
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 
 @Service
+@Transactional(readOnly = true)
 class DiaryService(
-    private val diaryAppender: DiaryAppender,
-    private val diaryReader: DiaryReader,
-    private val diaryModifier: DiaryModifier,
-    private val diaryValidator: DiaryValidator
+    private val diaryRepository: DiaryRepository,
+    private val userRepository: UserRepository,
+    private val accessManager: AccessManager,
 ) {
 
+    @Transactional
     fun appendDiary(diary: Diary): Long {
-        diaryValidator.validateIsPastThanToday(diary.targetDate)
-        diaryValidator.validateAlreadyExistsAtDate(diary.userId, diary.targetDate)
+        if (diary.isDateAfter(DateTimePicker.now().toLocalDate())) {
+            throw GridaException(CannotAppendDiaryAtFuture)
+        }
 
-        return diaryAppender.append(diary)
+        if (diaryRepository.existsByUserIdAndTargetDate(diary.userId, diary.targetDate)) {
+            throw GridaException(CannotAppendDiaryAtDate)
+        }
+
+        val targetUser = userRepository.findById(diary.userId)
+        return diaryRepository.save(diary, targetUser)
     }
 
     fun readDiary(
         diaryId: Long,
-        userId: Long
+        userId: Long,
     ): Diary {
-        val diary = diaryReader.read(diaryId)
-        diaryValidator.validateCanAccess(diary, userId)
-
-        return diary
+        return diaryRepository.findById(diaryId)
     }
 
+    @Transactional
     fun modify(
         diaryId: Long,
         userId: Long,
         content: String,
-        scope: DiaryScope
     ): Long {
-        diaryModifier.modify(diaryId, userId, content, scope)
-        return diaryId
-    }
-
-    fun modifyScope(
-        diaryId: Long,
-        userId: Long,
-        scope: DiaryScope
-    ): Long {
-        diaryModifier.modifyScope(diaryId, userId, scope)
+        val diary = diaryRepository.findById(diaryId)
+        accessManager.ownerOnly(diary, userId)
+        diaryRepository.updateContent(diaryId, content)
         return diaryId
     }
 }

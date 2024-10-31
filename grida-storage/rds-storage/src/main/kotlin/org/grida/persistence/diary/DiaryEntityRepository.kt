@@ -11,7 +11,6 @@ import org.grida.persistence.user.UserEntity
 import org.springframework.stereotype.Repository
 import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDate
-import kotlin.jvm.optionals.getOrNull
 
 @Repository
 @Transactional(readOnly = true)
@@ -30,9 +29,10 @@ class DiaryEntityRepository(
         return diaryEntity.id
     }
 
-    override fun findById(id: Long): Diary? {
+    override fun findById(id: Long): Diary {
         val diaryEntity = diaryJpaEntityRepository.findById(id)
-        return diaryEntity.getOrNull()?.toDomain()
+            .orElseThrow { GridaException(NoSuchData(Diary::class, id)) }
+        return diaryEntity.toDomain()
     }
 
     override fun existsByUserIdAndTargetDate(
