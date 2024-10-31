@@ -15,6 +15,14 @@ data class DiaryImage(
     }
 
     companion object {
-        const val IMAGE_GENERATE_MAX_ATTEMPT_COUNT = 3L
+        private const val IMAGE_GENERATE_MAX_ATTEMPT_COUNT = 3L
+
+        fun calculateRemainingAttemptCount(generatedCount: Long): Long {
+            return IMAGE_GENERATE_MAX_ATTEMPT_COUNT - generatedCount
+        }
+
+        fun canGenerateNew(generatedCount: Long): Boolean {
+            return generatedCount >= IMAGE_GENERATE_MAX_ATTEMPT_COUNT
+        }
     }
 }

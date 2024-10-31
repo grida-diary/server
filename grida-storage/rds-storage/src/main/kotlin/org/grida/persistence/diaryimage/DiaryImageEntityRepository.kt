@@ -9,9 +9,9 @@ import org.grida.error.GridaException
 import org.grida.error.NoSuchData
 import org.grida.persistence.base.JpqlExecutor
 import org.grida.persistence.diary.DiaryEntity
+import org.grida.persistence.image.ImageEntity
 import org.springframework.stereotype.Repository
 import org.springframework.transaction.annotation.Transactional
-import kotlin.jvm.optionals.getOrNull
 
 @Repository
 @Transactional(readOnly = true)
@@ -31,12 +31,13 @@ class DiaryImageEntityRepository(
         return diaryEntity.id
     }
 
-    override fun findById(id: Long): DiaryImage? {
-        val diaryImageEntity = diaryImageJpaEntityRepository.findById(id)
-        return diaryImageEntity.getOrNull()?.toDomain()
+    override fun findById(id: Long): DiaryImage {
+        val diaryImageEntity = findEntityByIdWithFetchJoin(id)
+        return diaryImageEntity?.toDomain()
+            ?: throw GridaException(NoSuchData(DiaryImageEntity::class, id))
     }
 
-    override fun findByDiaryIdAndStatus(diaryId: Long, status: ImageStatus): DiaryImage? {
+    override fun findByDiaryIdAndStatus(diaryId: Long, status: ImageStatus): DiaryImage {
         val diaryImageEntity = jpqlExecutor.find {
             select(
                 entity(DiaryImageEntity::class)
@@ -44,11 +45,12 @@ class DiaryImageEntityRepository(
                 entity(DiaryImageEntity::class)
             ).whereAnd(
                 path(DiaryImageEntity::diary)(DiaryEntity::id).eq(diaryId),
-                path(DiaryImageEntity::status).eq(status)
+                path(DiaryImageEntity::image)(ImageEntity::status).eq(status)
             )
         }
 
         return diaryImageEntity?.toDomain()
+            ?: throw GridaException(NoSuchData(DiaryImageEntity::class, diaryId))
     }
 
     override fun countByDiaryId(diaryId: Long): Long {
@@ -66,7 +68,18 @@ class DiaryImageEntityRepository(
     }
 
     override fun existsByDiaryIdAndStatus(diaryId: Long, status: ImageStatus): Boolean {
-        return findByDiaryIdAndStatus(diaryId, status)?.let { true } ?: false
+        val count = jpqlExecutor.find {
+            select(
+                count(entity(DiaryImageEntity::class))
+            ).from(
+                entity(DiaryImageEntity::class)
+            ).whereAnd(
+                path(DiaryImageEntity::diary)(DiaryEntity::id).eq(diaryId),
+                path(DiaryImageEntity::image)(ImageEntity::status).eq(status)
+            )
+        }
+
+        return count!! > 0
     }
 
     @Transactional
@@ -74,9 +87,24 @@ class DiaryImageEntityRepository(
         diaryImageId: Long,
         status: ImageStatus,
     ): Long {
-        val diaryImageEntity = diaryImageJpaEntityRepository.findById(diaryImageId)
-            .orElseThrow { GridaException(NoSuchData(DiaryImage::class, diaryImageId)) }
-        diaryImageEntity.updateStatue(status)
+        val diaryImageEntity = findEntityByIdWithFetchJoin(diaryImageId)
+            ?: throw GridaException(NoSuchData(DiaryImage::class, diaryImageId))
+        val image = diaryImageEntity.image
+        image.updateStatue(status)
+
         return diaryImageEntity.id
+    }
+
+    private fun findEntityByIdWithFetchJoin(id: Long): DiaryImageEntity? {
+        return jpqlExecutor.find {
+            select(
+                entity(DiaryImageEntity::class)
+            ).from(
+                entity(DiaryImageEntity::class),
+                fetchJoin(DiaryImageEntity::image)
+            ).where(
+                path(DiaryImageEntity::id).eq(id)
+            )
+        }
     }
 }

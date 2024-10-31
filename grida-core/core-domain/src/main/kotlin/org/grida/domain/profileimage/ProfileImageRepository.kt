@@ -7,9 +7,9 @@ interface ProfileImageRepository {
 
     fun save(profileImage: ProfileImage, user: User): Long
 
-    fun findById(id: Long): ProfileImage?
+    fun findById(id: Long): ProfileImage
 
-    fun findByUserIdAndStatus(userId: Long, status: ImageStatus): ProfileImage?
+    fun findByUserIdAndStatus(userId: Long, status: ImageStatus): ProfileImage
 
     fun findAllByUserId(userId: Long): List<ProfileImage>
 

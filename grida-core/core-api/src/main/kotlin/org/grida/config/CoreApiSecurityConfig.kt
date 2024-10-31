@@ -43,7 +43,7 @@ class CoreApiSecurityConfig(
                 .allHttpMethods()
                 .hasRoles(Role.ROLE_USER)
 
-            elseRequestAuthenticated()
+            elseRequestPermit()
         }
     }
 }
