@@ -1,8 +1,8 @@
 package org.grida.presentation.v1.diary
 
-import io.wwan13.wintersecurity.resolve.RequestUserId
 import org.grida.api.ApiResponse
 import org.grida.api.dto.IdResponse
+import org.grida.support.RequestUserId
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PatchMapping
 import org.springframework.web.bind.annotation.PathVariable

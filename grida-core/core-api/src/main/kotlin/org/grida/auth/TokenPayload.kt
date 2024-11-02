@@ -1,4 +1,4 @@
-package org.grida.config
+package org.grida.auth
 
 import io.wwan13.wintersecurity.jwt.payload.annotation.Payload
 import io.wwan13.wintersecurity.jwt.payload.annotation.Roles
@@ -9,7 +9,6 @@ import org.grida.domain.user.Role
 data class TokenPayload(
     @Subject
     val id: Long,
-
     @Roles
     val role: Role
 )

@@ -20,6 +20,7 @@ dependencies {
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 
     // security
+    implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("com.github.wwan13:winter-security:1.0.1")
 
     // logging-request

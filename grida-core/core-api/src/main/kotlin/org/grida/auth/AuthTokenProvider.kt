@@ -1,7 +1,6 @@
 package org.grida.auth
 
 import io.wwan13.wintersecurity.jwt.TokenGenerator
-import org.grida.config.TokenPayload
 import org.grida.domain.user.User
 import org.springframework.stereotype.Component
 
