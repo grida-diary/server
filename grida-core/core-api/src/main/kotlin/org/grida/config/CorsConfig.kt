@@ -9,6 +9,11 @@ class CorsConfig : WebMvcConfigurer {
 
     override fun addCorsMappings(registry: CorsRegistry) {
         registry.addMapping("/**")
-            .allowedOrigins("*")
+            .allowedOrigins(
+                "https://grida.today",
+                "https://docs.grida.today",
+                "https://monitoring.grida.today",
+                "http://localhost:3000"
+            )
     }
 }
