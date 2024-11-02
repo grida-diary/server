@@ -21,7 +21,7 @@ class ProfileImageService(
     fun append(
         userId: Long,
         imageUrl: String,
-        appearance: Appearance
+        appearance: String
     ): Long {
         val profileImage = ProfileImage(
             userId = userId,

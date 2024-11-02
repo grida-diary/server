@@ -7,7 +7,7 @@ data class ProfileImage(
     val id: Long = 0,
     val userId: Long,
     val image: Image,
-    val appearance: Appearance
+    val appearance: String
 ) : Ownable {
 
     override fun isOwner(accessorId: Long): Boolean {

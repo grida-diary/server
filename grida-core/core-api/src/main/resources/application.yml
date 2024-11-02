@@ -20,3 +20,7 @@ jwt:
   secret-key: ${JWT_SECRET_KEY}
   access-token-expired: ${ACCESS_TOKEN_EXPIRED}
   refresh-token-expired: ${REFRESH_TOKEN_EXPIRED}
+
+logging:
+  level:
+    root: info

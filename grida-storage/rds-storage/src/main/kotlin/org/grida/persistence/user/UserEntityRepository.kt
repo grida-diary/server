@@ -2,6 +2,7 @@ package org.grida.persistence.user
 
 import org.grida.domain.user.LoginOption
 import org.grida.domain.user.User
+import org.grida.domain.user.UserProfile
 import org.grida.domain.user.UserRepository
 import org.grida.error.GridaException
 import org.grida.error.NoSuchData
@@ -45,6 +46,21 @@ class UserEntityRepository(
             ?: throw GridaException(NoSuchData(User::class, loginOption.identifier))
     }
 
+    override fun findByLoginOptionOrNull(loginOption: LoginOption): User? {
+        val userEntity = jpqlExecutor.find {
+            select(
+                entity(UserEntity::class)
+            ).from(
+                entity(UserEntity::class)
+            ).whereAnd(
+                path(UserEntity::platform).eq(loginOption.platform),
+                path(UserEntity::platformIdentifier).eq(loginOption.identifier)
+            )
+        }
+
+        return userEntity?.toDomain()
+    }
+
     override fun existsByLoginOption(loginOption: LoginOption): Boolean {
         val count = jpqlExecutor.find {
             select(
@@ -58,5 +74,19 @@ class UserEntityRepository(
         }
 
         return count!! > 0
+    }
+
+    override fun updateProfileById(id: Long, userProfile: UserProfile) {
+        val userEntity = userJpaEntityRepository.findById(id)
+            .orElseThrow { GridaException(NoSuchData(User::class, id)) }
+
+        userEntity.updateProfile(userProfile)
+    }
+
+    override fun updateThemeById(id: Long, theme: String) {
+        val userEntity = userJpaEntityRepository.findById(id)
+            .orElseThrow { GridaException(NoSuchData(User::class, id)) }
+
+        userEntity.updateTheme(theme)
     }
 }

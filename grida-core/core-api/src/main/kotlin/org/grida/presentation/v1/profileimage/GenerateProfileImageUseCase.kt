@@ -17,7 +17,7 @@ class GenerateProfileImageUseCase(
     ): IdResponse {
         // val prompt = profileImageService.generateProfileImagePrompt(request.toAppearance())
         // val profileImage = openAiImageClient.generate(prompt)
-        val profileImageId = profileImageService.append(userId, "image", request.toAppearance())
+        val profileImageId = profileImageService.append(userId, "image", request.appearance)
         return IdResponse(profileImageId)
     }
 }

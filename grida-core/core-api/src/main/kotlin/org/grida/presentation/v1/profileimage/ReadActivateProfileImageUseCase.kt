@@ -13,15 +13,11 @@ class ReadActivateProfileImageUseCase(
         val profileImage = profileImageService.readActivateProfileImage(userId)
 
         return ProfileImageResponse(
-            imageId = profileImage.id,
+            profileImageId = profileImage.id,
             imageUrl = profileImage.image.url,
             status = profileImage.image.status.name,
             createdAt = DateTimeUtil.toDefaultDateTimeFormat(profileImage.image.timestamp.createdAt),
-            gender = profileImage.appearance.gender.name,
-            age = profileImage.appearance.age,
-            hairStyle = profileImage.appearance.hairStyle,
-            glasses = profileImage.appearance.glasses,
-            bodyShape = profileImage.appearance.bodyShape
+            appearance = profileImage.appearance
         )
     }
 }

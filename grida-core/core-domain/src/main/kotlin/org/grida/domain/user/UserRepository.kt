@@ -8,5 +8,11 @@ interface UserRepository {
 
     fun findByLoginOption(loginOption: LoginOption): User
 
+    fun findByLoginOptionOrNull(loginOption: LoginOption): User?
+
     fun existsByLoginOption(loginOption: LoginOption): Boolean
+
+    fun updateProfileById(id: Long, userProfile: UserProfile)
+
+    fun updateThemeById(id: Long, theme: String)
 }
