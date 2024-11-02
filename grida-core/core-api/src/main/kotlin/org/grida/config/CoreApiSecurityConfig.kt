@@ -1,49 +1,58 @@
 package org.grida.config
 
-import io.wwan13.wintersecurity.auth.authpattern.support.AuthPatternsRegistry
-import io.wwan13.wintersecurity.config.EnableJwtProvider
-import io.wwan13.wintersecurity.config.EnableSecureRequest
-import io.wwan13.wintersecurity.config.JwtProviderConfigurer
-import io.wwan13.wintersecurity.config.SecureRequestConfigurer
-import io.wwan13.wintersecurity.jwt.support.JwtPropertiesRegistry
-import io.wwan13.wintersecurity.secretkey.support.SecretKeyRegistry
-import org.grida.domain.user.Role
+import org.grida.auth.AuthFilter
+import org.grida.auth.AuthFilterExceptionHandler
+import org.grida.auth.ForbiddenHandler
+import org.grida.auth.UnauthorizedHandler
+import org.grida.support.UserIdResolver
+import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.security.config.annotation.web.builders.HttpSecurity
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
+import org.springframework.security.config.http.SessionCreationPolicy
+import org.springframework.security.web.SecurityFilterChain
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter
+import org.springframework.web.method.support.HandlerMethodArgumentResolver
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
 
 @Configuration
-@EnableSecureRequest
-@EnableJwtProvider
+@EnableWebSecurity
 class CoreApiSecurityConfig(
-    private val jwtProperties: JwtProperties
-) : SecureRequestConfigurer, JwtProviderConfigurer {
+    private val authFilter: AuthFilter,
+    private val authFilterExceptionHandler: AuthFilterExceptionHandler,
+    private val unauthorizedHandler: UnauthorizedHandler,
+    private val forbiddenHandler: ForbiddenHandler,
+) : WebMvcConfigurer {
 
-    override fun configureSecretKey(registry: SecretKeyRegistry) {
-        registry
-            .secretKey(jwtProperties.secretKey)
+    override fun addArgumentResolvers(
+        resolvers: MutableList<HandlerMethodArgumentResolver>,
+    ) {
+        resolvers.add(UserIdResolver())
     }
 
-    override fun configureJwt(registry: JwtPropertiesRegistry) {
-        registry.apply {
-            accessTokenValidity(jwtProperties.accessTokenExpired)
-            refreshTokenValidity(jwtProperties.refreshTokenExpired)
-        }
-    }
+    @Bean
+    fun securityFilterChain(
+        http: HttpSecurity,
+    ): SecurityFilterChain {
+        http
+            .httpBasic { it.disable() }
+            .formLogin { it.disable() }
+            .csrf { it.disable() }
+            .sessionManagement {
+                it.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+            }
+            .addFilterBefore(authFilter, BasicAuthenticationFilter::class.java)
+            .addFilterBefore(authFilterExceptionHandler, AuthFilter::class.java)
+            .exceptionHandling {
+                it.accessDeniedHandler(forbiddenHandler)
+                it.authenticationEntryPoint(unauthorizedHandler)
+            }
+            .authorizeHttpRequests {
+                it
+                    .requestMatchers("/api/v1/**").permitAll()
+                    .anyRequest().permitAll()
+            }
 
-    override fun registerAuthPatterns(registry: AuthPatternsRegistry) {
-        registry.apply {
-            uriPatterns("/api/health")
-                .httpMethodGet()
-                .permitAll()
-
-            uriPatterns("/api/v1/auth/**")
-                .allHttpMethods()
-                .permitAll()
-
-            uriPatterns("/api/v1/user/image/**", "/api/v1/diary/**")
-                .allHttpMethods()
-                .hasRoles(Role.ROLE_USER)
-
-            elseRequestPermit()
-        }
+        return http.build()
     }
 }
