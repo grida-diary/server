@@ -6,6 +6,7 @@ dependencies {
     // module dependencies
     implementation(project(":grida-core:core-domain"))
     implementation(project(":grida-storage:rds-storage"))
+    implementation(project(":grida-core:core-llm"))
     implementation(project(":grida-support:logging"))
     implementation(project(":grida-support:monitoring"))
     implementation(project(":grida-clients:feign-config"))
