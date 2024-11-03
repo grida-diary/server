@@ -35,6 +35,10 @@ class ProfileImageService(
         return profileImageRepository.save(profileImage, targetUser)
     }
 
+    fun read(profileImageId: Long): ProfileImage {
+        return profileImageRepository.findById(profileImageId)
+    }
+
     fun readActivateProfileImage(userId: Long): ProfileImage {
         return profileImageRepository.findByUserIdAndStatus(userId, ImageStatus.ACTIVATE)
     }
