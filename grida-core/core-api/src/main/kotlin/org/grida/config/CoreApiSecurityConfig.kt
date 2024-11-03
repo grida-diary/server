@@ -12,6 +12,9 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy
 import org.springframework.security.web.SecurityFilterChain
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter
+import org.springframework.web.cors.CorsConfiguration
+import org.springframework.web.cors.CorsConfigurationSource
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource
 import org.springframework.web.method.support.HandlerMethodArgumentResolver
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
 
@@ -35,6 +38,7 @@ class CoreApiSecurityConfig(
         http: HttpSecurity,
     ): SecurityFilterChain {
         http
+            .cors { }
             .httpBasic { it.disable() }
             .formLogin { it.disable() }
             .csrf { it.disable() }
@@ -54,5 +58,20 @@ class CoreApiSecurityConfig(
             }
 
         return http.build()
+    }
+
+    @Bean
+    fun corsConfigurationSource(): CorsConfigurationSource {
+        val configuration = CorsConfiguration().apply {
+            allowedOrigins = listOf("http://localhost:3000", "https://grida.today")
+            allowedMethods = listOf("GET", "POST", "PUT", "PATCH", "DELETE")
+            allowedHeaders = listOf("Authorization", "Cache-Control", "Content-Type")
+            allowCredentials = true
+            applyPermitDefaultValues()
+        }
+
+        val source = UrlBasedCorsConfigurationSource()
+        source.registerCorsConfiguration("/**", configuration)
+        return source
     }
 }

@@ -16,15 +16,11 @@ class ReadProfileImageHistoryUseCase(
             count = profileImages.size,
             profileImages = profileImages.map {
                 ProfileImageResponse(
-                    imageId = it.id,
+                    profileImageId = it.id,
                     imageUrl = it.image.url,
                     status = it.image.status.name,
                     createdAt = DateTimeUtil.toDefaultDateTimeFormat(it.image.timestamp.createdAt),
-                    gender = it.appearance.gender.name,
-                    age = it.appearance.age,
-                    hairStyle = it.appearance.hairStyle,
-                    glasses = it.appearance.glasses,
-                    bodyShape = it.appearance.bodyShape
+                    appearance = it.appearance
                 )
             }
         )

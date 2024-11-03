@@ -21,7 +21,7 @@ class ProfileImageService(
     fun append(
         userId: Long,
         imageUrl: String,
-        appearance: Appearance
+        appearance: String
     ): Long {
         val profileImage = ProfileImage(
             userId = userId,
@@ -33,6 +33,10 @@ class ProfileImageService(
         )
         val targetUser = userRepository.findById(userId)
         return profileImageRepository.save(profileImage, targetUser)
+    }
+
+    fun read(profileImageId: Long): ProfileImage {
+        return profileImageRepository.findById(profileImageId)
     }
 
     fun readActivateProfileImage(userId: Long): ProfileImage {

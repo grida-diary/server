@@ -5,12 +5,14 @@ import org.grida.domain.profileimage.ProfileImageService
 import org.springframework.stereotype.Component
 
 @Component
-class ReadActivateProfileImageUseCase(
-    private val profileImageService: ProfileImageService
+class ReadProfileImageUseCase(
+    private val profileImageService: ProfileImageService,
 ) {
 
-    fun execute(userId: Long): ProfileImageResponse {
-        val profileImage = profileImageService.readActivateProfileImage(userId)
+    fun execute(
+        profileImageId: Long,
+    ): ProfileImageResponse {
+        val profileImage = profileImageService.read(profileImageId)
 
         return ProfileImageResponse(
             profileImageId = profileImage.id,

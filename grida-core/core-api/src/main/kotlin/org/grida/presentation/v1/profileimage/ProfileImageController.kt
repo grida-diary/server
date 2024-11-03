@@ -18,6 +18,7 @@ class ProfileImageController(
     private val applyProfileImageUseCase: ApplyProfileImageUseCase,
     private val changeProfileImageUseCase: ChangeProfileImageUseCase,
     private val hasActivateProfileImageUseCase: HasActivateProfileImageUseCase,
+    private val readProfileImageUseCase: ReadProfileImageUseCase,
     private val readActivateProfileImageUseCase: ReadActivateProfileImageUseCase,
     private val readProfileImageHistoryUseCase: ReadProfileImageHistoryUseCase,
 ) {
@@ -54,6 +55,15 @@ class ProfileImageController(
         @RequestUserId userId: Long,
     ): ApiResponse<BooleanResultResponse> {
         val response = hasActivateProfileImageUseCase.execute(userId)
+        return ApiResponse.success(response)
+    }
+
+    @GetMapping("/{profileImageId}")
+    fun read(
+        @RequestUserId userId: Long,
+        @PathVariable profileImageId: Long
+    ): ApiResponse<ProfileImageResponse> {
+        val response = readProfileImageUseCase.execute(profileImageId)
         return ApiResponse.success(response)
     }
 

@@ -9,7 +9,6 @@ import jakarta.persistence.Id
 import jakarta.persistence.JoinColumn
 import jakarta.persistence.ManyToOne
 import jakarta.persistence.Table
-import org.grida.domain.profileimage.Appearance
 import org.grida.persistence.base.BaseEntity
 import org.grida.persistence.image.ImageEntity
 import org.grida.persistence.user.UserEntity
@@ -22,15 +21,8 @@ class ProfileImageEntity(
     @Column(name = "profile_image_id")
     var id: Long = 0,
 
-    var gender: Appearance.Gender,
-
-    var age: Int,
-
-    var hairStyle: String,
-
-    var glasses: String,
-
-    var bodyShape: String,
+    @Column(length = 511)
+    var appearance: String,
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "image_id")

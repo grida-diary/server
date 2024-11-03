@@ -5,6 +5,7 @@ spring:
       - rds-storage
       - kakao-client
       - openai-client
+      - core-llm
       - s3-client
       - logging
       - monitoring

@@ -9,25 +9,21 @@ class UserService(
     private val userRepository: UserRepository
 ) {
 
+    @Transactional
     fun appendNormalUser(
         name: String,
         loginOption: LoginOption
     ): Long {
-        val user = User(
-            name = name,
-            loginOption = loginOption
-        )
+        val user = User(loginOption = loginOption)
         return userRepository.save(user)
     }
 
+    @Transactional
     fun appendAndReturnNormalUser(
         name: String,
         loginOption: LoginOption
     ): User {
-        val user = User(
-            name = name,
-            loginOption = loginOption
-        )
+        val user = User(loginOption = loginOption)
         val userid = userRepository.save(user)
         return userRepository.findById(userid)
     }
@@ -36,9 +32,25 @@ class UserService(
         return userRepository.findById(id)
     }
 
-    fun readUserByLoginOption(
+    fun readUserByLoginOptionOrNull(
         loginOption: LoginOption
     ): User? {
-        return userRepository.findByLoginOption(loginOption)
+        return userRepository.findByLoginOptionOrNull(loginOption)
+    }
+
+    @Transactional
+    fun updateProfile(
+        id: Long,
+        profile: UserProfile
+    ) {
+        userRepository.updateProfileById(id, profile)
+    }
+
+    @Transactional
+    fun updateTheme(
+        id: Long,
+        theme: String
+    ) {
+        userRepository.updateThemeById(id, theme)
     }
 }

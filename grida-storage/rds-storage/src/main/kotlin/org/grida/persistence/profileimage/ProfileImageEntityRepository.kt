@@ -8,6 +8,8 @@ import org.grida.error.GridaException
 import org.grida.error.NoSuchData
 import org.grida.persistence.base.JpqlExecutor
 import org.grida.persistence.image.ImageEntity
+import org.grida.persistence.image.ImageJpaEntityRepository
+import org.grida.persistence.image.toEntity
 import org.grida.persistence.user.UserEntity
 import org.springframework.stereotype.Repository
 import org.springframework.transaction.annotation.Transactional
@@ -16,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional
 @Transactional(readOnly = true)
 class ProfileImageEntityRepository(
     private val profileImageJpaEntityRepository: ProfileImageJpaEntityRepository,
+    private val imageJpaEntityRepository: ImageJpaEntityRepository,
     private val jpqlExecutor: JpqlExecutor,
 ) : ProfileImageRepository {
 
@@ -24,7 +27,10 @@ class ProfileImageEntityRepository(
         profileImage: ProfileImage,
         user: User,
     ): Long {
-        val profileImageEntity = profileImage.toEntity(user)
+        val imageEntity = profileImage.image.toEntity()
+        imageJpaEntityRepository.save(imageEntity)
+
+        val profileImageEntity = profileImage.toEntity(user, imageEntity)
         profileImageJpaEntityRepository.save(profileImageEntity)
         return profileImageEntity.id
     }

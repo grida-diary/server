@@ -10,6 +10,8 @@ import org.grida.error.NoSuchData
 import org.grida.persistence.base.JpqlExecutor
 import org.grida.persistence.diary.DiaryEntity
 import org.grida.persistence.image.ImageEntity
+import org.grida.persistence.image.ImageJpaEntityRepository
+import org.grida.persistence.image.toEntity
 import org.springframework.stereotype.Repository
 import org.springframework.transaction.annotation.Transactional
 
@@ -17,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional
 @Transactional(readOnly = true)
 class DiaryImageEntityRepository(
     private val diaryImageJpaEntityRepository: DiaryImageJpaEntityRepository,
+    private val imageJpaEntityRepository: ImageJpaEntityRepository,
     private val jpqlExecutor: JpqlExecutor,
 ) : DiaryImageRepository {
 
@@ -26,7 +29,10 @@ class DiaryImageEntityRepository(
         diary: Diary,
         user: User,
     ): Long {
-        val diaryEntity = diaryImage.toEntity(user, diary)
+        val imageEntity = imageJpaEntityRepository.save(diaryImage.image.toEntity())
+        imageJpaEntityRepository.save(imageEntity)
+
+        val diaryEntity = diaryImage.toEntity(user, diary, imageEntity)
         diaryImageJpaEntityRepository.save(diaryEntity)
         return diaryEntity.id
     }
