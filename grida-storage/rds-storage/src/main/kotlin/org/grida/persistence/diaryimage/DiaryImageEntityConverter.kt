@@ -4,17 +4,19 @@ import org.grida.domain.diary.Diary
 import org.grida.domain.diaryimage.DiaryImage
 import org.grida.domain.user.User
 import org.grida.persistence.diary.toEntity
+import org.grida.persistence.image.ImageEntity
 import org.grida.persistence.image.toDomain
 import org.grida.persistence.image.toEntity
 import org.grida.persistence.user.toEntity
 
 fun DiaryImage.toEntity(
     user: User,
-    diary: Diary
+    diary: Diary,
+    imageEntity: ImageEntity
 ): DiaryImageEntity {
     return DiaryImageEntity(
         id = this.id,
-        image = this.image.toEntity(),
+        image = imageEntity,
         user = user.toEntity(),
         diary = diary.toEntity(user)
     )
