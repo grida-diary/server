@@ -43,12 +43,41 @@ class DiaryImageEntityRepository(
             ?: throw GridaException(NoSuchData(DiaryImageEntity::class, id))
     }
 
-    override fun findByDiaryIdAndStatus(diaryId: Long, status: ImageStatus): DiaryImage {
+    override fun findByDiaryId(diaryId: Long): DiaryImage? {
         val diaryImageEntity = jpqlExecutor.find {
             select(
                 entity(DiaryImageEntity::class)
             ).from(
                 entity(DiaryImageEntity::class)
+            ).where(
+                path(DiaryImageEntity::diary)(DiaryEntity::id).eq(diaryId)
+            )
+        }
+
+        return diaryImageEntity?.toDomain()
+    }
+
+    override fun findAllByDiaryIds(diaryIds: List<Long>): List<DiaryImage> {
+        val diaryImageEntities = jpqlExecutor.findAll {
+            select(
+                entity(DiaryImageEntity::class)
+            ).from(
+                entity(DiaryImageEntity::class)
+            ).where(
+                path(DiaryImageEntity::diary)(DiaryEntity::id).`in`(diaryIds)
+            )
+        }
+
+        return diaryImageEntities.map { it.toDomain() }
+    }
+
+    override fun findByDiaryIdAndStatus(diaryId: Long, status: ImageStatus): DiaryImage {
+        val diaryImageEntity = jpqlExecutor.find {
+            select(
+                entity(DiaryImageEntity::class)
+            ).from(
+                entity(DiaryImageEntity::class),
+                fetchJoin(DiaryImageEntity::image)
             ).whereAnd(
                 path(DiaryImageEntity::diary)(DiaryEntity::id).eq(diaryId),
                 path(DiaryImageEntity::image)(ImageEntity::status).eq(status)

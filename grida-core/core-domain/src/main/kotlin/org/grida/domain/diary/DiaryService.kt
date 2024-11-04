@@ -35,7 +35,18 @@ class DiaryService(
         diaryId: Long,
         userId: Long,
     ): Diary {
-        return diaryRepository.findById(diaryId)
+        val diary = diaryRepository.findById(diaryId)
+        accessManager.ownerOnly(diary, userId)
+        return diary
+    }
+
+    fun readMonthlyDiaries(
+        userId: Long,
+        year: Int,
+        month: Int
+    ): List<Diary> {
+        val range = DateTimePicker.monthOfYearRange(year, month)
+        return diaryRepository.findAllByUserIdAndTargetDateBetween(userId, range)
     }
 
     @Transactional

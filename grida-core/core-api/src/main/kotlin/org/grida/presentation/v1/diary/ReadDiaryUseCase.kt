@@ -16,6 +16,7 @@ class ReadDiaryUseCase(
         diaryId: Long,
     ): DiaryResponse {
         val diary = diaryService.readDiary(diaryId, userId)
+        val diaryImage = diaryImageService.readByDiaryId(diaryId)
         val remainCount = diaryImageService.countRemainImageGenerateAttempt(diaryId)
 
         return DiaryResponse(
@@ -23,7 +24,8 @@ class ReadDiaryUseCase(
             targetDate = DateTimeUtil.toDefaultDateFormat(diary.targetDate),
             scope = diary.scope.name,
             createdAt = DateTimeUtil.toDefaultDateTimeFormat(diary.timestamp.createdAt),
-            remainAttempt = remainCount
+            remainAttempt = remainCount,
+            diaryImageUrl = diaryImage.image.url
         )
     }
 }
