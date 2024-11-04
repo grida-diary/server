@@ -2,11 +2,14 @@ package org.grida.presentation.v1.user
 
 import org.grida.api.ApiResponse
 import org.grida.api.dto.IdResponse
+import org.grida.application.user.ReadUserResponse
+import org.grida.application.user.ReadUserUseCase
 import org.grida.application.user.UpdateProfileRequest
 import org.grida.application.user.UpdateProfileUseCase
 import org.grida.application.user.UpdateThemeRequest
 import org.grida.application.user.UpdateThemeUseCase
 import org.grida.support.RequestUserId
+import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
@@ -15,9 +18,18 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping("/api/v1/user")
 class UserController(
+    private val readUserUseCase: ReadUserUseCase,
     private val updateProfileUseCase: UpdateProfileUseCase,
     private val updateThemeUseCase: UpdateThemeUseCase
 ) {
+
+    @GetMapping
+    fun readUser(
+        @RequestUserId userId: Long
+    ): ApiResponse<ReadUserResponse> {
+        val response = readUserUseCase.execute(userId)
+        return ApiResponse.success(response)
+    }
 
     @PostMapping("/profile")
     fun updateProfile(

@@ -8,6 +8,7 @@ import org.grida.domain.user.UserRepository
 import org.grida.error.ActivateImageAlreadyExists
 import org.grida.error.GridaException
 import org.grida.error.ImageGenerateAttemptOver
+import org.grida.error.NoSuchData
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -64,6 +65,15 @@ class DiaryImageService(
         val diaryImage = diaryImageRepository.findById(diaryImageId)
         accessManager.ownerOnly(diaryImage, userId)
         diaryImageRepository.updateStatus(diaryImageId, ImageStatus.ACTIVATE)
+    }
+
+    fun readByDiaryId(diaryId: Long): DiaryImage {
+        return diaryImageRepository.findByDiaryId(diaryId)
+            ?: throw throw GridaException(NoSuchData(DiaryImage::class, diaryId))
+    }
+
+    fun readDiaryImagesByDiaryIds(diaryIds: List<Long>): List<DiaryImage> {
+        return diaryImageRepository.findAllByDiaryIds(diaryIds)
     }
 
     @Transactional

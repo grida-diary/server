@@ -5,6 +5,7 @@ import org.grida.api.dto.IdResponse
 import org.grida.support.RequestUserId
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
@@ -19,9 +20,10 @@ class DiaryImageController(
     @PostMapping("/{diaryId}/image")
     fun generateDiaryImage(
         @RequestUserId userId: Long,
-        @PathVariable diaryId: Long
+        @PathVariable diaryId: Long,
+        @RequestBody request: GenerateDiaryImageRequest
     ): ApiResponse<IdResponse> {
-        val response = generateDiaryImageUseCase.execute(userId, diaryId)
+        val response = generateDiaryImageUseCase.execute(userId, diaryId, request)
         return ApiResponse.success(response)
     }
 

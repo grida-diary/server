@@ -25,7 +25,7 @@ class ImageEntity(
 
     @Column(length = 127)
     @Enumerated(EnumType.STRING)
-    var status: ImageStatus = ImageStatus.ACTIVATE,
+    var status: ImageStatus = ImageStatus.DEACTIVATE,
 ) : BaseEntity() {
 
     fun updateStatue(status: ImageStatus) {

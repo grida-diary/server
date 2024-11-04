@@ -1,5 +1,6 @@
 package org.grida.persistence.diary
 
+import org.grida.datetime.DateTimeRange
 import org.grida.domain.diary.Diary
 import org.grida.domain.diary.DiaryRepository
 import org.grida.domain.diary.DiaryScope
@@ -33,6 +34,21 @@ class DiaryEntityRepository(
         val diaryEntity = diaryJpaEntityRepository.findById(id)
             .orElseThrow { GridaException(NoSuchData(Diary::class, id)) }
         return diaryEntity.toDomain()
+    }
+
+    override fun findAllByUserIdAndTargetDateBetween(userId: Long, range: DateTimeRange): List<Diary> {
+        val diaryEntities = jpqlExecutor.findAll {
+            select(
+                entity(DiaryEntity::class)
+            ).from(
+                entity(DiaryEntity::class)
+            ).whereAnd(
+                path(DiaryEntity::user)(UserEntity::id).eq(userId),
+                path(DiaryEntity::targetDate).between(range.start.toLocalDate(), range.end.toLocalDate())
+            )
+        }
+
+        return diaryEntities.map { it.toDomain() }
     }
 
     override fun existsByUserIdAndTargetDate(

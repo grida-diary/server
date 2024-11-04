@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping("/api/v1/diary")
 class DiaryController(
     private val appendDiaryUseCase: AppendDiaryUseCase,
+    private val analyzeDiaryUseCase: AnalyzeDiaryUseCase,
     private val readDiaryUseCase: ReadDiaryUseCase,
+    private val readMonthlyDiaryUseCase: ReadMonthlyDiaryUseCase,
     private val modifyDiaryUseCase: ModifyDiaryUseCase,
 ) {
 
@@ -28,12 +30,31 @@ class DiaryController(
         return ApiResponse.success(response)
     }
 
+    @PostMapping("/{diaryId}/analyze")
+    fun appendDiary(
+        @RequestUserId userId: Long,
+        @PathVariable diaryId: Long,
+    ): ApiResponse<AnalyzeDiaryResponse> {
+        val response = analyzeDiaryUseCase.execute(userId, diaryId)
+        return ApiResponse.success(response)
+    }
+
     @GetMapping("/{diaryId}")
     fun readDiary(
         @RequestUserId userId: Long,
         @PathVariable diaryId: Long,
     ): ApiResponse<DiaryResponse> {
         val response = readDiaryUseCase.execute(userId, diaryId)
+        return ApiResponse.success(response)
+    }
+
+    @GetMapping("/monthly/{year}/{month}")
+    fun readMonthlyDiaries(
+        @RequestUserId userId: Long,
+        @PathVariable year: Int,
+        @PathVariable month: Int,
+    ): ApiResponse<MonthlyDiaryResponse> {
+        val response = readMonthlyDiaryUseCase.execute(userId, year, month)
         return ApiResponse.success(response)
     }
 
