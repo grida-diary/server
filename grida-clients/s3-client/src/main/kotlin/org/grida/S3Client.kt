@@ -50,7 +50,7 @@ class S3Client(
             metadata.contentLength = imageBytes.size.toLong()
 
             amazonS3.putObject(properties.bucket, key, ByteArrayInputStream(imageBytes), metadata)
-            amazonS3.getUrl(properties.bucket, key).toString()
+            key
         } catch (e: AmazonClientException) {
             throw GridaException(FileUploadFail)
         }
